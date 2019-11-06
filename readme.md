@@ -14,15 +14,21 @@ Ik ben altijd opzoek naar goede films en series. Ik kan soms heel lang zoeken na
 * Delen van deze lijsten
 * Shared lists
 * Recommendations voor films, series & games op basis van jouw data
+* custom labels voor prioriteit
 
 ## Blog
 http://simonhanselaer.be/index.php?page=blog
+
+## Language
+De desktop applicatie gaat in vue.js gemaakt worden. Gecombineerd met electron om er een desktop applicatie van te maken.
+Inloggen en registreren op basis van firebase.
+
 
 ## Resources
 ### API
 * https://api.igdb.com
 * https://www.themoviedb.org
 
-### Language
-De desktop applicatie gaat in vue.js gemaakt worden
-Link: https://vuejs.org
+### Vue.js & electron
+* https://vuejs.org
+* https://github.com/SimulatedGREG/vue-electron
