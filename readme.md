@@ -24,4 +24,5 @@ http://simonhanselaer.be/index.php?page=blog
 * https://www.themoviedb.org
 
 ### Language
-Ik zou de desktop applicatie willen schrijven in python
+De desktop applicatie gaat in vue.js gemaakt worden
+Link: https://vuejs.org
