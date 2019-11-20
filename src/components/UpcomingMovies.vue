@@ -1,6 +1,7 @@
+
 <template>
-  <div class="popularMovies">
-    <h2>Popular movies</h2>
+  <div class="upcomingMovies">
+    <h2>Upcoming movies</h2>
     <moviesList v-if="!isLoadingMovies & !isLoadingConfig" :movies="computedMovies">
       <template slot-scope="movie">
         <h3 class="text-base">{{movie.title}}</h3>
@@ -19,7 +20,7 @@ import { RepositoryFactory } from "./../repositories/repositoryFactory";
 const MediaRepository = RepositoryFactory.get("media");
 
 export default {
-  name: "popularmovies",
+  name: "upcomingmovies",
   components: { moviesList },
   data() {
     return {
@@ -36,7 +37,7 @@ export default {
   methods: {
     async fetchMovies() {
       this.isLoadingMovies = true;
-      const { data } = await MediaRepository.getPopularMovies();
+      const { data } = await MediaRepository.getUpcomingMovies();
       this.isLoadingMovies = false;
       this.movies = data.results;
     },

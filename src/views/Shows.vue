@@ -1,5 +1,24 @@
 <template>
   <div class="shows">
-    <h1>This is the TV-shows page</h1>
+    <SpotlightSerie />
+    <PopularSeries />
+    <!-- <UpcomingSeries /> -->
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import SpotlightSerie from "@/components/SpotlightSerie.vue";
+import PopularSeries from "@/components/PopularSeries.vue";
+// import UpcomingSeries from "@/components/UpcomingSeries.vue";
+
+export default {
+  name: "home",
+  components: {
+    SpotlightSerie,
+    PopularSeries
+    //UpcomingSeries
+  }
+};
+</script>
+

@@ -1,5 +1,5 @@
 <template>
-  <div class="popularMovies--list">
+  <div class="movies--list">
     <div v-for="movie in movies" v-bind="{movie}" :key="movie.id">
       <slot v-bind="movie"></slot>
     </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "popularMovies-list",
+  name: "movies-list",
   props: {
     movies: {
       type: Array,
