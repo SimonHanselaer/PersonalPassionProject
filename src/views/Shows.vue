@@ -13,7 +13,7 @@ import PopularSeries from "@/components/PopularSeries.vue";
 // import UpcomingSeries from "@/components/UpcomingSeries.vue";
 
 export default {
-  name: "home",
+  name: "shows",
   components: {
     SpotlightSerie,
     PopularSeries
