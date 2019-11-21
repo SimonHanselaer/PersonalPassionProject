@@ -1,0 +1,19 @@
+.sideBar {
+  width: 22rem;
+  height: 100vh;
+  background-color: #10101080;
+}
+
+.sideBarItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  padding-left: 3.5rem;
+  padding-top: 10rem;
+}
+
+.sideBarItems * {
+  padding-bottom: 2.1rem;
+}
+  

@@ -1,11 +1,12 @@
 
 <template>
-  <div class="upcomingMovies">
-    <h2>Upcoming movies</h2>
+  <div class="upcoming upcomingMovies">
+    <h2 class="header-2">Upcoming movies</h2>
     <moviesList v-if="!isLoadingMovies & !isLoadingConfig" :movies="computedMovies">
       <template slot-scope="movie">
-        <h3 class="text-base">{{movie.title}}</h3>
+        <h3 class="title">{{movie.title}}</h3>
         <img
+          class="imageMedia"
           v-bind:src="config.images.base_url + config.images.poster_sizes[4] + movie.poster_path"
           width="200"
         />

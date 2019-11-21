@@ -1,13 +1,37 @@
 import Vue from 'vue';
-import MyButton from './Button.vue';
 
-export default { title: 'Button' };
+import { storiesOf } from "@storybook/vue";
+import StoryRouter from 'storybook-vue-router';
 
-export const withText = () => '<my-button>with text</my-button>';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from "@storybook/addon-links";
 
-export const withEmoji = () => '<my-button>😀 😎 👍 💯</my-button>';
+// import SpotlightGame from "../components/SpotlightGame";
+// import SpotlightMovie from "../components/SpotlightMovie";
+// import SpotlightSerie from "../components/SpotlightSerie";
 
-export const asAComponent = () => ({
-    components: { MyButton },
-    template: '<my-button :rounded="true">rounded</my-button>'
-});
+import "../styles/index.css";
+
+import Home from "../views/Home";
+import Shows from "../views/Shows";
+import Games from "../views/Games";
+import Social from "../views/Social";
+import Profile from "../views/Profile";
+
+storiesOf(`Views`, module)
+    .add(`Home`, () => ({
+        render: h => <Home />
+    }))
+    .add(`Shows`, () => ({
+        render: h => <Shows />
+    }))
+    .add(`Games`, () => ({
+        render: h => <Games />
+    }))
+    .add(`Social`, () => ({
+        render: h => <Social />
+    }))
+    .add(`Profile`, () => ({
+        render: h => <Profile />
+    }));
+

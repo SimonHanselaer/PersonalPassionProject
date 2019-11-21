@@ -1,6 +1,6 @@
 <template>
   <div class="spotlightSerie">
-    <h2>Spotlight</h2>
+    <h2 class="header-2">Spotlight</h2>
     <article v-if="!isLoadingSeries & !isLoadingConfig">
       <h3>{{computedSerie.title}}</h3>
       <img

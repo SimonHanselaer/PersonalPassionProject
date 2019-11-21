@@ -1,0 +1,25 @@
+.normal, .nav, .header-1, .header-2 {
+  color: #fff;
+  font-family: montserrat;
+}
+
+.normal {
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+
+.nav {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.header-1 {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+.header-2 {
+  font-family: bebas neue;
+  font-size: 3.6rem;
+  font-weight: 700;
+}

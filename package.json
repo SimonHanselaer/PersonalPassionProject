@@ -23,6 +23,9 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-plugin-router": "^4.0.0",
@@ -34,6 +37,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.18.2",
+    "storybook-vue-router": "^1.0.7",
     "vue-template-compiler": "^2.6.10"
   }
 }

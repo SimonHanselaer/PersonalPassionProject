@@ -1,5 +1,5 @@
 <template>
-  <div class="games">
+  <div class="games contentContainer layoutContent">
     <SpotlightGame />
     <PopularGames />
   </div>
@@ -7,8 +7,8 @@
 
 <script>
 // @ is an alias to /src
-import SpotlightGame from "@/components/SpotlightGame.vue";
-import PopularGames from "@/components/PopularGames.vue";
+import SpotlightGame from "../components/SpotlightGame.vue";
+import PopularGames from "../components/PopularGames.vue";
 
 export default {
   name: "games",

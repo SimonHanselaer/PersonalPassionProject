@@ -1,35 +1,19 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Movies</router-link>|
-      <router-link to="/shows">TV-shows</router-link>|
-      <router-link to="/games">Games</router-link>|
-      <router-link to="/social">Social</router-link>|
-      <router-link to="/profile">Profile</router-link>|
-    </div>
+  <div id="app" class="layout normal">
+    <section class="sideBar">
+      <div id="nav" class="nav sideBarItems">
+        <router-link to="/">Movies</router-link>
+        <router-link to="/shows">TV-shows</router-link>
+        <router-link to="/games">Games</router-link>
+        <router-link to="/social">Social</router-link>
+        <router-link to="/profile">Profile</router-link>
+      </div>
+    </section>
     <router-view />
   </div>
 </template>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+@import "./styles/typo.module.css";
+@import "./App.module.css";
 </style>

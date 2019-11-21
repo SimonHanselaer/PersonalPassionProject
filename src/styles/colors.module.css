@@ -1,0 +1,12 @@
+:global(:root){
+    --primary-color: #ffffff;
+    --accent-color: #3764FC;
+  }
+  
+  .color-primary {
+    color: var(--primary-color);
+  }
+
+  .color-accent {
+    color: var(--accent-color);
+  }

@@ -1,13 +1,12 @@
-import { configure } from '@storybook/vue';
-
 import Vue from 'vue';
-
 import Vuex from 'vuex';
 
-import Mybutton from '../src/stories/Button.vue';
+import { configure } from '@storybook/vue';
 
 Vue.use(Vuex);
 
-configure(require.context('../src', true, /\.stories\.js$/), module);
+function loadStories() {
+    require("../src/stories");
+}
 
-export const withText = () => '<my-component>with text</my-component>';
+configure(loadStories, module);

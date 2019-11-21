@@ -1,6 +1,6 @@
 <template>
   <div class="spotlightGame">
-    <h2>Spotlight</h2>
+    <h2 class="header-2">Spotlight</h2>
     <article v-if="!isLoadingGame & !isLoadingCover">
       <h3>{{game.name}}</h3>
       <img

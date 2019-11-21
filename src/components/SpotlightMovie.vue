@@ -1,6 +1,6 @@
 <template>
-  <div class="spotlightMovie">
-    <h2>Spotlight</h2>
+  <div class="spotlight spotlightMovie">
+    <h2 class="header-2">Spotlight</h2>
     <article v-if="!isLoadingMovies & !isLoadingConfig">
       <h3>{{computedMovie.title}}</h3>
       <img
