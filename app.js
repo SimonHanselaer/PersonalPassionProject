@@ -9,11 +9,11 @@ if (process.env.NODE_ENV === 'DEV') {
     url = `file://${process.cwd()}/dist/index.html`
 }
 
-const psList = require("ps-list");
+// const psList = require("ps-list");
 
-(async () => {
-    console.log(await psList()) => [{ pid: 3213, name: 'node', cmd: 'node test.js', ppid: 1, uid: 501, cpu: 0.1, memory: 1.5 }, …]
-})();
+// (async () => {
+//     console.log(await psList()) => [{ pid: 3213, name: 'node', cmd: 'node test.js', ppid: 1, uid: 501, cpu: 0.1, memory: 1.5 }, …]
+// })();
 
 // const desktopCapturer = require('electron');
 

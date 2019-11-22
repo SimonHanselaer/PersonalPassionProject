@@ -4,6 +4,8 @@ const baseDomain = "https://api.themoviedb.org/3";
 const APIKey = "?api_key=36421093ef1319648160ea0b83f490ad";
 
 const config = "/configuration";
+const movieDetails = "/movie/";
+const serieDetails = "/tv/";
 const popularMovies = "/movie/popular";
 const popularSeries = "/tv/popular";
 const upcomingMovies = "/movie/upcoming";
@@ -20,42 +22,49 @@ const valueDay = TodayDate.getDate();
 const data = [valueYear, valueMonth, valueDay];
 let sum = 0;
 
-
 data.forEach(e => {
-    while (e) {
-        sum += e % 10;
-        e = Math.floor(e / 10);
-    }
+  while (e) {
+    sum += e % 10;
+    e = Math.floor(e / 10);
+  }
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 export default {
-    getConfig() {
-        return axios.get(`${baseDomain}${config}${APIKey}`);
-    },
+  getConfig() {
+    return axios.get(`${baseDomain}${config}${APIKey}`);
+  },
 
-    getPopularMovies() {
-        return axios.get(`${baseDomain}${popularMovies}${APIKey}`);
-    },
+  getMovieDetails(id) {
+    return axios.get(`${baseDomain}${movieDetails}${id}${APIKey}`);
+  },
 
-    getPopularSeries() {
-        return axios.get(`${baseDomain}${popularSeries}${APIKey}`);
-    },
+  getSerieDetails(id) {
+    return axios.get(`${baseDomain}${serieDetails}${id}${APIKey}`);
+  },
 
-    getUpcomingMovies() {
-        return axios.get(`${baseDomain}${upcomingMovies}${APIKey}${region}`);
-    },
+  getPopularMovies() {
+    return axios.get(`${baseDomain}${popularMovies}${APIKey}`);
+  },
 
-    getUpcomingSeries() {
-        return axios.get(`${baseDomain}${upcomingSeries}${APIKey}${region}`);
-    },
+  getPopularSeries() {
+    return axios.get(`${baseDomain}${popularSeries}${APIKey}`);
+  },
 
-    getSpotlightMovie() {
-        return axios.get(`${baseDomain}${popularMovies}${APIKey}${page}${sum}`);
-    },
+  getUpcomingMovies() {
+    return axios.get(`${baseDomain}${upcomingMovies}${APIKey}${region}`);
+  },
 
-    getSpotlightSerie() {
-        return axios.get(`${baseDomain}${popularSeries}${APIKey}${page}${sum}`);
-    }
+  getUpcomingSeries() {
+    return axios.get(`${baseDomain}${upcomingSeries}${APIKey}${region}`);
+  },
+
+  getSpotlightMovie() {
+    return axios.get(`${baseDomain}${popularMovies}${APIKey}${page}${sum}`);
+  },
+
+  getSpotlightSerie() {
+    return axios.get(`${baseDomain}${popularSeries}${APIKey}${page}${sum}`);
+  }
 };

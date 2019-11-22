@@ -1,12 +1,19 @@
 <template>
   <div class="popularSeries">
     <h2 class="header-2">Popular series</h2>
-    <seriesList v-if="!isLoadingSeries & !isLoadingConfig" :series="computedSeries">
+    <seriesList
+      v-if="!isLoadingSeries & !isLoadingConfig"
+      :series="computedSeries"
+    >
       <template slot-scope="serie">
-        <h3 class="title">{{serie.name}}</h3>
+        <h3 class="title">{{ serie.name }}</h3>
         <img
           class="imageMedia"
-          v-bind:src="config.images.base_url + config.images.poster_sizes[4] + serie.poster_path"
+          v-bind:src="
+            config.images.base_url +
+              config.images.poster_sizes[4] +
+              serie.poster_path
+          "
           width="200"
         />
       </template>

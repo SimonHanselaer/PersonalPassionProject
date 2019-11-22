@@ -1,6 +1,11 @@
 <template>
   <div class="movies--list listLayout">
-    <div v-for="movie in movies" v-bind="{movie}" :key="movie.id" class="mediaTile">
+    <div
+      v-for="movie in movies"
+      v-bind="{ movie }"
+      :key="movie.id"
+      class="mediaTile"
+    >
       <slot v-bind="movie"></slot>
     </div>
   </div>

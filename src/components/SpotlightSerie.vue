@@ -1,12 +1,22 @@
 <template>
-  <div class="spotlightSerie">
+  <div class="spotlight spotlightSerie">
     <h2 class="header-2">Spotlight</h2>
-    <article v-if="!isLoadingSeries & !isLoadingConfig">
-      <h3>{{computedSerie.title}}</h3>
+    <article v-if="!isLoadingSeries & !isLoadingConfig & !isLoadingDetails" class="spotlightLayout">
+      <h3 class="spotlightTitle header-3">{{ computedSerie.name }}</h3>
       <img
-        v-bind:src="config.images.base_url + config.images.poster_sizes[4] + computedSerie.poster_path"
+        class="spotlightImage"
+        v-bind:src="
+          config.images.base_url +
+            config.images.poster_sizes[4] +
+            computedSerie.poster_path
+        "
         width="200"
       />
+      <p class="spotlightGenre details">{{serieDetails.genres[0].name}}</p>
+      <p class="spotlightRuntime details">{{computedRuntime}}</p>
+      <p class="spotlightReleaseYear details">{{computedReleaseYear}}</p>
+      <p class="spotlightOverview">{{serieDetails.overview}}</p>
+      <div class="spotlightBorder"></div>
     </article>
   </div>
 </template>
@@ -21,8 +31,10 @@ export default {
     return {
       isLoadingSeries: false,
       isLoadingConfig: false,
+      isLoadingDetails: false,
       serie: [],
       config: [],
+      serieDetails: [],
       PageNumber: 0,
       refactoredNumber: 0
     };
@@ -39,17 +51,37 @@ export default {
       this.PageNumber = data.page;
       this.refactoredNumber = Math.ceil((this.PageNumber / 33) * 20);
       this.serie = data.results;
+      this.fetchDetails();
     },
     async fetchConfig() {
       this.isLoadingConfig = true;
       const { data } = await MediaRepository.getConfig();
       this.isLoadingConfig = false;
       this.config = data;
+    },
+    async fetchDetails() {
+      this.isLoadingDetails = true;
+      const { data } = await MediaRepository.getSerieDetails(
+        this.serie[this.refactoredNumber].id
+      );
+      console.log(data);
+      this.serieDetails = data;
+      this.isLoadingDetails = false;
     }
   },
   computed: {
     computedSerie() {
       return this.serie[this.refactoredNumber];
+    },
+    computedReleaseYear() {
+      return this.serieDetails.first_air_date.slice(0, 4);
+    },
+    computedRuntime() {
+      const hours = Math.floor(this.serieDetails.episode_run_time[0] / 60);
+      const minutes = this.serieDetails.episode_run_time[0] % 60;
+      const convertedTime = `${hours}h ${minutes}min`;
+
+      return convertedTime;
     }
   }
 };

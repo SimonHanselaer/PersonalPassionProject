@@ -1,0 +1,33 @@
+"Included scalars"
+scalar JSON
+scalar Upload
+
+type MediaItem {
+  id: ID!
+  mediaItemId: Int!
+  mediaTitle: String!
+  mediaImage: String!
+}
+
+input MediaItemInput {
+  mediaItemId: Int!
+  mediaTitle: String!
+  mediaImage: String!
+}
+
+type Query {
+  "Test query with a parameter"
+  hello(name: String): String!
+  media: [MediaItem]
+
+}
+
+type Mutation {
+  addMediaItem(input: MediaItemInput!): MediaItem!
+
+}
+
+type Subscription {
+  mediaItemAdded: MediaItem!
+
+}

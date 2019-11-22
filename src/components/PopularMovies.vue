@@ -3,12 +3,32 @@
     <h2 class="header-2">Popular movies</h2>
     <moviesList v-if="!isLoadingMovies & !isLoadingConfig" :movies="computedMovies">
       <template slot-scope="movie">
-        <h3 class="title">{{movie.title}}</h3>
+        <h3 class="title">{{ movie.title }}</h3>
         <img
           class="imageMedia"
-          v-bind:src="config.images.base_url + config.images.poster_sizes[4] + movie.poster_path"
+          v-bind:src="
+            config.images.base_url +
+              config.images.poster_sizes[4] +
+              movie.poster_path
+          "
           width="200"
         />
+        <p class="visually-hidden">{{movie.id}}</p>
+
+        <ApolloMutation
+          :mutation="require('../graphql/AddMediaItem.gql')"
+          :variables="{
+            input: {
+              mediaItemId: movie.id,
+              mediaTitle: movie.title,
+              mediaImage: config.images.base_url + config.images.poster_sizes[4] + movie.poster_path
+            },
+          }"
+        >
+          <template slot-scope="{ mutate }">
+            <button @click="mutate()">Add to list</button>
+          </template>
+        </ApolloMutation>
       </template>
     </moviesList>
   </div>
@@ -27,7 +47,8 @@ export default {
       isLoadingMovies: false,
       isLoadingConfig: false,
       movies: [],
-      config: []
+      config: [],
+      mediaItemId: 0
     };
   },
   created() {
@@ -46,7 +67,8 @@ export default {
       const { data } = await MediaRepository.getConfig();
       this.isLoadingConfig = false;
       this.config = data;
-    }
+    },
+    addToList() {}
   },
   computed: {
     computedMovies() {

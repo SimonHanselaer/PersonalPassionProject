@@ -17,65 +17,67 @@ import axios from "axios";
 //GetDayOfYear-----------------------------------------------------------------
 const now = new Date();
 const start = new Date(now.getFullYear(), 0, 0);
-const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+const diff =
+  now -
+  start +
+  (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
 const oneDay = 1000 * 60 * 60 * 24;
 const day = Math.floor(diff / oneDay);
 
 //-----------------------------------------------------------------------------
 
 export default {
-    async getPopularGames() {
-        const config = {
-            method: "POST",
-            url:
-                "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
-            headers: {
-                Accept: "application/json",
-                "user-key": "bb1628f3841097cc6c575a5621692f75",
-                "x-requested-with": "localhost"
-            },
-            data: "fields name; limit 5; sort popularity desc; where rating_count > 100 & rating > 70;"
-        };
+  async getPopularGames() {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data:
+        "fields name; limit 5; sort popularity desc; where rating_count > 100 & rating > 70;"
+    };
 
-        let response = await axios(config);
+    let response = await axios(config);
 
-        return response;
-    },
+    // url prefix erin zetten
 
-    async getSpotlightGame() {
-        const config = {
-            method: "POST",
-            url:
-                "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
-            headers: {
-                Accept: "application/json",
-                "user-key": "bb1628f3841097cc6c575a5621692f75",
-                "x-requested-with": "localhost"
-            },
-            data:
-                `fields name; limit ${day}; sort popularity desc; where rating_count > 100;`
-        };
+    return response;
+  },
 
-        let response = await axios(config);
+  async getSpotlightGame() {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data: `fields name; limit ${day}; sort popularity desc; where rating_count > 100;`
+    };
 
-        return response;
-    },
+    let response = await axios(config);
 
-    async getCover(id) {
-        const config = {
-            method: "POST",
-            url:
-                "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/covers",
-            headers: {
-                Accept: "application/json",
-                "user-key": "bb1628f3841097cc6c575a5621692f75",
-                "x-requested-with": "localhost"
-            },
-            data: `fields *; where game = ${id}; limit 1;`
-        };
+    return response;
+  },
 
-        let response = await axios(config);
+  async getCover(id) {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/covers",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data: `fields *; where game = ${id}; limit 1;`
+    };
 
-        return response;
-    }
+    let response = await axios(config);
+
+    return response;
+  }
 };

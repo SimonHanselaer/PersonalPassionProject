@@ -1,5 +1,17 @@
 <template>
   <div class="profile contentContainer">
-    <h1>This is the profile page</h1>
+    <watchlist />
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import watchlist from "../components/watchlist.vue";
+
+export default {
+  name: "profile",
+  components: {
+    watchlist
+  }
+};
+</script>

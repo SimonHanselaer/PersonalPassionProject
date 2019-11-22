@@ -1,0 +1,7 @@
+#import "./MediaItemFragment.gql"
+
+mutation addMediaItem ($input: MediaItemInput!) {
+  addMediaItem (input: $input) {
+    ...MediaItem
+  }
+}

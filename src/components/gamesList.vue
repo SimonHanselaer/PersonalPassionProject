@@ -1,6 +1,6 @@
 <template>
   <div class="games--list listLayout">
-    <div v-for="game in games" v-bind="{game}" :key="game.id" class="mediaTile">
+    <div v-for="game in games" v-bind="{ game }" :key="game.id" class="mediaTile">
       <slot v-bind="game"></slot>
     </div>
   </div>

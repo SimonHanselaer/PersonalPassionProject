@@ -1,0 +1,6 @@
+fragment MediaItem on MediaItem {
+  id
+  mediaItemId
+  mediaTitle
+  mediaImage
+}

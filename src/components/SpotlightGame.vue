@@ -2,9 +2,13 @@
   <div class="spotlightGame">
     <h2 class="header-2">Spotlight</h2>
     <article v-if="!isLoadingGame & !isLoadingCover">
-      <h3>{{game.name}}</h3>
+      <h3>{{ game.name }}</h3>
       <img
-        v-bind:src="'https://images.igdb.com/igdb/image/upload/t_720p/' + cover[0].image_id + '.jpg'"
+        v-bind:src="
+          'https://images.igdb.com/igdb/image/upload/t_720p/' +
+            cover[0].image_id +
+            '.jpg'
+        "
         width="200"
       />
     </article>

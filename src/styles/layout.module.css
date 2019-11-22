@@ -34,9 +34,64 @@
   'upcoming';
 }
 
+/* spotlight ------------------------------------------------------------------------------------------------------------------------------ */
+
 .spotLight {
   grid-area: spotlight;
 }
+
+.spotlightLayout {
+  display: grid;
+  grid-template-columns: 20rem repeat(3, max-content) .7fr repeat(2, 2rem);
+  grid-template-rows: repeat(2, auto) .2rem auto 1fr;
+  gap: 2rem;
+  row-gap: 1rem;
+
+  grid-template-areas: 'spotlightImage spotlightTitle spotlightTitle spotlightTitle . spotlightWatchlist spotlightMoreOptions'
+  'spotlightImage spotlightGenre spotlightRuntime spotlightReleaseYear . . .'
+  'spotlightImage spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder'
+  'spotlightImage spotlightOverview spotlightOverview spotlightOverview spotlightOverview . .'
+  'spotlightImage . . . . . .';
+}
+
+.spotlightImage {
+  grid-area: spotlightImage;
+}
+
+.spotlightTitle {
+  grid-area: spotlightTitle;
+}
+
+.spotlightWatchlist {
+  grid-area: spotlightWatchlist;
+}
+
+.spotlightMoreOptions {
+  grid-area: spotlightMoreOptions;
+}
+
+.spotlightGenre {
+  grid-area: spotlightGenre;
+}
+
+.spotlightRuntime {
+  grid-area: spotlightRuntime;
+}
+
+.spotlightReleaseYear {
+  grid-area: spotlightReleaseYear;
+}
+
+.spotlightOverview {
+  grid-area: spotlightOverview;
+}
+
+.spotlightBorder {
+  grid-area: spotlightBorder;
+  border-bottom: .2rem solid #fff;
+}
+
+/* spotlight ------------------------------------------------------------------------------------------------------------------------------ */
 
 .popular {
   grid-area: popular;

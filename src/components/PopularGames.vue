@@ -1,12 +1,17 @@
 <template>
   <div class="popularGames">
     <h2 class="header-2">Popular games</h2>
-    <gamesList v-if="!isLoadingGames & !isLoadingCovers" :games="games" :key="getUpdate">
-      <template slot-scope="game" v-if="game.cover">
-        <h3 class="title">{{game.name}}</h3>
+    <gamesList v-if="!isLoadingGames" :games="games">
+      <template slot-scope="game">
+        <h3 class="title">{{ game.name }}</h3>
         <img
+          v-if="game.cover"
           class="imageMedia"
-          v-bind:src="'https://images.igdb.com/igdb/image/upload/t_720p/' + game.cover + '.jpg'"
+          v-bind:src="
+            'https://images.igdb.com/igdb/image/upload/t_720p/' +
+              game.cover +
+              '.jpg'
+          "
           height="300"
           align="middle"
         />
@@ -31,8 +36,9 @@ export default {
       getUpdate: 0
     };
   },
-  created() {
-    this.fetchGames().then(this.fetchCovers);
+  async created() {
+    await this.fetchGames();
+    await this.fetchCovers();
   },
   methods: {
     async fetchGames() {
@@ -43,13 +49,12 @@ export default {
     },
     async fetchCovers() {
       this.isLoadingCovers = true;
-      this.games.forEach(game => {
-        MediaRepository.getCover(game.id).then(cover => {
-          game.cover = cover.data[0].image_id;
-          this.getUpdate++;
-        });
-      });
+      for (let i = 0; i < this.games.length; i++) {
+        const cover = await MediaRepository.getCover(this.games[i].id);
+        this.games[i].cover = cover.data[0].image_id;
+      }
       this.isLoadingCovers = false;
+      this.games = this.games.concat();
     }
   }
 };
