@@ -1,63 +1,38 @@
 <template>
   <div class="upcoming upcomingMovies">
     <h2 class="header-2">Upcoming movies</h2>
-    <moviesList
-      v-if="!isLoadingMovies & !isLoadingConfig"
-      :movies="computedMovies"
-    >
-      <template slot-scope="movie">
-        <h3 class="title">{{ movie.title }}</h3>
-        <img
-          class="imageMedia"
-          v-bind:src="
-            config.images.base_url +
-              config.images.poster_sizes[4] +
-              movie.poster_path
-          "
-          width="200"
-        />
-      </template>
-    </moviesList>
+    <MediaList v-if="!computedLoadingStatus" :media="computedMovies">
+      <MediaTile
+        slot-scope="movie"
+        :title="movie.title"
+        :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + movie.poster_path"
+        :id="movie.id"
+      />
+    </MediaList>
   </div>
 </template>
 
 <script>
-import moviesList from "./MoviesList";
-import { RepositoryFactory } from "./../repositories/repositoryFactory";
-const MediaRepository = RepositoryFactory.get("media");
+import store from "./../store/index";
+import MediaList from "./MediaList";
+import MediaTile from "./MediaTile";
 
 export default {
   name: "upcomingmovies",
-  components: { moviesList },
-  data() {
-    return {
-      isLoadingMovies: false,
-      isLoadingConfig: false,
-      movies: [],
-      config: []
-    };
-  },
+  components: { MediaList, MediaTile },
   created() {
-    this.fetchMovies();
-    this.fetchConfig();
-  },
-  methods: {
-    async fetchMovies() {
-      this.isLoadingMovies = true;
-      const { data } = await MediaRepository.getUpcomingMovies();
-      this.isLoadingMovies = false;
-      this.movies = data.results;
-    },
-    async fetchConfig() {
-      this.isLoadingConfig = true;
-      const { data } = await MediaRepository.getConfig();
-      this.isLoadingConfig = false;
-      this.config = data;
-    }
+    this.$store.dispatch("fetchUpcomingMovies");
+    this.$store.dispatch("fetchConfig");
   },
   computed: {
     computedMovies() {
-      return this.movies.slice(0, 5);
+      return store.state.upcomingMovies;
+    },
+    computedConfig() {
+      return store.state.config;
+    },
+    computedLoadingStatus() {
+      return store.state.loadingStatus;
     }
   }
 };

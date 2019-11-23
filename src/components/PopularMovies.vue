@@ -1,78 +1,41 @@
 <template>
   <div class="popular popularMovies">
     <h2 class="header-2">Popular movies</h2>
-    <moviesList v-if="!isLoadingMovies & !isLoadingConfig" :movies="computedMovies">
-      <template slot-scope="movie">
-        <h3 class="title">{{ movie.title }}</h3>
-        <img
-          class="imageMedia"
-          v-bind:src="
-            config.images.base_url +
-              config.images.poster_sizes[4] +
-              movie.poster_path
-          "
-          width="200"
-        />
-        <p class="visually-hidden">{{movie.id}}</p>
-
-        <ApolloMutation
-          :mutation="require('../graphql/AddMediaItem.gql')"
-          :variables="{
-            input: {
-              mediaItemId: movie.id,
-              mediaTitle: movie.title,
-              mediaImage: config.images.base_url + config.images.poster_sizes[4] + movie.poster_path
-            },
-          }"
-        >
-          <template slot-scope="{ mutate }">
-            <button @click="mutate()">Add to list</button>
-          </template>
-        </ApolloMutation>
-      </template>
-    </moviesList>
+    <MediaList v-if="!computedLoadingStatus & !computedLoadingStatusConfig" :media="computedMovies">
+      <MediaTile
+        slot-scope="mediaItem"
+        :title="mediaItem.title"
+        :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + mediaItem.poster_path"
+        :id="mediaItem.id"
+      />
+    </MediaList>
   </div>
 </template>
 
 <script>
-import moviesList from "./MoviesList";
-import { RepositoryFactory } from "./../repositories/repositoryFactory";
-const MediaRepository = RepositoryFactory.get("media");
+import store from "./../store/index";
+import MediaList from "./MediaList";
+import MediaTile from "./MediaTile";
 
 export default {
   name: "popularmovies",
-  components: { moviesList },
-  data() {
-    return {
-      isLoadingMovies: false,
-      isLoadingConfig: false,
-      movies: [],
-      config: [],
-      mediaItemId: 0
-    };
-  },
+  components: { MediaList, MediaTile },
   created() {
-    this.fetchMovies();
-    this.fetchConfig();
-  },
-  methods: {
-    async fetchMovies() {
-      this.isLoadingMovies = true;
-      const { data } = await MediaRepository.getPopularMovies();
-      this.isLoadingMovies = false;
-      this.movies = data.results;
-    },
-    async fetchConfig() {
-      this.isLoadingConfig = true;
-      const { data } = await MediaRepository.getConfig();
-      this.isLoadingConfig = false;
-      this.config = data;
-    },
-    addToList() {}
+    this.$store.dispatch("fetchPopularMovies");
+    this.$store.dispatch("fetchConfig");
   },
   computed: {
     computedMovies() {
-      return this.movies.slice(0, 5);
+      return store.state.popularMovies;
+    },
+    computedConfig() {
+      return store.state.config;
+    },
+    computedLoadingStatus() {
+      return store.state.loadingStatusPopular;
+    },
+    computedLoadingStatusConfig() {
+      return store.state.loadingStatusConfig;
     }
   }
 };
