@@ -1,49 +1,46 @@
 <template>
   <div class="spotlightGame">
     <h2 class="header-2">Spotlight</h2>
-    <article v-if="!isLoadingGame & !isLoadingCover">
-      <h3>{{ game.name }}</h3>
+    <article v-if="!computedLoadingStatus" class="spotlightLayout">
+      <h3 class="spotlightTitle header-3">{{computedGame.name}}</h3>
       <img
+        class="spotlightImage"
         v-bind:src="
           'https://images.igdb.com/igdb/image/upload/t_720p/' +
-            cover[0].image_id +
+            computedGame.cover +
             '.jpg'
         "
         width="200"
       />
+      <p class="spotlightGenre details">{{computedGame.genre}}</p>
+      <p class="spotlightReleaseYear details">{{computedReleaseYear}}</p>
+      <p class="spotlightOverview">{{computedGame.summary}}</p>
+      <div class="spotlightBorder"></div>
     </article>
   </div>
 </template>
 
 <script>
-import { RepositoryFactory } from "./../repositories/repositoryFactory";
-const MediaRepository = RepositoryFactory.get("games");
+import store from "./../store/index";
 
 export default {
   name: "spotlightgame",
-  data() {
-    return {
-      isLoadingGame: false,
-      isLoadingCover: true,
-      game: [],
-      cover: []
-    };
-  },
   created() {
-    this.fetchGame().then(this.fetchCover);
+    this.$store.dispatch("fetchSpotlightGame");
   },
-  methods: {
-    async fetchGame() {
-      this.isLoadingGame = true;
-      const { data } = await MediaRepository.getSpotlightGame();
-      this.isLoadingGame = false;
-      this.game = data[data.length - 1];
+  computed: {
+    computedGame() {
+      return store.state.spotlightGame;
     },
-    async fetchCover() {
-      this.isLoadingCover = true;
-      const { data } = await MediaRepository.getCover(this.game.id);
-      this.isLoadingCover = false;
-      this.cover = data;
+    computedLoadingStatus() {
+      return store.state.loadingStatusSpotlight;
+    },
+    computedReleaseYear() {
+      const date = new Date(
+        store.state.spotlightGame.first_release_date * 1000
+      );
+      const year = date.getFullYear();
+      return year;
     }
   }
 };

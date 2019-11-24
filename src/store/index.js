@@ -23,6 +23,7 @@ export default new Vuex.Store({
     spotlightMovieDetails: [],
     spotlightSerie: [],
     spotlightSerieDetails: [],
+    spotlightGame: [],
     refactoredNumber: 0,
     config: []
   },
@@ -83,7 +84,10 @@ export default new Vuex.Store({
 
     SET_POPULAR_GAMES(state, popularGames) {
       state.popularGames = popularGames;
+    },
 
+    SET_SPOTLIGHT_GAME(state, spotlightGame) {
+      state.spotlightGame = spotlightGame;
     }
   },
   actions: {
@@ -145,6 +149,19 @@ export default new Vuex.Store({
       }
 
       context.commit('SET_LOADING_STATUS_POPULAR', false);
+    },
+    async fetchSpotlightGame(context) {
+      context.commit('SET_LOADING_STATUS_SPOTLIGHT', true);
+      let { data } = await GameRepository.getSpotlightGame();
+      context.commit('SET_SPOTLIGHT_GAME', data[data.length - 1]);
+
+      data = await GameRepository.getCover(context.state.spotlightGame.id);
+      context.state.spotlightGame.cover = data.data[0].image_id;
+
+      data = await GameRepository.getGenre(context.state.spotlightGame.genres[0]);
+      context.state.spotlightGame.genre = data.data[0].name;
+
+      context.commit('SET_LOADING_STATUS_SPOTLIGHT', false);
     },
 
   },

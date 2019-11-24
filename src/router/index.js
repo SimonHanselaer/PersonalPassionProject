@@ -1,55 +1,88 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import Router from "vue-router";
+import firebase from "firebase";
+
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
 import Home from "../views/Home.vue";
+import Shows from "../views/Shows.vue";
+import Games from "../views/Games.vue";
+import Social from "../views/Social.vue";
+import Profile from "../views/Profile.vue";
 
-Vue.use(VueRouter);
+Vue.use(Router);
 
-const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: Home
-  },
-  {
-    path: "/shows",
-    name: "Tv-shows",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Shows.vue")
-  },
-  {
-    path: "/games",
-    name: "Games",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Games.vue")
-  },
-  {
-    path: "/social",
-    name: "Social",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Social.vue")
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Profile.vue")
-  }
-];
+const router = new Router({
+  mode: 'history',
+  routes: [
+    {
+      path: '*',
+      redirect: '/login'
+    },
+    {
+      path: '/',
+      redirect: '/login'
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: Login
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: Register
+    },
+    {
+      path: "/movies",
+      name: "movies",
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/shows",
+      name: "Tv-shows",
+      component: Shows,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/games",
+      name: "Games",
+      component: Games,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/social",
+      name: "Social",
+      component: Social,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: Profile,
+      meta: {
+        requiresAuth: true
+      }
+    },
+  ]
+});
 
-const router = new VueRouter({
-  routes
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) next('login');
+  else if (!requiresAuth && currentUser) next('home');
+  else next();
 });
 
 export default router;

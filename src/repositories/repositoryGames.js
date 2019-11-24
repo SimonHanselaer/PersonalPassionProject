@@ -56,7 +56,7 @@ export default {
         "user-key": "bb1628f3841097cc6c575a5621692f75",
         "x-requested-with": "localhost"
       },
-      data: `fields name; limit ${day}; sort popularity desc; where rating_count > 100;`
+      data: `fields name, summary, first_release_date, genres; limit ${day}; sort popularity desc; where rating_count > 100;`
     };
 
     let response = await axios(config);
@@ -74,6 +74,23 @@ export default {
         "x-requested-with": "localhost"
       },
       data: `fields *; where game = ${id}; limit 1;`
+    };
+
+    let response = await axios(config);
+
+    return response;
+  },
+
+  async getGenre(id) {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/genres",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data: `fields *; where id = ${id}; limit 1;`
     };
 
     let response = await axios(config);
