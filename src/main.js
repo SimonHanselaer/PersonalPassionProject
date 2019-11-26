@@ -19,9 +19,6 @@ firebase.initializeApp({
   appId: "1:388989029865:web:790ae55dabeee17d604f78",
   measurementId: "G-NJN1KLFMZX"
 });
-// Initialize Firebase
-// firebase.initializeApp(firebaseConfig);
-// firebase.analytics();
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {

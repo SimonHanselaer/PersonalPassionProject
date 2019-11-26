@@ -7,6 +7,7 @@
         :title="movie.title"
         :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + movie.poster_path"
         :id="movie.id"
+        :mediaType="'movie'"
       />
     </MediaList>
   </div>

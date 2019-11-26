@@ -1,4 +1,4 @@
-.normal, .nav, .header-1, .header-2 {
+.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton {
   color: #fff;
   font-family: montserrat;
 }
@@ -33,4 +33,50 @@
 
 .details {
   font-size: 1.4rem;
+}
+
+.textInputField {
+  font-size: 1.2rem;
+}
+
+.textInputField::placeholder {
+  font-size: 1rem;
+}
+
+.header-4 {
+  font-size: 4.8rem;
+  font-weight: bold;
+}
+
+.loginInput {
+  font-size: 1.6rem;
+  color: #333;
+}
+
+.loginButton {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.loginRegisterButton {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.header-5 {
+  font-size: 3.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.header-6 {
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  padding-bottom: .5rem;
+}
+
+.header-7 {
+  font-weight: 600;
+  font-size: 1.6rem;
 }

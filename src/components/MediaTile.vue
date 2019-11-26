@@ -1,5 +1,5 @@
 <template>
-  <article class="mediaTile">
+  <article class="mediaTile" @click="goToDetail(id, mediaType)">
     <h3 class="title">{{title}}</h3>
     <img class="imageMedia" height="300" :src="src" />
     <p class="visually-hidden">{{id}}</p>
@@ -7,12 +7,13 @@
     <ApolloMutation
       :mutation="require('../graphql/AddMediaItem.gql')"
       :variables="{
-            input: {
-              mediaItemId: id,
-              mediaTitle: title,
-              mediaImage: src
-            },
-          }"
+              input: {
+                mediaItemId: id,
+                mediaTitle: title,
+                mediaImage: src,
+                mediaType: mediaType
+              },
+            }"
       class="wishlistIcon"
     >
       <template slot-scope="{ mutate }">
@@ -54,7 +55,15 @@
 <script>
 export default {
   name: "mediatile",
-  props: ["title", "src", "id"]
+  props: ["title", "src", "id", "mediaType"],
+  methods: {
+    goToDetail(id, mediaType) {
+      this.$router.push({
+        name: "detail",
+        params: { detailId: id, mediaType: mediaType }
+      });
+    }
+  }
 };
 </script>
 

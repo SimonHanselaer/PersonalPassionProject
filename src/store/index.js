@@ -10,11 +10,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: [],
     loadingStatus: false,
     loadingStatusConfig: false,
     loadingStatusSpotlight: false,
     loadingStatusPopular: false,
     loadingStatusUpcoming: false,
+    loadingStatusDetails: false,
     popularSeries: [],
     popularMovies: [],
     popularGames: [],
@@ -24,6 +26,10 @@ export default new Vuex.Store({
     spotlightSerie: [],
     spotlightSerieDetails: [],
     spotlightGame: [],
+    searchResults: [],
+    mediaDetails: [],
+    mediaDetailsCredits: [],
+    mediaDetailsExternalId: [],
     refactoredNumber: 0,
     config: []
   },
@@ -46,6 +52,10 @@ export default new Vuex.Store({
 
     SET_LOADING_STATUS_UPCOMING(state, status) {
       state.loadingStatusUpcoming = status;
+    },
+
+    SET_LOADING_STATUS_DETAILS(state, status) {
+      state.loadingStatusDetails = status;
     },
 
     SET_CONFIG(state, config) {
@@ -88,6 +98,22 @@ export default new Vuex.Store({
 
     SET_SPOTLIGHT_GAME(state, spotlightGame) {
       state.spotlightGame = spotlightGame;
+    },
+
+    SET_SEARCH_RESULTS(state, searchResults) {
+      state.searchResults = searchResults;
+    },
+
+    SET_DETAILS(state, mediaDetails) {
+      state.mediaDetails = mediaDetails;
+    },
+
+    SET_DETAILS_CREDITS(state, mediaDetailsCredits) {
+      state.mediaDetailsCredits = mediaDetailsCredits;
+    },
+
+    SET_DETAILS_EXTERNAL_ID(state, mediaDetailsExternalId) {
+      state.mediaDetailsExternalId = mediaDetailsExternalId;
     }
   },
   actions: {
@@ -164,6 +190,45 @@ export default new Vuex.Store({
       context.commit('SET_LOADING_STATUS_SPOTLIGHT', false);
     },
 
+    async fetchSearchQuery(context, query) {
+      let { data } = await MediaRepository.getSearchResults(query);
+      context.commit('SET_SEARCH_RESULTS', data.results.splice(0, 5));
+    },
+
+    async fetchDetails(context, props) {
+      let { data } = [];
+      switch (props.type) {
+        case 'movie':
+          context.commit('SET_LOADING_STATUS_DETAILS', true);
+
+          data = await MediaRepository.getMovieDetails(props.id);
+          context.commit('SET_DETAILS', data.data);
+
+          data = await MediaRepository.getMovieCredits(props.id);
+          context.commit('SET_DETAILS_CREDITS', data.data);
+
+          context.commit('SET_LOADING_STATUS_DETAILS', false);
+          break;
+        case 'tv':
+          context.commit('SET_LOADING_STATUS_DETAILS', true);
+
+          data = await MediaRepository.getSerieDetails(props.id);
+          context.commit('SET_DETAILS', data.data);
+
+          data = await MediaRepository.getSerieCredits(props.id);
+          context.commit('SET_DETAILS_CREDITS', data.data);
+
+          data = await MediaRepository.getSerieExternalId(props.id);
+          context.commit('SET_DETAILS_EXTERNAL_ID', data.data);
+
+          context.commit('SET_LOADING_STATUS_DETAILS', false);
+
+          break;
+
+        default:
+          break;
+      }
+    }
   },
   modules: {}
 });

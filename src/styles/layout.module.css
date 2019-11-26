@@ -1,7 +1,7 @@
 .layout {
     display: grid;
     grid-template-columns: 22rem 1fr;
-    grid-template-rows: 7rem auto;
+    grid-template-rows: 6rem auto;
     gap: 3rem;
 
     grid-template-areas: 'navBar navBar'
@@ -12,11 +12,13 @@
   grid-area: sideBar;
 
   position: fixed;
-  top: 5rem;
+  top: 6rem;
 }
 
 .navBar {
   grid-area: navBar;
+
+  position: fixed;
 }
 
 .contentContainer {
@@ -52,6 +54,7 @@
   'spotlightImage spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder'
   'spotlightImage spotlightOverview spotlightOverview spotlightOverview spotlightOverview . .'
   'spotlightImage . . . . . .';
+
 }
 
 .spotlightImage {
@@ -84,6 +87,11 @@
 
 .spotlightOverview {
   grid-area: spotlightOverview;
+  text-overflow: ellipsis;
+  display: block;
+  height: 21rem;
+  width: 65rem;
+  overflow: hidden;
 }
 
 .spotlightBorder {
@@ -153,3 +161,269 @@
     height: auto;
   }
 }
+
+/* login ---------------------------------------------------------------------------------------------------------------------------------- */
+.login {
+  display: grid;
+  grid-template-columns: 12.6rem 2.2rem 4.3rem 4rem 4.3rem 2.2rem 12.6rem ;
+  grid-template-rows: auto 1rem auto 3rem 4.2rem 2rem 4.2rem 2rem auto 3rem 4.2rem 4rem auto 4rem 4.5rem 5rem;
+  grid-template-areas: 
+  'loginTitle loginTitle loginTitle loginTitle loginTitle loginTitle loginTitle'
+  '. . . . . . .'
+  'loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle'
+  '. . . . . . .'
+  'loginEmail loginEmail loginEmail loginEmail loginEmail loginEmail loginEmail'
+  '. . . . . . .'
+  'loginPassword loginPassword loginPassword loginPassword loginPassword loginPassword loginPassword'
+  '. . . . . . .'
+  'loginRemember loginRemember loginRemember . loginForgot loginForgot loginForgot'
+  '. . . . . . .'
+  'loginButton loginButton loginButton loginButton loginButton loginButton loginButton'
+  '. . . . . . .'
+  'loginBorder1 loginBorder1 loginBorder1 loginOr loginBorder2 loginBorder2 loginBorder2'
+  '. . . . . . .'
+  'loginGoogle . loginTwitter loginTwitter loginTwitter . loginFacebook'
+  '. . . . . . .'
+  'loginRegister loginRegister loginRegister loginRegister loginRegister loginRegister loginRegister';
+
+  text-align: center;
+  margin-left: 75rem;
+  margin-top: 8rem;
+
+  outline: none;
+  box-shadow: none;
+}
+
+.loginTitle {
+  grid-area: loginTitle;
+  text-align: left;
+  height: 4rem;
+}
+
+.loginSubtitle {
+  grid-area: loginSubtitle;
+  text-align: left;
+}
+
+.loginEmail {
+  grid-area: loginEmail;
+}
+
+.loginPassword {
+  grid-area: loginPassword;
+}
+
+.loginRemember {
+  grid-area: loginRemember;
+  text-align: left;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.loginForgot {
+  grid-area: loginForgot;
+  text-align: right;
+  color: #3764FC;
+}
+
+.loginButton {
+  grid-area: loginButton;
+  border: none;
+  background-color: #3764FC;
+
+  border-radius: .2rem;
+  color: #fff;
+}
+
+.loginBorder1 {
+  grid-area: loginBorder1;
+}
+
+.loginOr {
+  grid-area: loginOr;
+}
+
+.loginBorder2 {
+  grid-area: loginBorder2;
+}
+
+.loginGoogle {
+  grid-area: loginGoogle;
+}
+
+.loginTwitter {
+  grid-area: loginTwitter;
+}
+
+.loginFacebook {
+  grid-area: loginFacebook;
+}
+
+.loginRegister {
+  grid-area: loginRegister;
+}
+
+.loginRegisterButton {
+  color: #3764FC
+}
+
+.loginEmail, .loginPassword {
+  border: solid .13rem #3764FC;
+  border-radius: .3rem;
+  background-color: #EFEFEF;
+  padding-left: 1rem;
+}
+
+.loginGoogle, .loginTwitter, .loginFacebook {
+  background-color: #fff;
+  border: none;
+  
+  -webkit-box-shadow: 2px 2px 14px 0px rgba(0,0,0,0.5);
+-moz-box-shadow: 2px 2px 14px 0px rgba(0,0,0,0.5);
+box-shadow: 2px 2px 14px 0px rgba(0,0,0,0.5);
+
+border-radius: .2rem;
+}
+
+.loginButton, .loginGoogle, .loginTwitter, .loginFacebook, .loginEmail, .loginPassword {
+  outline: none;
+  box-shadow: none;
+}
+
+.loginButton::focus, .loginGoogle::focus, .loginTwitter::focus, .loginFacebook::focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.loginBorder1:after, .loginBorder2:after {
+  content: '';
+  display: block;
+  margin-top: 1.2rem;
+  border-bottom: solid .1rem #fff;
+}
+
+/* Detail --------------------------------------------------------------------------------------------------------------------------------- */
+.detail {
+  display: grid;
+  grid-template-columns: 27rem repeat(3, max-content) 1fr 3rem repeat(3, 5rem);
+  grid-template-rows: repeat(2, auto) .2rem auto auto 1fr 2.5rem 25.5rem;
+  grid-template-areas: 
+  'detailImage detailTitle detailTitle detailTitle detailTitle detailTitle detailTitle . detailRating'
+  'detailImage detailGenre detailRuntime detailReleaseYear . . . . .'
+  'detailImage detailBorder detailBorder detailBorder detailBorder detailBorder detailBorder detailBorder detailBorder'
+  'detailImage detailOverview detailOverview detailOverview detailOverview . detailDetails detailDetails detailDetails'
+  'detailImage detailImdb detailImdb detailImdb detailImdb . detailDetails detailDetails detailDetails'
+  'detailImage . . . . . detailDetails detailDetails detailDetails'
+  '. . . . . . . . .'
+  'detailCast detailCast detailCast detailCast detailCast detailCast detailCast detailCast .';
+
+  gap: 1.5rem;
+  width: 110rem;
+  padding-top: 1rem;
+
+}
+
+.detailTitle {
+  padding-top: .8rem;
+  grid-area: detailTitle;
+}
+
+.detailImage {
+  grid-area: detailImage;
+}
+
+.detailRating {
+  grid-area: detailRating;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.detailGenre {
+  grid-area: detailGenre;
+}
+
+.detailRuntime {
+  grid-area: detailRuntime;
+}
+
+.detailReleaseYear {
+  grid-area: detailReleaseYear;
+}
+
+.detailBorder {
+  grid-area: detailBorder;
+  /* border-bottom: .2rem solid #fff; */
+}
+
+.detailBorder:after {
+content: '';
+display: block;
+margin-top: -1rem;
+border-bottom: .2rem solid #fff;
+}
+
+.detailOverview {
+  grid-area: detailOverview;
+}
+
+.detailDetails {
+  grid-area: detailDetails;
+}
+
+.detailDetails div {
+  padding-bottom: 1rem;
+}
+
+.detailImdb {
+  grid-area: detailImdb;
+}
+
+.detailCast {
+  grid-area: detailCast;
+}
+
+.castList {
+  display: grid;
+  grid-template-columns: repeat(5, 15rem);
+  gap: 1rem;
+}
+
+.castTile {
+  display: grid;
+  grid-template-columns: 1rem 13rem 1rem;
+  grid-template-rows: 1rem 15.5rem 5.5rem .5rem;
+
+  grid-template-areas: '. . .'
+  '. . .'
+  '. castName .'
+  '. . .';
+
+  overflow: hidden;
+}
+
+.castTile::before {
+  content: '';
+  background-color: #00000050;
+  grid-area: 1 / 1 / -1 / -1;
+}
+
+.castName {
+  grid-area: castName;
+  display: flex;
+  align-items: flex-end;
+}
+
+.castImage {
+    font-size: 0;
+    grid-area: 1 / 1 / -1 / -1;
+    z-index: -1;
+  
+    & img {
+      width: 100%;
+      height: auto;
+    }
+}
+

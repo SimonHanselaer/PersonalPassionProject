@@ -9,6 +9,7 @@ import Shows from "../views/Shows.vue";
 import Games from "../views/Games.vue";
 import Social from "../views/Social.vue";
 import Profile from "../views/Profile.vue";
+import Detail from "../views/Detail.vue";
 
 Vue.use(Router);
 
@@ -34,7 +35,7 @@ const router = new Router({
       component: Register
     },
     {
-      path: "/movies",
+      path: "../movies",
       name: "movies",
       component: Home,
       meta: {
@@ -43,7 +44,7 @@ const router = new Router({
     },
     {
       path: "/shows",
-      name: "Tv-shows",
+      name: "shows",
       component: Shows,
       meta: {
         requiresAuth: true
@@ -51,7 +52,7 @@ const router = new Router({
     },
     {
       path: "/games",
-      name: "Games",
+      name: "games",
       component: Games,
       meta: {
         requiresAuth: true
@@ -59,7 +60,7 @@ const router = new Router({
     },
     {
       path: "/social",
-      name: "Social",
+      name: "social",
       component: Social,
       meta: {
         requiresAuth: true
@@ -67,12 +68,20 @@ const router = new Router({
     },
     {
       path: "/profile",
-      name: "Profile",
+      name: "profile",
       component: Profile,
       meta: {
         requiresAuth: true
       }
     },
+    {
+      path: "/detail/:mediaType/:detailId",
+      name: "detail",
+      component: Detail,
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 });
 

@@ -1,7 +1,66 @@
+/* navbar---------------------------------------------------------------- */
+.navBar {
+  width: 100vw;
+  height: 6rem;
+  background-color: #121620;
+
+  display: grid;
+  grid-template-columns: 1rem auto 1fr auto auto 3rem;
+  grid-template-areas: '. appName . searchBar profilePic .';
+  gap: 3rem;
+
+  align-items: center;
+}
+
+.appName {
+  grid-area: appName;
+}
+
+.profilePicture {
+  grid-area: profilePic;
+}
+
+/* searchBar------------------------------------- */
+.searchBarContainer {
+  grid-area: searchBar;
+
+  width: 24rem;
+  height: 3.5rem;
+
+}
+
+.searchBar {
+  background-color: #2B394B;
+  border: solid .1rem #3764FC;
+  border-radius: .8rem;
+  width: 24rem;
+  height: 3.5rem;
+  color: #fff;
+  padding-left: 2.6rem;
+  padding-top: .2rem;
+  padding-bottom: 0;
+  
+}
+
+.searchBar:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.searchBarIcon {
+  position: relative;
+  left: .5rem;
+  top: -2.7rem;
+}
+
+
+/* sidebar---------------------------------------------------------------- */
+
 .sideBar {
   width: 22rem;
   height: 100vh;
-  background-color: #10101080;
+  /* background-color: #10101080; */
+  background-color: #162B43;
 }
 
 .sideBarItems {

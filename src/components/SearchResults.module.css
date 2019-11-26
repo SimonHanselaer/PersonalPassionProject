@@ -1,0 +1,20 @@
+.searchItem {
+    background-color: #121620;
+    display: grid;
+    grid-template-columns: 4rem 20rem;
+    grid-template-rows: 5rem;
+    grid-template-areas: 'searchItemImage searchItemTitle';
+
+    height: 5rem;
+
+    position: relative;
+    top: -2rem;
+}
+
+.searchItemImage {
+    grid-area: searchItemImage;
+}
+
+.searchItemTitle {
+    grid-area: searchItemTitle;
+}

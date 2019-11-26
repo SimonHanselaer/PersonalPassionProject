@@ -10,6 +10,10 @@ const popularMovies = "/movie/popular";
 const popularSeries = "/tv/popular";
 const upcomingMovies = "/movie/upcoming";
 const upcomingSeries = "/tv/on_the_air";
+const multiSearch = "/search/multi";
+const credits = "/credits";
+const externalId = "/external_ids";
+const initQuery = "&query="
 const region = "&region=US";
 const page = "&page=";
 
@@ -44,6 +48,18 @@ export default {
     return axios.get(`${baseDomain}${serieDetails}${id}${APIKey}`);
   },
 
+  getMovieCredits(id) {
+    return axios.get(`${baseDomain}${movieDetails}${id}${credits}${APIKey}`);
+  },
+
+  getSerieCredits(id) {
+    return axios.get(`${baseDomain}${serieDetails}${id}${credits}${APIKey}`);
+  },
+
+  getSerieExternalId(id) {
+    return axios.get(`${baseDomain}${serieDetails}${id}${externalId}${APIKey}`);
+  },
+
   getPopularMovies() {
     return axios.get(`${baseDomain}${popularMovies}${APIKey}`);
   },
@@ -66,5 +82,9 @@ export default {
 
   getSpotlightSerie() {
     return axios.get(`${baseDomain}${popularSeries}${APIKey}${page}${sum}`);
+  },
+
+  getSearchResults(query) {
+    return axios.get(`${baseDomain}${multiSearch}${APIKey}${initQuery}${query}`);
   }
 };
