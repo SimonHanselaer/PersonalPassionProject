@@ -81,6 +81,14 @@
         </div>
       </section>
       <div class="detailBorder"></div>
+      <img
+        class="detailBackdrop"
+        :src="computedConfig.images.base_url +
+            computedConfig.images.backdrop_sizes[3] +
+            computedDetails.backdrop_path"
+        width="1280"
+        alt
+      />
     </article>
     <article v-else-if="this.$route.params.mediaType == 'tv'" class="detail">
       <h3 class="detailTitle header-5">{{computedDetails.name}}</h3>
@@ -142,6 +150,14 @@
         </div>
       </section>
       <div class="detailBorder"></div>
+      <img
+        class="detailBackdrop"
+        :src="computedConfig.images.base_url +
+            computedConfig.images.backdrop_sizes[3] +
+            computedDetails.backdrop_path"
+        width="1280"
+        alt
+      />
     </article>
 
     <article v-else-if="this.$route.params.mediaType == 'game'">

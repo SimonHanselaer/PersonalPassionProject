@@ -1,6 +1,6 @@
 <template>
   <article class="mediaTile" @click="goToDetail(id, mediaType)">
-    <h3 class="title">{{title}}</h3>
+    <h3 class="title" @click="addMediaItem">{{title}}</h3>
     <img class="imageMedia" height="300" :src="src" />
     <p class="visually-hidden">{{id}}</p>
 
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import { ADD_MEDIAITEM_MUTATION } from "./../constants/graphql";
+
 export default {
   name: "mediatile",
   props: ["title", "src", "id", "mediaType"],
@@ -62,6 +64,23 @@ export default {
         name: "detail",
         params: { detailId: id, mediaType: mediaType }
       });
+    },
+    addMediaItem() {
+      let self = this;
+      this.$apollo
+        .mutate({
+          mutation: ADD_MEDIAITEM_MUTATION,
+          variables: {
+            input: {
+              user_id: self.$store.state.userId,
+              id: self.id,
+              mediaTitle: self.title,
+              mediaImage: self.src,
+              mediaType: self.mediaType
+            }
+          }
+        })
+        .then(console.log("media toegevoegd aan watchlist"));
     }
   }
 };

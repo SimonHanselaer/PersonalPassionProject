@@ -2,32 +2,60 @@
 scalar JSON
 scalar Upload
 
-type MediaItem {
+type List {
   id: ID!
-  mediaItemId: Int!
+  name: String!
+  media: [MediaItem]
+}
+
+type User {
+  id: ID!
+  lists: [List]
+}
+
+type MediaItem {
+  user_id: ID!
+  id: ID!
   mediaTitle: String!
   mediaImage: String!
+  mediaType: String!
 }
 
 input MediaItemInput {
-  mediaItemId: Int!
+  user_id: ID!
+  id: ID!
   mediaTitle: String!
   mediaImage: String!
+  mediaType: String!
+}
+
+input UserInput {
+  id: ID!
+}
+
+input ListInput {
+  id: ID!
+  listName: String!
 }
 
 type Query {
-  "Test query with a parameter"
-  hello(name: String): String!
+  hello(name: String): String
   media: [MediaItem]
+  users: [User]
+  userLists(id: ID): [User]
+  lists: [MediaItem]
 
 }
 
 type Mutation {
   addMediaItem(input: MediaItemInput!): MediaItem!
-
+  addUser(input: UserInput!): User!
+  addList(input: ListInput!): List!
 }
 
 type Subscription {
   mediaItemAdded: MediaItem!
+  userAdded: User!
+  listAdded: List!
 
 }

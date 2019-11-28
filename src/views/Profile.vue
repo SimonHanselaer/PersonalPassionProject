@@ -1,17 +1,17 @@
 <template>
   <div class="profile contentContainer">
-    <watchlist />
+    <ProfileLists />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import watchlist from "../components/watchlist.vue";
+import ProfileLists from "../components/ProfileLists.vue";
 
 export default {
   name: "profile",
   components: {
-    watchlist
+    ProfileLists
   }
 };
 </script>

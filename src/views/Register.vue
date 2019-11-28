@@ -81,7 +81,7 @@
         </g>
       </svg>
     </button>
-    <button class="loginFacebook">
+    <button class="loginFacebook" @click="socialLoginFacebook">
       <svg
         width="30px"
         height="30px"
@@ -125,6 +125,7 @@
 
 <script>
 import firebase from "firebase";
+import { ADD_USER_MUTATION } from "./../constants/graphql";
 
 export default {
   name: "register",
@@ -152,56 +153,48 @@ export default {
     socialLoginGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
 
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(result => {
-          this.$router.push({ name: "movies" });
-          this.$store.state.user = result;
-        })
-        .catch(err => {
-          alert("Oops! Something went wrong!" + err.message);
-        });
+      this.handleSocialLogin(provider);
     },
     socialLoginTwitter() {
       const provider = new firebase.auth.TwitterAuthProvider();
 
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(result => {
-          const token = result.credential.accessToken;
-          const secret = result.credential.secret;
-
-          const user = result.user;
-
-          this.$router.push({ name: "movies" });
-          this.$store.state.user = user;
-
-          console.log(token, secret);
-        })
-        .catch(err => {
-          alert("Oops! Something went wrong!" + err.message);
-        });
+      this.handleSocialLogin(provider);
     },
     socialLoginFacebook() {
       const provider = new firebase.auth.FacebookAuthProvider();
 
+      this.handleSocialLogin(provider);
+    },
+    handleSocialLogin(provider) {
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          // const token = result.credential.accessToken;
           const user = result.user;
 
           this.$router.push({ name: "movies" });
           this.$store.state.user = user;
+          this.$store.state.userId = user.uid;
+
+          this.addUser(user.uid);
         })
         .catch(err => {
           const errorMessage = err.message;
 
           alert("Oops! Something went wrong!" + errorMessage);
         });
+    },
+    addUser(userId) {
+      this.$apollo
+        .mutate({
+          mutation: ADD_USER_MUTATION,
+          variables: {
+            input: {
+              id: userId
+            }
+          }
+        })
+        .then(console.log("user toegevoegd"));
     }
   }
 };

@@ -184,7 +184,7 @@ export default {
 
           const user = result.user;
 
-          this.$router.replace("movies");
+          this.$router.push({ name: "movies" });
           this.$store.state.user = user;
 
           console.log(token, secret);
