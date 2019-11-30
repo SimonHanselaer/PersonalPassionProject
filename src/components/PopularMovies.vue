@@ -8,6 +8,8 @@
         :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + mediaItem.poster_path"
         :id="mediaItem.id"
         :mediaType="'movie'"
+        :duration="0"
+        :releaseDate="mediaItem.release_date"
       />
     </MediaList>
   </div>

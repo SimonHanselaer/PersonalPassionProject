@@ -8,6 +8,8 @@
         :src="'https://images.igdb.com/igdb/image/upload/t_720p/' + mediaItem.cover + '.jpg'"
         :id="mediaItem.id"
         :mediaType="'game'"
+        :duration="0"
+        :releaseDate="mediaItem.first_release_date"
       />
     </MediaList>
   </div>

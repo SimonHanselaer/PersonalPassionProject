@@ -10,6 +10,7 @@ import Games from "../views/Games.vue";
 import Social from "../views/Social.vue";
 import Profile from "../views/Profile.vue";
 import Detail from "../views/Detail.vue";
+import ListDetail from "../views/ListDetail.vue";
 
 Vue.use(Router);
 
@@ -78,6 +79,14 @@ const router = new Router({
       path: "/detail/:mediaType/:detailId",
       name: "detail",
       component: Detail,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/listDetail/:detailId",
+      name: "listDetail",
+      component: ListDetail,
       meta: {
         requiresAuth: true
       }

@@ -5,6 +5,12 @@ import store from "./store";
 import { createProvider } from "./vue-apollo";
 import firebase from "firebase";
 
+import { firestorePlugin } from 'vuefire';
+// import firebase from 'firebase/app';
+import 'firebase/firestore';
+
+
+
 Vue.config.productionTip = false;
 
 let app = '';
@@ -30,4 +36,8 @@ firebase.auth().onAuthStateChanged(() => {
     }).$mount("#app");
   }
 })
+
+Vue.use(firestorePlugin)
+
+export const db = firebase.firestore()
 

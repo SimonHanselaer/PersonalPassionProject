@@ -6,7 +6,7 @@
       <p class="detailRuntime">{{computedDetails.runtime}}</p>
       <p class="detailReleaseYear">{{computedDetails.release_date}}</p>
       <section class="detailOverview">
-        <h4 class="header-6">Desription</h4>
+        <h4 class="header-6">Description</h4>
         <p>{{computedDetails.overview}}</p>
       </section>
       <div class="detailRating">

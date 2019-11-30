@@ -10,8 +10,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: [],
-    userId: '',
+    user: sessionStorage.user,
+    userId: sessionStorage.uid,
     loadingStatus: false,
     loadingStatusConfig: false,
     loadingStatusSpotlight: false,

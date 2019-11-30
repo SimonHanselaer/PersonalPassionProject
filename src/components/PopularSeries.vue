@@ -8,6 +8,8 @@
         :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + serie.poster_path"
         :id="serie.id"
         :mediaType="'tv'"
+        :duration="0"
+        :releaseDate="serie.first_air_date"
       />
     </MediaList>
   </div>

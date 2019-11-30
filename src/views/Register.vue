@@ -174,7 +174,9 @@ export default {
 
           this.$router.push({ name: "movies" });
           this.$store.state.user = user;
-          this.$store.state.userId = user.uid;
+          sessionStorage.setItem("user", user);
+          sessionStorage.setItem("uid", user.uid);
+          console.log(sessionStorage);
 
           this.addUser(user.uid);
         })
