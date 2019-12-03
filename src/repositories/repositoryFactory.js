@@ -1,9 +1,11 @@
 import RepositoryGames from "./repositoryGames";
 import RepositoryMedia from "./repositoryMedia";
+import RepositoryFirestore from "./repositoryFirestore";
 
 const repositories = {
   media: RepositoryMedia,
-  games: RepositoryGames
+  games: RepositoryGames,
+  firestore: RepositoryFirestore
   // other repositories ...
 };
 

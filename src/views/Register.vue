@@ -125,7 +125,7 @@
 
 <script>
 import firebase from "firebase";
-import { ADD_USER_MUTATION } from "./../constants/graphql";
+// import { ADD_USER_MUTATION } from "./../constants/graphql";
 
 export default {
   name: "register",
@@ -142,8 +142,10 @@ export default {
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-            this.$router.replace("movies");
-            console.log(user);
+            this.$router.push({ name: "movies" });
+            this.$store.dispatch("addUser", user.user.uid);
+            localStorage.setItem("uid", user.user.uid);
+            localStorage.setItem("uid", user.user.photoURL);
           },
           err => {
             alert("Oops!" + err.message);
@@ -174,29 +176,16 @@ export default {
 
           this.$router.push({ name: "movies" });
           this.$store.state.user = user;
-          sessionStorage.setItem("user", user);
-          sessionStorage.setItem("uid", user.uid);
-          console.log(sessionStorage);
+          localStorage.setItem("user", user);
+          localStorage.setItem("uid", user.uid);
 
-          this.addUser(user.uid);
+          this.$store.dispatch("addUser", user.uid);
         })
         .catch(err => {
           const errorMessage = err.message;
 
           alert("Oops! Something went wrong!" + errorMessage);
         });
-    },
-    addUser(userId) {
-      this.$apollo
-        .mutate({
-          mutation: ADD_USER_MUTATION,
-          variables: {
-            input: {
-              id: userId
-            }
-          }
-        })
-        .then(console.log("user toegevoegd"));
     }
   }
 };

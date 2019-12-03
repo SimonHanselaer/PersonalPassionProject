@@ -151,7 +151,8 @@ export default {
         .then(
           user => {
             this.$router.push({ name: "movies" });
-            this.$store.state.user = user;
+            localStorage.setItem("uid", user.user.uid);
+            localStorage.setItem("uid", user.user.photoURL);
           },
           err => {
             alert("Oops! something went wrong!" + err.message);
@@ -161,56 +162,35 @@ export default {
     socialLoginGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
 
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(result => {
-          this.$router.push({ name: "movies" });
-          this.$store.state.user = result;
-        })
-        .catch(err => {
-          alert("Oops! Something went wrong!" + err.message);
-        });
+      this.handleSocialLogin(provider);
     },
     socialLoginTwitter() {
       const provider = new firebase.auth.TwitterAuthProvider();
 
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(result => {
-          const token = result.credential.accessToken;
-          const secret = result.credential.secret;
-
-          const user = result.user;
-
-          this.$router.push({ name: "movies" });
-          this.$store.state.user = user;
-
-          console.log(token, secret);
-        })
-        .catch(err => {
-          alert("Oops! Something went wrong!" + err.message);
-        });
+      this.handleSocialLogin(provider);
     },
     socialLoginFacebook() {
       const provider = new firebase.auth.FacebookAuthProvider();
 
+      this.handleSocialLogin(provider);
+    },
+    handleSocialLogin(provider) {
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          // const token = result.credential.accessToken;
           const user = result.user;
 
           this.$router.push({ name: "movies" });
           this.$store.state.user = user;
+          localStorage.setItem("user", user);
+          localStorage.setItem("uid", user.uid);
+          localStorage.setItem("profilePicture", user.photoURL);
+
+          this.$store.dispatch("addUser", user.uid);
         })
         .catch(err => {
           const errorMessage = err.message;
-          // const errorCode = error.code;
-          // const email = error.email;
-          // const credential = error.credential;
 
           alert("Oops! Something went wrong!" + errorMessage);
         });

@@ -11,6 +11,7 @@ import Social from "../views/Social.vue";
 import Profile from "../views/Profile.vue";
 import Detail from "../views/Detail.vue";
 import ListDetail from "../views/ListDetail.vue";
+import Navigation from "../components/Navigation.vue";
 
 Vue.use(Router);
 
@@ -19,26 +20,26 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/login'
+      redirect: { name: 'movies' }
     },
     {
       path: '/',
-      redirect: '/login'
+      redirect: { name: 'movies' }
     },
     {
       path: "/login",
       name: "login",
-      component: Login
+      components: { content: Login }
     },
     {
       path: "/register",
       name: "register",
-      component: Register
+      components: { content: Register }
     },
     {
       path: "../movies",
       name: "movies",
-      component: Home,
+      components: { content: Home, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -46,7 +47,7 @@ const router = new Router({
     {
       path: "/shows",
       name: "shows",
-      component: Shows,
+      components: { content: Shows, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -54,7 +55,7 @@ const router = new Router({
     {
       path: "/games",
       name: "games",
-      component: Games,
+      components: { content: Games, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -62,7 +63,7 @@ const router = new Router({
     {
       path: "/social",
       name: "social",
-      component: Social,
+      components: { content: Social, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -70,7 +71,7 @@ const router = new Router({
     {
       path: "/profile",
       name: "profile",
-      component: Profile,
+      components: { content: Profile, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -78,7 +79,7 @@ const router = new Router({
     {
       path: "/detail/:mediaType/:detailId",
       name: "detail",
-      component: Detail,
+      components: { content: Detail, navigation: Navigation },
       meta: {
         requiresAuth: true
       }
@@ -86,7 +87,7 @@ const router = new Router({
     {
       path: "/listDetail/:detailId",
       name: "listDetail",
-      component: ListDetail,
+      components: { content: ListDetail, navigation: Navigation },
       meta: {
         requiresAuth: true
       }

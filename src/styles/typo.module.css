@@ -1,9 +1,9 @@
-.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton {
+.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton {
   color: #fff;
   font-family: montserrat;
 }
 
-.normal {
+.normal, .logoutButton {
   font-size: 1.6rem;
   font-weight: 300;
   line-height: 2.3rem;
@@ -76,7 +76,11 @@
   padding-bottom: .5rem;
 }
 
-.header-7 {
+.header-7, .backButton {
   font-weight: 600;
   font-size: 1.6rem;
+}
+
+.backButton {
+  font-size: 1.5rem;
 }

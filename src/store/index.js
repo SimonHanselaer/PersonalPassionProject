@@ -4,14 +4,17 @@ import Vuex from "vuex";
 import { RepositoryFactory } from "./../repositories/repositoryFactory";
 const MediaRepository = RepositoryFactory.get("media");
 const GameRepository = RepositoryFactory.get("games");
+const FirestoreRepository = RepositoryFactory.get("firestore");
 
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: sessionStorage.user,
-    userId: sessionStorage.uid,
+    userId: localStorage.uid,
+    userLists: [],
+    listName: "",
+    listItems: [],
     loadingStatus: false,
     loadingStatusConfig: false,
     loadingStatusSpotlight: false,
@@ -115,6 +118,20 @@ export default new Vuex.Store({
 
     SET_DETAILS_EXTERNAL_ID(state, mediaDetailsExternalId) {
       state.mediaDetailsExternalId = mediaDetailsExternalId;
+    },
+
+    ON_LOGIN(state, user) {
+      state.user = user;
+      localStorage.setItem("uid", user.uid);
+    },
+    SET_USER_LISTS(state, userlists) {
+      state.userLists = userlists;
+    },
+    SET_LIST_NAME(state, name) {
+      state.listName = name;
+    },
+    SET_LIST_ITEMS(state, items) {
+      state.listItems = items;
     }
   },
   actions: {
@@ -226,10 +243,54 @@ export default new Vuex.Store({
 
           break;
 
+        case 'game':
+          context.commit('SET_LOADING_STATUS_DETAILS', true);
+
+          data = await GameRepository.getDetails(props.id);
+          context.commit('SET_DETAILS', data.data[0]);
+
+          data = await GameRepository.getCover(context.state.mediaDetails.id);
+          context.state.mediaDetails.cover = data.data[0].image_id;
+
+          data = await GameRepository.getGenre(context.state.mediaDetails.genres[0]);
+          context.state.mediaDetails.genre = data.data[0].name;
+
+          data = await GameRepository.getScreenshot(context.state.mediaDetails.id);
+          context.state.mediaDetails.screenshot = data.data[0].image_id
+
+          context.commit('SET_LOADING_STATUS_DETAILS', false);
+
+          break;
+
         default:
           break;
       }
+    },
+    async addUser(context, props) {
+      console.log(context);
+      FirestoreRepository.addUser(props);
+    },
+    async addUserList(context, props) {
+      console.log(context);
+      FirestoreRepository.addUserList(props);
+    },
+    async addWatchlistItem(context, props) {
+      console.log(context);
+      FirestoreRepository.addWatchlistItem(props);
+    },
+    async getLists(context) {
+      let data = await FirestoreRepository.getLists();
+      context.commit('SET_USER_LISTS', data);
+    },
+    async getListName(context, props) {
+      let data = await FirestoreRepository.getListName(props);
+      context.commit('SET_LIST_NAME', data);
+    },
+    async getListItems(context, props) {
+      let data = await FirestoreRepository.getListItems(props);
+      context.commit('SET_LIST_ITEMS', data);
     }
+
   },
   modules: {}
 });

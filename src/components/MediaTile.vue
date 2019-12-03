@@ -38,9 +38,6 @@
 </template>
 
 <script>
-import { db } from "./../main";
-import firebase from "firebase";
-
 export default {
   name: "mediatile",
   props: ["title", "src", "id", "mediaType", "duration", "releaseDate"],
@@ -59,30 +56,15 @@ export default {
     addMediaItem() {
       let self = this;
 
-      let addToWishlist = db
-        .collection("lists")
-        .doc(sessionStorage.uid)
-        .collection("media")
-        .doc(self.id.toString());
-
-      addToWishlist.get().then(docSnapshot => {
-        if (docSnapshot.exists) {
-          alert("media item is already on wishlist");
-        } else {
-          addToWishlist.set({
-            name: self.title,
-            image: self.src,
-            type: self.mediaType,
-            duration: self.duration,
-            releaseDate: self.releaseDate,
-            addedOn: firebase.firestore.FieldValue.serverTimestamp()
-          });
-          let updateCount = db.collection("lists").doc(sessionStorage.uid);
-          updateCount.update({
-            count: firebase.firestore.FieldValue.increment(1)
-          });
-        }
-      });
+      let data = {
+        id: self.id,
+        title: self.title,
+        src: self.src,
+        type: self.mediaType,
+        duration: self.duration,
+        releaseDate: self.releaseDate
+      };
+      this.$store.dispatch("addWatchlistItem", data);
     }
   }
 };

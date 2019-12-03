@@ -1,5 +1,9 @@
 <template>
-  <article class="searchItem" v-if="data.poster_path || data.profile_path">
+  <article
+    class="searchItem"
+    v-if="data.poster_path || data.profile_path"
+    @click="goToDetail(data.id, data.media_type)"
+  >
     <h3 v-if="data.media_type == 'movie'" class="searchItemTitle">{{data.title}}</h3>
     <h3 class="searchItemTitle" v-else>{{data.name}}</h3>
     <img
@@ -25,6 +29,14 @@ export default {
   props: ["data"],
   created() {
     // this.$store.dispatch("fetchConfig");
+  },
+  methods: {
+    goToDetail(id, mediaType) {
+      this.$router.push({
+        name: "detail",
+        params: { detailId: id, mediaType: mediaType }
+      });
+    }
   },
   computed: {
     computedConfig() {

@@ -18,6 +18,7 @@
 
 .profilePicture {
   grid-area: profilePic;
+  border-radius: 10rem;
 }
 
 /* searchBar------------------------------------- */
@@ -69,10 +70,41 @@
   justify-content: space-around;
 
   padding-left: 3.5rem;
-  padding-top: 10rem;
+  padding-top: 5rem;
 }
 
 .sideBarItems * {
   padding-bottom: 2.1rem;
+}
+
+.logoutButton {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 12rem;
+  align-items: center;
+  
+  position: fixed;
+  bottom: 2rem;
+}
+
+.logoutButton svg {
+  padding: 0;
+}
+
+.backButton {
+  background: none;
+  border: none;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 8rem;
+
+  outline: none;
 }
   

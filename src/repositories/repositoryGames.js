@@ -96,5 +96,39 @@ export default {
     let response = await axios(config);
 
     return response;
+  },
+
+  async getDetails(id) {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/games",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data: `fields *; where id = ${id}; limit 1;`
+    };
+
+    let response = await axios(config);
+
+    return response;
+  },
+
+  async getScreenshot(id) {
+    const config = {
+      method: "POST",
+      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/screenshots",
+      headers: {
+        Accept: "application/json",
+        "user-key": "bb1628f3841097cc6c575a5621692f75",
+        "x-requested-with": "localhost"
+      },
+      data: `fields image_id; where game = ${id}; limit 1;`
+    };
+
+    let response = await axios(config);
+
+    return response;
   }
 };

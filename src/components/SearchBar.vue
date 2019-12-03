@@ -1,5 +1,5 @@
 <template>
-  <div class="searchBarContainer">
+  <div class="searchBarContainer" v-on-clickaway="handleClickAway">
     <input
       type="text"
       class="textInputField searchBar"
@@ -7,7 +7,6 @@
       v-model="inputQuery"
       @keyup="handleChange"
       @focus="inputFocused = true"
-      @blur="inputFocused = false"
     />
     <svg
       class="searchBarIcon"
@@ -45,13 +44,16 @@ import store from "./../store/index";
 import SearchResultsList from "./SearchResultsList";
 import SearchResultItem from "./SearchResultItem";
 
+import { mixin as clickaway } from "vue-clickaway";
+
 export default {
   name: "searchBar",
+  mixins: [clickaway],
   components: { SearchResultsList, SearchResultItem },
   data() {
     return {
       inputQuery: "",
-      inputFocused: true
+      inputFocused: false
     };
   },
   methods: {
@@ -61,6 +63,9 @@ export default {
       } else {
         store.state.searchResults = [];
       }
+    },
+    handleClickAway() {
+      this.inputFocused = false;
     }
   },
   computed: {

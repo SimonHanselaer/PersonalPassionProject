@@ -367,6 +367,27 @@ border-bottom: .2rem solid #fff;
 
 .detailOverview {
   grid-area: detailOverview;
+  overflow: auto;
+  max-height: 26rem;
+}
+
+.detailOverview::-webkit-scrollbar {
+  width: 8px;
+  transform: translate(20px, 30px);
+}
+
+.detailOverview::-webkit-scrollbar-track {
+  background-color: #ffffff20;
+  border-radius: .4rem;
+}
+
+.detailOverview::-webkit-scrollbar-thumb {
+  background-color: #ffffff50;
+  border-radius: .4rem;
+}
+
+.detailOverviewText {
+  margin-right: 1.5rem;
 }
 
 .detailDetails {
@@ -445,3 +466,13 @@ border-bottom: .2rem solid #fff;
   }
 }
 
+/* List detail ---------------------------------------------------------------------------------------------------------------------------- */
+
+.listDetailFormContainer {
+  height: 20rem;
+  padding-top: 2rem;
+}
+
+.addlistContainer {
+  padding-bottom: 2rem;
+}
