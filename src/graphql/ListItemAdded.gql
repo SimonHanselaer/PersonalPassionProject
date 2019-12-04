@@ -1,7 +1,0 @@
-#import "./ListFragment.gql"
-
-subscription listAdded {
-  listAdded {
-    ...List
-  }
-}

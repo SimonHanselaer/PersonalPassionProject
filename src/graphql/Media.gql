@@ -1,7 +1,0 @@
-#import "./MediaItemFragment.gql"
-
-query media {
-  media {
-    ...MediaItem
-  }
-}

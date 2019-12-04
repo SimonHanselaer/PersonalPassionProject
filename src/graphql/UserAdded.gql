@@ -1,7 +1,0 @@
-#import "./UserFragment.gql"
-
-subscription userAdded {
-  userAdded {
-    ...User
-  }
-}

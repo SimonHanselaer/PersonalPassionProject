@@ -1,7 +1,0 @@
-fragment List on List {
-  id
-  name
-  media {
-    id
-  }
-}

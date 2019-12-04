@@ -1,7 +1,0 @@
-#import "./MediaItemFragment.gql"
-
-subscription mediaItemAdded {
-  mediaItemAdded {
-    ...MediaItem
-  }
-}

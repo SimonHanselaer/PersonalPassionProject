@@ -2,7 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import { createProvider } from "./vue-apollo";
 import firebase from "firebase";
 
 import { firestorePlugin } from 'vuefire';
@@ -31,7 +30,6 @@ firebase.auth().onAuthStateChanged(() => {
     app = new Vue({
       router,
       store,
-      apolloProvider: createProvider(),
       render: h => h(App)
     }).$mount("#app");
   }

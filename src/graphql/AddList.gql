@@ -1,7 +1,0 @@
-#import "./ListFragment.gql"
-
-mutation addList ($input: ListInput!) {
-  addList (input: $input) {
-    ...List
-  }
-}

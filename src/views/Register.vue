@@ -125,7 +125,6 @@
 
 <script>
 import firebase from "firebase";
-// import { ADD_USER_MUTATION } from "./../constants/graphql";
 
 export default {
   name: "register",
