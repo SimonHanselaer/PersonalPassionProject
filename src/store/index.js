@@ -15,6 +15,7 @@ export default new Vuex.Store({
     userLists: [],
     listName: "",
     listItems: [],
+    modifiedList: [],
     loadingStatus: false,
     loadingStatusConfig: false,
     loadingStatusSpotlight: false,
@@ -289,8 +290,92 @@ export default new Vuex.Store({
     async getListItems(context, props) {
       let data = await FirestoreRepository.getListItems(props);
       context.commit('SET_LIST_ITEMS', data);
-    }
+    },
 
+    async modifyList(context, props) {
+
+      // filter------------------------------------------------------------------------------------------------------------------------------
+
+      const todayDate = new Date().toISOString().slice(0, 10);
+
+      context.state.modifiedList = await context.state.listItems.filter(mediaItem => {
+        return (
+          mediaItem.type == props.type[0] ||
+          mediaItem.type == props.type[1] ||
+          mediaItem.type == props.type[2]
+        );
+      })
+
+      if (props.released) {
+        context.state.modifiedList = await context.state.modifiedList.filter(mediaItem => {
+          return (
+            mediaItem.releaseDate < todayDate
+          );
+        })
+      }
+
+      // Sort------------------------------------------------------------------------------------------------------------------------------
+
+      switch (props.sortBy) {
+        case "newestAdded":
+          context.state.modifiedList = context.state.modifiedList.sort(sortByNewest)
+          break;
+
+        case "name":
+          context.state.modifiedList = context.state.modifiedList.sort(sortByName)
+          break;
+
+        case "releaseDate":
+          context.state.modifiedList = context.state.modifiedList.sort(sortByRelease)
+          break;
+
+        default:
+          context.state.modifiedList = context.state.modifiedList.sort(sortByNewest)
+          break;
+      }
+
+      function sortByNewest(a, b) {
+        const mediaItemA = a.addedOn;
+        const mediaItemB = b.addedOn;
+
+        let comparison = 0;
+        if (mediaItemA > mediaItemB) {
+          comparison = -1;
+        } else if (mediaItemA < mediaItemB) {
+          comparison = 1;
+        }
+
+        return comparison;
+      }
+
+      function sortByName(a, b) {
+        const mediaItemA = a.name.toUpperCase();
+        const mediaItemB = b.name.toUpperCase();
+
+        let comparison = 0;
+        if (mediaItemA > mediaItemB) {
+          comparison = 1;
+        } else if (mediaItemA < mediaItemB) {
+          comparison = -1;
+        }
+
+        return comparison;
+      }
+
+      function sortByRelease(a, b) {
+        const mediaItemA = a.releaseDate;
+        const mediaItemB = b.releaseDate;
+
+        let comparison = 0;
+        if (mediaItemA > mediaItemB) {
+          comparison = -1;
+        } else if (mediaItemA < mediaItemB) {
+          comparison = 1;
+        }
+
+        return comparison;
+      }
+    }
   },
   modules: {}
 });

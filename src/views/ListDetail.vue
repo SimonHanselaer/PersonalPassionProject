@@ -3,59 +3,52 @@
     <h2>{{computedListName}}</h2>
 
     <section class="listDetailFormContainer">
-      <form>
-        <div v-on:change="orderlist">
+      <form v-on:change="updateList">
+        <div>
           <h3>Order by</h3>
           <label>
-            <input type="radio" name="picked" v-model="picked" value="newestAdded" checked />
+            <input type="radio" name="picked" v-model="listProps.sortBy" value="newestAdded" />
             Sort by newest added
           </label>
           <label>
-            <input type="radio" name="picked" v-model="picked" value="name" />
+            <input type="radio" name="picked" v-model="listProps.sortBy" value="name" />
             Sort by Name
           </label>
           <label>
-            <input type="radio" name="picked" v-model="picked" value="releaseDate" />
+            <input type="radio" name="picked" v-model="listProps.sortBy" value="releaseDate" />
             Sort by Release date
           </label>
         </div>
         <div>
           <h3>Filter</h3>
-          <div v-on:change="filterList">
+          <div>
             <h4>Type</h4>
             <label>
-              <input type="checkbox" name="filterType" v-model="filterType" value="movie" checked />
+              <input type="checkbox" name="filterType" v-model="listProps.type" value="movie" />
               Movie
             </label>
             <label>
-              <input type="checkbox" name="filterType" v-model="filterType" value="tv" checked />
+              <input type="checkbox" name="filterType" v-model="listProps.type" value="tv" />
               TV-Serie
             </label>
             <label>
-              <input type="checkbox" name="filterType" v-model="filterType" value="game" checked />
+              <input type="checkbox" name="filterType" v-model="listProps.type" value="game" />
               Game
             </label>
           </div>
           <div>
             <h4>Detail</h4>
             <label>
-              <input
-                type="checkbox"
-                name="filterDetail"
-                v-model="filterDetail"
-                :value="true"
-                checked
-              />
+              <input type="checkbox" name="filterDetail" v-model="filterDetail" :value="true" />
               Watched
             </label>
-            <div v-on:change="filterList">
+            <div>
               <label>
                 <input
                   type="checkbox"
                   name="filterReleasedBool"
-                  v-model="filterReleasedBool"
+                  v-model="listProps.released"
                   value="true"
-                  checked
                 />
                 Released
               </label>
@@ -65,7 +58,7 @@
       </form>
     </section>
     <section>
-      <MediaList v-if="computedListItems" :media="computedListItems">
+      <MediaList v-if="computedListItems" :media="computedModifiedList">
         <mediaTile
           slot-scope="listItem"
           :title="listItem.name"
@@ -91,11 +84,12 @@ export default {
   data() {
     return {
       name: "",
-      orderedList: [],
-      picked: "newestAdded",
-      filterType: [],
-      filterDetail: [],
-      filterReleasedBool: false
+      listProps: {
+        sortBy: "newestAdded",
+        type: ["movie", "tv", "game"],
+        released: false,
+        watched: false
+      }
     };
   },
   created() {
@@ -105,8 +99,8 @@ export default {
 
     this.getName(properties);
     this.getListItems(properties);
-    this.orderlist();
-    this.filterList();
+
+    store.dispatch("modifyList", this.listProps);
   },
   methods: {
     getName(properties) {
@@ -115,104 +109,9 @@ export default {
     getListItems(properties) {
       this.$store.dispatch("getListItems", properties.id);
     },
-    orderlist() {
+    updateList() {
       let self = this;
-      switch (self.picked) {
-        case "newestAdded":
-          self.ListOrderedAddedOn();
-          break;
-
-        case "name":
-          self.ListOrderedName();
-          break;
-
-        case "releaseDate":
-          self.ListOrderedRelease();
-          break;
-
-        default:
-          self.ListOrderedAddedOn();
-          break;
-      }
-    },
-    filterList() {
-      let self = this;
-      const todayDate = new Date().toISOString().slice(0, 10);
-
-      store.state.listItems = store.state.listItems.filter(mediaItem => {
-        return (
-          mediaItem.type == self.filterType[0] ||
-          mediaItem.type == self.filterType[1] ||
-          mediaItem.type == self.filterType[2] ||
-          (self.filterReleasedBool && mediaItem.releaseDate < todayDate)
-        );
-      });
-    },
-    // filterReleased() {
-    //   let self = this;
-
-    //   if (self.filterReleasedBool) {
-    //     self.orderedList = self.listItems.filter(mediaItem => {
-    //       return mediaItem.releaseDate < todayDate;
-    //     });
-    //   }
-    // },
-    ListOrderedName() {
-      let self = this;
-
-      function compare(a, b) {
-        const mediaItemA = a.name.toUpperCase();
-        const mediaItemB = b.name.toUpperCase();
-
-        let comparison = 0;
-        if (mediaItemA > mediaItemB) {
-          comparison = 1;
-        } else if (mediaItemA < mediaItemB) {
-          comparison = -1;
-        }
-
-        return comparison;
-      }
-
-      self.orderedList = store.state.listItems.sort(compare);
-    },
-    ListOrderedRelease() {
-      let self = this;
-
-      function compare(a, b) {
-        const mediaItemA = a.releaseDate;
-        const mediaItemB = b.releaseDate;
-
-        let comparison = 0;
-        if (mediaItemA > mediaItemB) {
-          comparison = -1;
-        } else if (mediaItemA < mediaItemB) {
-          comparison = 1;
-        }
-
-        return comparison;
-      }
-
-      self.orderedList = store.state.listItems.sort(compare);
-    },
-    ListOrderedAddedOn() {
-      let self = this;
-
-      function compare(a, b) {
-        const mediaItemA = a.addedOn;
-        const mediaItemB = b.addedOn;
-
-        let comparison = 0;
-        if (mediaItemA > mediaItemB) {
-          comparison = -1;
-        } else if (mediaItemA < mediaItemB) {
-          comparison = 1;
-        }
-
-        return comparison;
-      }
-
-      self.orderedList = store.state.listItems.sort(compare);
+      store.dispatch("modifyList", self.listProps);
     }
   },
   computed: {
@@ -221,6 +120,9 @@ export default {
     },
     computedListItems() {
       return store.state.listItems;
+    },
+    computedModifiedList() {
+      return store.state.modifiedList;
     }
   }
 };
