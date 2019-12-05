@@ -39,7 +39,7 @@
           <div>
             <h4>Detail</h4>
             <label>
-              <input type="checkbox" name="filterDetail" v-model="filterDetail" :value="true" />
+              <input type="checkbox" name="filterDetail" v-model="listProps.watched" :value="true" />
               Watched
             </label>
             <div>
@@ -58,7 +58,7 @@
       </form>
     </section>
     <section>
-      <MediaList v-if="computedListItems" :media="computedModifiedList">
+      <MediaList v-if="computedModifiedList" :media="computedModifiedList">
         <mediaTile
           slot-scope="listItem"
           :title="listItem.name"
@@ -88,7 +88,7 @@ export default {
         sortBy: "newestAdded",
         type: ["movie", "tv", "game"],
         released: false,
-        watched: false
+        watched: true
       }
     };
   },
@@ -100,6 +100,8 @@ export default {
     this.getName(properties);
     this.getListItems(properties);
 
+    store.dispatch("getWatchedMedia");
+    store.dispatch("getWatchedMediaItems");
     store.dispatch("modifyList", this.listProps);
   },
   methods: {

@@ -32,8 +32,8 @@
     <article v-if="this.$route.params.mediaType == 'movie'" class="detail">
       <h3 class="detailTitle header-5">{{computedDetails.title}}</h3>
       <p class="detailGenre">{{computedDetails.genres[0].name}}</p>
-      <p class="detailRuntime">{{computedDetails.runtime}}</p>
-      <p class="detailReleaseYear">{{computedDetails.release_date}}</p>
+      <p class="detailRuntime">{{computedRuntimeMovie}}</p>
+      <p class="detailReleaseYear">{{computedReleaseMovie}}</p>
       <section class="detailOverview">
         <h4 class="header-6">Description</h4>
         <p>{{computedDetails.overview}}</p>
@@ -84,16 +84,22 @@
       <section class="detailCast">
         <h4 class="header-6">Cast</h4>
         <ul class="castList">
-          <li v-for="actor in computedActors" v-bind:key="actor.id" class="castTile">
-            <img
-              class="castImage"
-              :src="computedConfig.images.base_url +
+          <li v-for="actor in computedActors" v-bind:key="actor.id">
+            <a
+              target="_blank"
+              :href="'https://www.imdb.com/name/' + actor.imdb_id"
+              class="castTile"
+            >
+              <img
+                class="castImage"
+                :src="computedConfig.images.base_url +
             computedConfig.images.poster_sizes[4] +
             actor.profile_path"
-              height="225"
-              alt
-            />
-            <p class="castName">{{actor.name}}</p>
+                height="225"
+                alt
+              />
+              <p class="castName">{{actor.name}}</p>
+            </a>
           </li>
         </ul>
       </section>
@@ -106,7 +112,7 @@
         </div>
         <div>
           <h5 class="header-7">Release date</h5>
-          <p>{{computedDetails.release_date}}</p>
+          <p>{{computedReleaseMovieFull}}</p>
         </div>
       </section>
       <div class="detailBorder"></div>
@@ -122,8 +128,8 @@
     <article v-else-if="this.$route.params.mediaType == 'tv'" class="detail">
       <h3 class="detailTitle header-5">{{computedDetails.name}}</h3>
       <p class="detailGenre">{{computedDetails.genres[0].name}}</p>
-      <p class="detailRuntime">{{computedDetails.episode_run_time[0]}}</p>
-      <p class="detailReleaseYear">{{computedDetails.first_air_date}}</p>
+      <p class="detailRuntime">{{computedRuntimeSerie}}</p>
+      <p class="detailReleaseYear">{{computedReleaseSerie}}</p>
       <section class="detailOverview">
         <h4 class="header-6">Description</h4>
         <p class="detailOverviewText">{{computedDetails.overview}}</p>
@@ -145,16 +151,22 @@
       <section class="detailCast">
         <h4 class="header-6">Cast</h4>
         <ul class="castList">
-          <li v-for="actor in computedActors" v-bind:key="actor.id" class="castTile">
-            <img
-              class="castImage"
-              :src="computedConfig.images.base_url +
-            computedConfig.images.poster_sizes[4] +
-            actor.profile_path"
-              height="225"
-              alt
-            />
-            <p class="castName">{{actor.name}}</p>
+          <li v-for="actor in computedActors" v-bind:key="actor.id">
+            <a
+              target="_blank"
+              :href="'https://www.imdb.com/name/' + actor.imdb_id"
+              class="castTile"
+            >
+              <img
+                class="castImage"
+                :src="computedConfig.images.base_url +
+              computedConfig.images.poster_sizes[4] +
+              actor.profile_path"
+                height="225"
+                alt
+              />
+              <p class="castName">{{actor.name}}</p>
+            </a>
           </li>
         </ul>
       </section>
@@ -171,7 +183,7 @@
         </div>
         <div v-if="computedDetails.in_production & computedDetails.next_episode_to_air != null">
           <h5 class="header-7">Next episode</h5>
-          <p>{{computedDetails.next_episode_to_air.air_date}}</p>
+          <p>{{computedReleaseSerieFull}}</p>
         </div>
         <div v-if="!computedDetails.in_production">
           <h5 class="header-7">Status</h5>
@@ -224,6 +236,7 @@
 </template>
 
 <script>
+const moment = require("moment");
 import store from "./../store/index";
 
 export default {
@@ -278,7 +291,7 @@ export default {
       return store.state.loadingStatusConfig;
     },
     computedActors() {
-      return store.state.mediaDetailsCredits.cast.splice(0, 5);
+      return store.state.mediaDetailsCast;
     },
     computedDirector() {
       return store.state.mediaDetailsCredits.crew.filter(person => {
@@ -292,6 +305,43 @@ export default {
       return new Date(
         store.state.mediaDetails.first_release_date * 1000
       ).getFullYear();
+    },
+    computedReleaseMovie() {
+      return store.state.mediaDetails.release_date.slice(0, 4);
+    },
+
+    computedReleaseMovieFull() {
+      const date = store.state.mediaDetails.release_date;
+      const dateFormat = moment(date, "YYYY-MM-DD");
+      return dateFormat.format("Do MMM YYYY");
+    },
+
+    computedReleaseSerie() {
+      return store.state.mediaDetails.first_air_date.slice(0, 4);
+    },
+
+    computedReleaseSerieFull() {
+      const date = store.state.mediaDetails.next_episode_to_air.air_date;
+      const dateFormat = moment(date, "YYYY-MM-DD");
+      return dateFormat.format("Do MMM YYYY");
+    },
+
+    computedRuntimeMovie() {
+      const hours = Math.floor(store.state.mediaDetails.runtime / 60);
+      const minutes = store.state.mediaDetails.runtime % 60;
+      const convertedTime = `${hours}h ${minutes}min`;
+
+      return convertedTime;
+    },
+
+    computedRuntimeSerie() {
+      const hours = Math.floor(
+        store.state.mediaDetails.episode_run_time[0] / 60
+      );
+      const minutes = store.state.mediaDetails.episode_run_time[0] % 60;
+      const convertedTime = `${hours}h ${minutes}min`;
+
+      return convertedTime;
     }
   }
 };

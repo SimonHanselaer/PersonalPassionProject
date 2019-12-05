@@ -15,6 +15,7 @@ export default new Vuex.Store({
     userLists: [],
     listName: "",
     listItems: [],
+    watchedMedia: [],
     modifiedList: [],
     loadingStatus: false,
     loadingStatusConfig: false,
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     searchResults: [],
     mediaDetails: [],
     mediaDetailsCredits: [],
+    mediaDetailsCast: [],
     mediaDetailsExternalId: [],
     refactoredNumber: 0,
     config: []
@@ -114,6 +116,7 @@ export default new Vuex.Store({
     },
 
     SET_DETAILS_CREDITS(state, mediaDetailsCredits) {
+      state.mediaDetailsCast = mediaDetailsCredits.cast.splice(0, 5);
       state.mediaDetailsCredits = mediaDetailsCredits;
     },
 
@@ -133,6 +136,9 @@ export default new Vuex.Store({
     },
     SET_LIST_ITEMS(state, items) {
       state.listItems = items;
+    },
+    SET_WATCHED_MEDIA_ITEMS(state, items) {
+      state.watchedMedia = items;
     }
   },
   actions: {
@@ -226,6 +232,11 @@ export default new Vuex.Store({
           data = await MediaRepository.getMovieCredits(props.id);
           context.commit('SET_DETAILS_CREDITS', data.data);
 
+          for (let i = 0; i < context.state.mediaDetailsCast.length; i++) {
+            let data = await MediaRepository.getCastExternalId(context.state.mediaDetailsCast[i].id);
+            context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
+          }
+
           context.commit('SET_LOADING_STATUS_DETAILS', false);
           break;
         case 'tv':
@@ -239,6 +250,11 @@ export default new Vuex.Store({
 
           data = await MediaRepository.getSerieExternalId(props.id);
           context.commit('SET_DETAILS_EXTERNAL_ID', data.data);
+
+          for (let i = 0; i < context.state.mediaDetailsCast.length; i++) {
+            let data = await MediaRepository.getCastExternalId(context.state.mediaDetailsCast[i].id);
+            context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
+          }
 
           context.commit('SET_LOADING_STATUS_DETAILS', false);
 
@@ -292,6 +308,11 @@ export default new Vuex.Store({
       context.commit('SET_LIST_ITEMS', data);
     },
 
+    async getWatchedMediaItems(context) {
+      let data = await FirestoreRepository.getWatchedMediaItems();
+      context.commit('SET_WATCHED_MEDIA_ITEMS', data)
+    },
+
     async modifyList(context, props) {
 
       // filter------------------------------------------------------------------------------------------------------------------------------
@@ -311,6 +332,14 @@ export default new Vuex.Store({
           return (
             mediaItem.releaseDate < todayDate
           );
+        })
+      }
+
+      if (props.watched) {
+        context.state.modifiedList = await context.state.modifiedList.filter(mediaItem => {
+          for (let i = 0; i < context.state.watchedMedia.length; i++) {
+            return mediaItem.id != context.state.watchedMedia[i];
+          }
         })
       }
 
@@ -375,6 +404,17 @@ export default new Vuex.Store({
 
         return comparison;
       }
+    },
+    async getWatchedMedia() {
+      let data = await FirestoreRepository.getWatchedMedia();
+      const plexUsername = 'simonhanselaer';
+      const entries = Object.entries(data.data);
+      entries.forEach(entry => {
+        let key = entry[0].slice(0, plexUsername.length);
+        if (key === plexUsername) {
+          FirestoreRepository.addToWatched(entry[1]);
+        }
+      })
     }
   },
   modules: {}

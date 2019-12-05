@@ -16,6 +16,7 @@ const externalId = "/external_ids";
 const initQuery = "&query="
 const region = "&region=US";
 const page = "&page=";
+const person = "/person/";
 
 //spotlight movie -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const TodayDate = new Date();
@@ -86,5 +87,9 @@ export default {
 
   getSearchResults(query) {
     return axios.get(`${baseDomain}${multiSearch}${APIKey}${initQuery}${query}`);
+  },
+
+  getCastExternalId(id) {
+    return axios.get(`${baseDomain}${person}${id}${externalId}${APIKey}`);
   }
 };

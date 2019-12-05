@@ -1,5 +1,6 @@
 import { db } from "./../main";
 import firebase from "firebase";
+import axios from "axios";
 // import store from "../store/index";
 
 export default {
@@ -91,6 +92,7 @@ export default {
         const listItems = list.get()
             .then(querySnapshot => {
                 let data = [];
+
                 querySnapshot.forEach(doc => {
                     data.push({
                         id: doc.id,
@@ -105,5 +107,21 @@ export default {
                 return data
             });
         return listItems
+    },
+    async getWatchedMedia() {
+        return axios.get(`https://store.zapier.com/api/records?secret=PersonalPassionProject`);
+    },
+    async addToWatched(id) {
+        db.collection("users").doc(localStorage.uid).update({
+            watched: firebase.firestore.FieldValue.arrayUnion(id)
+        })
+    },
+
+    async getWatchedMediaItems() {
+        let data = [];
+        data = await db.collection("users").doc(localStorage.uid).get().then(doc => {
+            return doc.data().watched
+        });
+        return data;
     }
 };
