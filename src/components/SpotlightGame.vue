@@ -17,14 +17,17 @@
       <p class="spotlightOverview">{{computedGame.summary}}</p>
       <div class="spotlightBorder"></div>
     </article>
+    <Loading v-else />
   </div>
 </template>
 
 <script>
 import store from "./../store/index";
+import Loading from "./Loading";
 
 export default {
   name: "spotlightgame",
+  components: { Loading },
   created() {
     this.$store.dispatch("fetchSpotlightGame");
   },

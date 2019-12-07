@@ -529,7 +529,7 @@ border-bottom: .2rem solid #fff;
   padding-bottom: .5rem;
 }
 
-.moreOptionsItem:last-child {
+.moreOptionsItem:last-child, .moreOptionsMediaTile:last-child {
   padding-bottom: 0;
 }
 
@@ -537,8 +537,22 @@ border-bottom: .2rem solid #fff;
   padding-left: 1rem;
 }
 
-.moreOPtionsMediaTile {
+.moreOptionsMediaTile {
   background-color: #121620;
   position: relative;
-  width: 20rem;
+  left: -9.5rem;
+  width: 12rem;
+
+  padding-left: 1rem;
+  padding-bottom: .5rem;
+
+  border-radius: .2rem;
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  margin: 2rem;
+  margin-top: 5rem;
+
 }

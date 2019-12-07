@@ -22,7 +22,6 @@ export default {
   components: { ModalAddToList },
   computed: {
     computedModalValues() {
-      console.log(store.state.modalValues);
       return store.state.modalValues;
     }
   }

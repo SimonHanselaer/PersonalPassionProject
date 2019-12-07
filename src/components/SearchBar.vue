@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     handleChange() {
-      if (this.inputQuery.length > 2) {
+      if (this.inputQuery.length > 0) {
         this.$store.dispatch("fetchSearchQuery", this.inputQuery);
       } else {
         store.state.searchResults = [];

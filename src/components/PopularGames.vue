@@ -12,6 +12,7 @@
         :releaseDate="mediaItem.first_release_date"
       />
     </MediaList>
+    <Loading v-else />
   </div>
 </template>
 
@@ -19,10 +20,11 @@
 import store from "./../store/index";
 import MediaList from "./MediaList";
 import MediaTile from "./MediaTile";
+import Loading from "./Loading";
 
 export default {
   name: "populargames",
-  components: { MediaList, MediaTile },
+  components: { MediaList, MediaTile, Loading },
   created() {
     this.$store.dispatch("fetchPopularGames");
   },
