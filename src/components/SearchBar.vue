@@ -50,6 +50,15 @@ export default {
   name: "searchBar",
   mixins: [clickaway],
   components: { SearchResultsList, SearchResultItem },
+  watch: {
+    $route: {
+      deep: true,
+      handler: function() {
+        this.inputQuery = "";
+        this.inputFocused = false;
+      }
+    }
+  },
   data() {
     return {
       inputQuery: "",

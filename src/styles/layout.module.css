@@ -49,11 +49,11 @@
   gap: 2rem;
   row-gap: 1rem;
 
-  grid-template-areas: 'spotlightImage spotlightTitle spotlightTitle spotlightTitle . spotlightWatchlist spotlightMoreOptions'
+  grid-template-areas: 'spotlightImage spotlightTitle spotlightTitle spotlightTitle spotlightTitle spotlightWatchlist spotlightMoreOptions'
   'spotlightImage spotlightGenre spotlightRuntime spotlightReleaseYear . . .'
   'spotlightImage spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder spotlightBorder'
   'spotlightImage spotlightOverview spotlightOverview spotlightOverview spotlightOverview . .'
-  'spotlightImage . . . . . .';
+  'spotlightImage spotlightCTA spotlightCTA spotlightCTA . . .';
 
 }
 
@@ -71,6 +71,8 @@
 
 .spotlightMoreOptions {
   grid-area: spotlightMoreOptions;
+  padding-bottom: .7rem;
+  outline: none;
 }
 
 .spotlightGenre {
@@ -89,14 +91,42 @@
   grid-area: spotlightOverview;
   text-overflow: ellipsis;
   display: block;
-  height: 21rem;
+  height: 14rem;
   width: 65rem;
-  overflow: hidden;
+  overflow: auto;
+}
+
+.spotlightOverview::-webkit-scrollbar {
+  width: 8px;
+  transform: translate(20px, 30px);
+}
+
+.spotlightOverview::-webkit-scrollbar-track {
+  background-color: #ffffff20;
+  border-radius: .4rem;
+}
+
+.spotlightOverview::-webkit-scrollbar-thumb {
+  background-color: #ffffff50;
+  border-radius: .4rem;
 }
 
 .spotlightBorder {
   grid-area: spotlightBorder;
   border-bottom: .2rem solid #fff;
+}
+
+.spotlightCTA {
+  grid-area: spotlightCTA;
+  border: none;
+  background-color: #3764FC;
+  border-radius: .3rem;
+
+  height: 3rem;
+
+  align-self: flex-end;
+
+  outline: none;
 }
 
 /* spotlight ------------------------------------------------------------------------------------------------------------------------------ */
@@ -475,4 +505,40 @@ border-bottom: .2rem solid #fff;
 
 .addlistContainer {
   padding-bottom: 2rem;
+}
+
+.active {
+  display: none;
+}
+
+.moreOptions {
+  background-color: #121620;
+  position: absolute;
+  top: 15rem;
+  left: 119rem;
+
+  padding: 1rem;
+
+  border-radius: .2rem;
+}
+
+.moreOptionsItem {
+  display: flex;
+  align-items: center;
+  padding-right: 2rem;
+  padding-bottom: .5rem;
+}
+
+.moreOptionsItem:last-child {
+  padding-bottom: 0;
+}
+
+.moreOptionsItem p {
+  padding-left: 1rem;
+}
+
+.moreOPtionsMediaTile {
+  background-color: #121620;
+  position: relative;
+  width: 20rem;
 }

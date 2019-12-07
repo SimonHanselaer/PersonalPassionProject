@@ -123,5 +123,32 @@ export default {
             return doc.data().watched
         });
         return data;
+    },
+
+    async addItemToList(data) {
+        let addItem = db
+            .collection("lists")
+            .doc(data.listId)
+            .collection("media")
+            .doc(data.id.toString());
+
+        addItem.get().then(docSnapshot => {
+            if (docSnapshot.exists) {
+                alert("media item is already on list");
+            } else {
+                addItem.set({
+                    name: data.title,
+                    image: data.src,
+                    type: data.type,
+                    duration: data.duration,
+                    releaseDate: data.releaseDate,
+                    addedOn: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                let updateCount = db.collection("lists").doc(data.listId);
+                updateCount.update({
+                    count: firebase.firestore.FieldValue.increment(1)
+                });
+            }
+        });
     }
 };

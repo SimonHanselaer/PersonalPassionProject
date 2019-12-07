@@ -38,7 +38,8 @@ export default new Vuex.Store({
     mediaDetailsCast: [],
     mediaDetailsExternalId: [],
     refactoredNumber: 0,
-    config: []
+    config: [],
+    modalValues: {}
   },
   mutations: {
     SET_LOADING_STATUS(state, status) {
@@ -415,6 +416,18 @@ export default new Vuex.Store({
           FirestoreRepository.addToWatched(entry[1]);
         }
       })
+    },
+    async addToWatched(context, props) {
+      console.log(context, props);
+      FirestoreRepository.addToWatched(props.toString());
+    },
+    async addItemToList(context, props) {
+      console.log(context, props);
+      FirestoreRepository.addItemToList(props);
+    },
+    async setModalValues(context, props) {
+      console.log(props);
+      context.state.modalValues = props;
     }
   },
   modules: {}

@@ -7,6 +7,7 @@ import firebase from "firebase";
 import { firestorePlugin } from 'vuefire';
 // import firebase from 'firebase/app';
 import 'firebase/firestore';
+import VModal from 'vue-js-modal'
 
 
 
@@ -35,7 +36,8 @@ firebase.auth().onAuthStateChanged(() => {
   }
 })
 
-Vue.use(firestorePlugin)
+Vue.use(firestorePlugin);
+Vue.use(VModal)
 
 export const db = firebase.firestore()
 
