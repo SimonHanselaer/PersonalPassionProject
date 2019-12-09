@@ -10,16 +10,18 @@
       :duration="computedModalValues.duration"
       :mediaType="computedModalValues.mediaType"
     />
+    <ModalAddNewList />
   </div>
 </template>
 
 <script>
 import store from "./store/index";
 import ModalAddToList from "./components/ModalAddToList";
+import ModalAddNewList from "./components/ModalAddNewList";
 
 export default {
   name: "app",
-  components: { ModalAddToList },
+  components: { ModalAddToList, ModalAddNewList },
   computed: {
     computedModalValues() {
       return store.state.modalValues;

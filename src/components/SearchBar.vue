@@ -18,7 +18,13 @@
       xmlns:xlink="http://www.w3.org/1999/xlink"
     >
       <title>search</title>
-      <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g
+        id="Symbols"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
         <g
           id="search"
           transform="translate(1.000000, 1.000000)"

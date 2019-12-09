@@ -142,9 +142,16 @@ export default {
         .then(
           user => {
             this.$router.push({ name: "movies" });
-            this.$store.dispatch("addUser", user.user.uid);
             localStorage.setItem("uid", user.user.uid);
-            localStorage.setItem("uid", user.user.photoURL);
+            localStorage.setItem("profilePicture", user.user.photoURL);
+
+            const props = {
+              image: user.user.photoURL,
+              name: user.user.email,
+              id: user.user.uid
+            };
+
+            this.$store.dispatch("addUser", props);
           },
           err => {
             alert("Oops!" + err.message);
@@ -174,11 +181,16 @@ export default {
           const user = result.user;
 
           this.$router.push({ name: "movies" });
-          this.$store.state.user = user;
-          localStorage.setItem("user", user);
           localStorage.setItem("uid", user.uid);
+          localStorage.setItem("profilePicture", user.photoURL);
 
-          this.$store.dispatch("addUser", user.uid);
+          const props = {
+            image: user.photoURL,
+            name: user.displayName,
+            id: user.uid
+          };
+
+          this.$store.dispatch("addUser", props);
         })
         .catch(err => {
           const errorMessage = err.message;

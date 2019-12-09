@@ -1,6 +1,6 @@
 <template>
   <div class="profile contentContainer">
-    <AddList />
+    <ProfileBanner />
     <ProfileLists />
   </div>
 </template>
@@ -8,13 +8,13 @@
 <script>
 // @ is an alias to /src
 import ProfileLists from "../components/ProfileLists.vue";
-import AddList from "../components/AddList.vue";
+import ProfileBanner from "../components/ProfileBanner.vue";
 
 export default {
   name: "profile",
   components: {
-    ProfileLists,
-    AddList
+    ProfileBanner,
+    ProfileLists
   }
 };
 </script>

@@ -3,16 +3,28 @@
     <section class="navBar">
       <p class="appName">Media wish- &amp; watchlist</p>
       <SearchBar />
-      <img :src="profilePicture" class="profilePicture" height="40" alt v-if="profilePicture" />
-      <img src="/assets/icon/user.svg" class="profilePicture" height="40" alt v-else />
+      <img
+        :src="profilePicture"
+        class="profilePicture"
+        height="40"
+        alt
+        v-if="profilePicture"
+      />
+      <img
+        src="/assets/icon/user.svg"
+        class="profilePicture"
+        height="40"
+        alt
+        v-else
+      />
     </section>
     <section class="sideBar">
       <div id="nav" class="nav sideBarItems">
-        <router-link v-bind:to="{name: 'movies'}">Movies</router-link>
-        <router-link v-bind:to="{name: 'shows'}">TV-shows</router-link>
-        <router-link v-bind:to="{name: 'games'}">Games</router-link>
-        <router-link v-bind:to="{name: 'social'}">Social</router-link>
-        <router-link v-bind:to="{name: 'profile'}">Profile</router-link>
+        <router-link v-bind:to="{ name: 'movies' }">Movies</router-link>
+        <router-link v-bind:to="{ name: 'shows' }">TV-shows</router-link>
+        <router-link v-bind:to="{ name: 'games' }">Games</router-link>
+        <router-link v-bind:to="{ name: 'social' }">Social</router-link>
+        <router-link v-bind:to="{ name: 'profile' }">Profile</router-link>
         <button class="logoutButton" @click="logout">
           Logout
           <svg
@@ -26,7 +38,13 @@
             <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
             <title>logout</title>
             <desc>Created with Sketch.</desc>
-            <g id="Symbols" stroke="none" stroke-width="1" fill="#FFFFFF" fill-rule="evenodd">
+            <g
+              id="Symbols"
+              stroke="none"
+              stroke-width="1"
+              fill="#FFFFFF"
+              fill-rule="evenodd"
+            >
               <g
                 id="SideBar"
                 transform="translate(-174.000000, -921.000000)"

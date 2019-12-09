@@ -6,13 +6,15 @@ const MediaRepository = RepositoryFactory.get("media");
 const GameRepository = RepositoryFactory.get("games");
 const FirestoreRepository = RepositoryFactory.get("firestore");
 
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: [],
     userId: localStorage.uid,
     userLists: [],
+    users: [],
+    friends: [],
     listName: "",
     listItems: [],
     watchedMedia: [],
@@ -23,6 +25,7 @@ export default new Vuex.Store({
     loadingStatusPopular: false,
     loadingStatusUpcoming: false,
     loadingStatusDetails: false,
+    loadingStatusUser: false,
     popularSeries: [],
     popularMovies: [],
     popularGames: [],
@@ -84,7 +87,7 @@ export default new Vuex.Store({
 
     SET_SPOTLIGHT_MOVIE(state, spotlightMovieData) {
       state.refactoredNumber = Math.ceil((spotlightMovieData.page / 33) * 20);
-      state.spotlightMovie = spotlightMovieData.results[state.refactoredNumber]
+      state.spotlightMovie = spotlightMovieData.results[state.refactoredNumber];
     },
 
     SET_SPOTLIGHT_MOVIE_DETAILS(state, spotlightMovieDetails) {
@@ -93,7 +96,7 @@ export default new Vuex.Store({
 
     SET_SPOTLIGHT_SERIE(state, spotlightSerieData) {
       state.refactoredNumber = Math.ceil((spotlightSerieData.page / 33) * 20);
-      state.spotlightSerie = spotlightSerieData.results[state.refactoredNumber]
+      state.spotlightSerie = spotlightSerieData.results[state.refactoredNumber];
     },
 
     SET_SPOTLIGHT_SERIE_DETAILS(state, spotlightSerieDetails) {
@@ -140,143 +143,167 @@ export default new Vuex.Store({
     },
     SET_WATCHED_MEDIA_ITEMS(state, items) {
       state.watchedMedia = items;
+    },
+    SET_USER_DATA(state, userData) {
+      state.user = userData
+    },
+    SET_USERS(state, users) {
+      state.users = users;
+    },
+    SET_FRIENDS(state, friends) {
+      state.friends = friends;
+    },
+    SET_LOADING_STATUS_USER(state, status) {
+      state.loadingStatusUser = status
     }
   },
   actions: {
     async fetchConfig(context) {
-      context.commit('SET_LOADING_STATUS_CONFIG', true);
+      context.commit("SET_LOADING_STATUS_CONFIG", true);
       const { data } = await MediaRepository.getConfig();
-      context.commit('SET_LOADING_STATUS_CONFIG', false);
-      context.commit('SET_CONFIG', data);
+      context.commit("SET_LOADING_STATUS_CONFIG", false);
+      context.commit("SET_CONFIG", data);
     },
     async fetchPopularSeries(context) {
-      context.commit('SET_LOADING_STATUS_POPULAR', true);
+      context.commit("SET_LOADING_STATUS_POPULAR", true);
       const { data } = await MediaRepository.getPopularSeries();
-      context.commit('SET_LOADING_STATUS_POPULAR', false);
-      context.commit('SET_POPULAR_SERIES', data.results.splice(0, 5));
+      context.commit("SET_LOADING_STATUS_POPULAR", false);
+      context.commit("SET_POPULAR_SERIES", data.results.splice(0, 5));
     },
     async fetchPopularMovies(context) {
-      context.commit('SET_LOADING_STATUS_POPULAR', true);
+      context.commit("SET_LOADING_STATUS_POPULAR", true);
       const { data } = await MediaRepository.getPopularMovies();
-      context.commit('SET_LOADING_STATUS_POPULAR', false);
-      context.commit('SET_POPULAR_MOVIES', data.results.splice(0, 5));
+      context.commit("SET_LOADING_STATUS_POPULAR", false);
+      context.commit("SET_POPULAR_MOVIES", data.results.splice(0, 5));
     },
     async fetchUpcomingMovies(context) {
-      context.commit('SET_LOADING_STATUS_UPCOMING', true);
+      context.commit("SET_LOADING_STATUS_UPCOMING", true);
       const { data } = await MediaRepository.getUpcomingMovies();
-      context.commit('SET_LOADING_STATUS_UPCOMING', false);
-      context.commit('SET_UPCOMING_MOVIES', data.results.splice(0, 5));
+      context.commit("SET_LOADING_STATUS_UPCOMING", false);
+      context.commit("SET_UPCOMING_MOVIES", data.results.splice(0, 5));
     },
     async fetchSpotlightMovie(context) {
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', true);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", true);
       let { data } = await MediaRepository.getSpotlightMovie();
-      context.commit('SET_SPOTLIGHT_MOVIE', data);
+      context.commit("SET_SPOTLIGHT_MOVIE", data);
 
       data = await MediaRepository.getMovieDetails(
         context.state.spotlightMovie.id
       );
-      context.commit('SET_SPOTLIGHT_MOVIE_DETAILS', data.data);
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', false);
+      context.commit("SET_SPOTLIGHT_MOVIE_DETAILS", data.data);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", false);
     },
     async fetchSpotlightSerie(context) {
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', true);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", true);
       let { data } = await MediaRepository.getSpotlightSerie();
-      context.commit('SET_SPOTLIGHT_SERIE', data);
+      context.commit("SET_SPOTLIGHT_SERIE", data);
 
       data = await MediaRepository.getSerieDetails(
         context.state.spotlightSerie.id
       );
 
-      context.commit('SET_SPOTLIGHT_SERIE_DETAILS', data.data);
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', false);
+      context.commit("SET_SPOTLIGHT_SERIE_DETAILS", data.data);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", false);
     },
     async fetchPopularGames(context) {
-      context.commit('SET_LOADING_STATUS_POPULAR', true);
+      context.commit("SET_LOADING_STATUS_POPULAR", true);
       const { data } = await GameRepository.getPopularGames();
-      context.commit('SET_POPULAR_GAMES', data);
+      context.commit("SET_POPULAR_GAMES", data);
 
       for (let i = 0; i < context.state.popularGames.length; i++) {
-        const cover = await GameRepository.getCover(context.state.popularGames[i].id);
+        const cover = await GameRepository.getCover(
+          context.state.popularGames[i].id
+        );
         context.state.popularGames[i].cover = cover.data[0].image_id;
       }
 
-      context.commit('SET_LOADING_STATUS_POPULAR', false);
+      context.commit("SET_LOADING_STATUS_POPULAR", false);
     },
     async fetchSpotlightGame(context) {
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', true);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", true);
       let { data } = await GameRepository.getSpotlightGame();
-      context.commit('SET_SPOTLIGHT_GAME', data[data.length - 1]);
+      context.commit("SET_SPOTLIGHT_GAME", data[data.length - 1]);
 
       data = await GameRepository.getCover(context.state.spotlightGame.id);
       context.state.spotlightGame.cover = data.data[0].image_id;
 
-      data = await GameRepository.getGenre(context.state.spotlightGame.genres[0]);
+      data = await GameRepository.getGenre(
+        context.state.spotlightGame.genres[0]
+      );
       context.state.spotlightGame.genre = data.data[0].name;
 
-      context.commit('SET_LOADING_STATUS_SPOTLIGHT', false);
+      context.commit("SET_LOADING_STATUS_SPOTLIGHT", false);
     },
 
     async fetchSearchQuery(context, query) {
       let { data } = await MediaRepository.getSearchResults(query);
-      context.commit('SET_SEARCH_RESULTS', data.results.splice(0, 5));
+      context.commit("SET_SEARCH_RESULTS", data.results.splice(0, 5));
     },
 
     async fetchDetails(context, props) {
       let { data } = [];
       switch (props.type) {
-        case 'movie':
-          context.commit('SET_LOADING_STATUS_DETAILS', true);
+        case "movie":
+          context.commit("SET_LOADING_STATUS_DETAILS", true);
 
           data = await MediaRepository.getMovieDetails(props.id);
-          context.commit('SET_DETAILS', data.data);
+          context.commit("SET_DETAILS", data.data);
 
           data = await MediaRepository.getMovieCredits(props.id);
-          context.commit('SET_DETAILS_CREDITS', data.data);
+          context.commit("SET_DETAILS_CREDITS", data.data);
 
           for (let i = 0; i < context.state.mediaDetailsCast.length; i++) {
-            let data = await MediaRepository.getCastExternalId(context.state.mediaDetailsCast[i].id);
+            let data = await MediaRepository.getCastExternalId(
+              context.state.mediaDetailsCast[i].id
+            );
             context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
           }
 
-          context.commit('SET_LOADING_STATUS_DETAILS', false);
+          context.commit("SET_LOADING_STATUS_DETAILS", false);
           break;
-        case 'tv':
-          context.commit('SET_LOADING_STATUS_DETAILS', true);
+        case "tv":
+          context.commit("SET_LOADING_STATUS_DETAILS", true);
 
           data = await MediaRepository.getSerieDetails(props.id);
-          context.commit('SET_DETAILS', data.data);
+          context.commit("SET_DETAILS", data.data);
 
           data = await MediaRepository.getSerieCredits(props.id);
-          context.commit('SET_DETAILS_CREDITS', data.data);
+          context.commit("SET_DETAILS_CREDITS", data.data);
 
           data = await MediaRepository.getSerieExternalId(props.id);
-          context.commit('SET_DETAILS_EXTERNAL_ID', data.data);
+          context.commit("SET_DETAILS_EXTERNAL_ID", data.data);
 
           for (let i = 0; i < context.state.mediaDetailsCast.length; i++) {
-            let data = await MediaRepository.getCastExternalId(context.state.mediaDetailsCast[i].id);
+            let data = await MediaRepository.getCastExternalId(
+              context.state.mediaDetailsCast[i].id
+            );
             context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
           }
 
-          context.commit('SET_LOADING_STATUS_DETAILS', false);
+          context.commit("SET_LOADING_STATUS_DETAILS", false);
 
           break;
 
-        case 'game':
-          context.commit('SET_LOADING_STATUS_DETAILS', true);
+        case "game":
+          context.commit("SET_LOADING_STATUS_DETAILS", true);
 
           data = await GameRepository.getDetails(props.id);
-          context.commit('SET_DETAILS', data.data[0]);
+          context.commit("SET_DETAILS", data.data[0]);
 
           data = await GameRepository.getCover(context.state.mediaDetails.id);
           context.state.mediaDetails.cover = data.data[0].image_id;
 
-          data = await GameRepository.getGenre(context.state.mediaDetails.genres[0]);
+          data = await GameRepository.getGenre(
+            context.state.mediaDetails.genres[0]
+          );
           context.state.mediaDetails.genre = data.data[0].name;
 
-          data = await GameRepository.getScreenshot(context.state.mediaDetails.id);
-          context.state.mediaDetails.screenshot = data.data[0].image_id
+          data = await GameRepository.getScreenshot(
+            context.state.mediaDetails.id
+          );
+          context.state.mediaDetails.screenshot = data.data[0].image_id;
 
-          context.commit('SET_LOADING_STATUS_DETAILS', false);
+          context.commit("SET_LOADING_STATUS_DETAILS", false);
 
           break;
 
@@ -298,69 +325,80 @@ export default new Vuex.Store({
     },
     async getLists(context) {
       let data = await FirestoreRepository.getLists();
-      context.commit('SET_USER_LISTS', data);
+      context.commit("SET_USER_LISTS", data);
     },
     async getListName(context, props) {
       let data = await FirestoreRepository.getListName(props);
-      context.commit('SET_LIST_NAME', data);
+      context.commit("SET_LIST_NAME", data);
     },
     async getListItems(context, props) {
       let data = await FirestoreRepository.getListItems(props);
-      context.commit('SET_LIST_ITEMS', data);
+      context.commit("SET_LIST_ITEMS", data);
     },
 
     async getWatchedMediaItems(context) {
       let data = await FirestoreRepository.getWatchedMediaItems();
-      context.commit('SET_WATCHED_MEDIA_ITEMS', data)
+      context.commit("SET_WATCHED_MEDIA_ITEMS", data);
     },
 
     async modifyList(context, props) {
-
       // filter------------------------------------------------------------------------------------------------------------------------------
 
       const todayDate = new Date().toISOString().slice(0, 10);
 
-      context.state.modifiedList = await context.state.listItems.filter(mediaItem => {
-        return (
-          mediaItem.type == props.type[0] ||
-          mediaItem.type == props.type[1] ||
-          mediaItem.type == props.type[2]
-        );
-      })
+      context.state.modifiedList = await context.state.listItems.filter(
+        mediaItem => {
+          return (
+            mediaItem.type == props.type[0] ||
+            mediaItem.type == props.type[1] ||
+            mediaItem.type == props.type[2]
+          );
+        }
+      );
 
       if (props.released) {
-        context.state.modifiedList = await context.state.modifiedList.filter(mediaItem => {
-          return (
-            mediaItem.releaseDate < todayDate
-          );
-        })
+        context.state.modifiedList = await context.state.modifiedList.filter(
+          mediaItem => {
+            return mediaItem.releaseDate < todayDate;
+          }
+        );
       }
 
       if (props.watched) {
-        context.state.modifiedList = await context.state.modifiedList.filter(mediaItem => {
-          for (let i = 0; i < context.state.watchedMedia.length; i++) {
-            return mediaItem.id != context.state.watchedMedia[i];
+        context.state.modifiedList = await context.state.modifiedList.filter(
+          mediaItem => {
+            for (let i = 0; i < context.state.watchedMedia.length; i++) {
+              return mediaItem.id != context.state.watchedMedia[i];
+            }
           }
-        })
+        );
       }
 
       // Sort------------------------------------------------------------------------------------------------------------------------------
 
       switch (props.sortBy) {
         case "newestAdded":
-          context.state.modifiedList = context.state.modifiedList.sort(sortByNewest)
+          context.state.modifiedList = context.state.modifiedList.sort(
+            sortByNewest
+          );
           break;
 
         case "name":
-          context.state.modifiedList = context.state.modifiedList.sort(sortByName)
+          context.state.modifiedList = context.state.modifiedList.sort(
+            sortByName
+          );
           break;
 
         case "releaseDate":
-          context.state.modifiedList = context.state.modifiedList.sort(sortByRelease)
+          context.state.modifiedList = context.state.modifiedList.sort(
+            sortByRelease
+          );
           break;
 
         default:
-          context.state.modifiedList = context.state.modifiedList.sort(sortByNewest)
+          context.state.modifiedList = context.state.modifiedList.sort(
+            sortByNewest
+          );
           break;
       }
 
@@ -407,19 +445,24 @@ export default new Vuex.Store({
       }
     },
     async getWatchedMedia() {
-      let data = await FirestoreRepository.getWatchedMedia();
-      const plexUsername = 'simonhanselaer';
-      const entries = Object.entries(data.data);
-      entries.forEach(entry => {
-        let key = entry[0].slice(0, plexUsername.length);
-        if (key === plexUsername) {
-          FirestoreRepository.addToWatched(entry[1]);
-        }
-      })
+      const plexUsername = "simonhanselaer";
+      let data = await FirestoreRepository.getWatchedMedia(plexUsername);
+
+      data.forEach(element => {
+        FirestoreRepository.addToWatched(element);
+      });
     },
     async addToWatched(context, props) {
       console.log(context, props);
-      FirestoreRepository.addToWatched(props.toString());
+      FirestoreRepository.addToWatched(props);
+    },
+    async addToWatchedSeries(context, props) {
+      console.log(context, props);
+      FirestoreRepository.addToWatchedSeries(props);
+    },
+    async addToPlayedGames(context, props) {
+      console.log(context, props);
+      FirestoreRepository.addToPlayedGames(props);
     },
     async addItemToList(context, props) {
       console.log(context, props);
@@ -428,6 +471,29 @@ export default new Vuex.Store({
     async setModalValues(context, props) {
       console.log(props);
       context.state.modalValues = props;
+    },
+    async getUser(context) {
+
+      let data = await FirestoreRepository.getUser();
+      context.commit("SET_USER_DATA", data);
+    },
+    async getUsers(context) {
+      context.commit("SET_LOADING_STATUS_USER", true);
+
+      let data = await FirestoreRepository.getUsers();
+      context.commit("SET_USERS", data);
+
+      context.commit("SET_LOADING_STATUS_USER", false);
+    },
+
+    async addFriend(context, prop) {
+      FirestoreRepository.addFriend(prop);
+      console.log(context);
+    },
+
+    async getFriends(context) {
+      let data = await FirestoreRepository.getFriends();
+      context.commit("SET_FRIENDS", data);
     }
   },
   modules: {}

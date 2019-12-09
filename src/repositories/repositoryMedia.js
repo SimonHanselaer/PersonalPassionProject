@@ -13,7 +13,7 @@ const upcomingSeries = "/tv/on_the_air";
 const multiSearch = "/search/multi";
 const credits = "/credits";
 const externalId = "/external_ids";
-const initQuery = "&query="
+const initQuery = "&query=";
 const region = "&region=US";
 const page = "&page=";
 const person = "/person/";
@@ -86,7 +86,9 @@ export default {
   },
 
   getSearchResults(query) {
-    return axios.get(`${baseDomain}${multiSearch}${APIKey}${initQuery}${query}`);
+    return axios.get(
+      `${baseDomain}${multiSearch}${APIKey}${initQuery}${query}`
+    );
   },
 
   getCastExternalId(id) {

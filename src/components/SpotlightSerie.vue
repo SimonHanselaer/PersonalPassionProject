@@ -12,10 +12,10 @@
         "
         width="200"
       />
-      <p class="spotlightGenre details">{{computedSerieDetails.genres[0].name}}</p>
-      <p class="spotlightRuntime details">{{computedRuntime}}</p>
-      <p class="spotlightReleaseYear details">{{computedReleaseYear}}</p>
-      <p class="spotlightOverview">{{computedSerieDetails.overview}}</p>
+      <p class="spotlightGenre details">{{ computedSerieDetails.genres[0].name }}</p>
+      <p class="spotlightRuntime details">{{ computedRuntime }}</p>
+      <p class="spotlightReleaseYear details">{{ computedReleaseYear }}</p>
+      <p class="spotlightOverview">{{ computedSerieDetails.overview }}</p>
       <div class="spotlightBorder"></div>
 
       <button @click="addMediaItem" class="spotlightWatchlist wishlistButton">
@@ -88,7 +88,7 @@
             </g>
           </svg>
         </button>
-        <div v-bind:class="{active: isActive}">
+        <div v-bind:class="{ active: isActive }">
           <ul class="moreOptions textInputField">
             <li class="moreOptionsItem" @click="addToList">
               <svg
@@ -230,7 +230,16 @@ export default {
     },
     addToSeen() {
       let self = this;
-      this.$store.dispatch("addToWatched", self.computedSerie.id);
+
+      let today = new Date();
+      const dd = String(today.getDate()).padStart(2, "0");
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const yyyy = today.getFullYear();
+
+      today = yyyy + "-" + mm + "-" + dd;
+
+      const props = { id: self.computedSerie.id, timestamp: today };
+      this.$store.dispatch("addToWatchedSeries", props);
     }
   },
   computed: {

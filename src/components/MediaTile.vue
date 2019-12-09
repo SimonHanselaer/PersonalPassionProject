@@ -1,8 +1,8 @@
 <template>
   <article class="mediaTile" @click="goToDetail(id, mediaType)">
-    <h3 class="title">{{title}}</h3>
+    <h3 class="title">{{ title }}</h3>
     <img class="imageMedia" height="300" :src="src" />
-    <p class="visually-hidden">{{id}}</p>
+    <p class="visually-hidden">{{ id }}</p>
 
     <button @click.stop="addMediaItem" class="wishlistIcon wishlistButton">
       <svg
@@ -74,7 +74,7 @@
           </g>
         </svg>
       </button>
-      <div v-bind:class="{active: isActive}">
+      <div v-bind:class="{ active: isActive }">
         <ul class="moreOptionsMediaTile textInputField">
           <li class="moreOptionsItem" @click.stop="addToList">
             <svg
@@ -209,7 +209,33 @@ export default {
     },
     addToSeen() {
       let self = this;
-      this.$store.dispatch("addToWatched", self.id);
+
+      let today = new Date();
+      const dd = String(today.getDate()).padStart(2, "0");
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const yyyy = today.getFullYear();
+
+      today = yyyy + "-" + mm + "-" + dd;
+
+      const props = { id: self.id, timestamp: today };
+
+      switch (self.mediaType) {
+        case "movie":
+          this.$store.dispatch("addToWatched", props);
+
+          break;
+        case "tv":
+          this.$store.dispatch("addToWatchedSeries", props);
+
+          break;
+        case "game":
+          this.$store.dispatch("addToPlayedGames", props);
+
+          break;
+
+        default:
+          break;
+      }
     }
   }
 };

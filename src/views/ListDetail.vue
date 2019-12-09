@@ -1,21 +1,36 @@
 <template>
   <div class="contentContainer" v-if="computedListName">
-    <h2>{{computedListName}}</h2>
+    <h2>{{ computedListName }}</h2>
 
     <section class="listDetailFormContainer">
       <form v-on:change="updateList">
         <div>
           <h3>Order by</h3>
           <label>
-            <input type="radio" name="picked" v-model="listProps.sortBy" value="newestAdded" />
+            <input
+              type="radio"
+              name="picked"
+              v-model="listProps.sortBy"
+              value="newestAdded"
+            />
             Sort by newest added
           </label>
           <label>
-            <input type="radio" name="picked" v-model="listProps.sortBy" value="name" />
+            <input
+              type="radio"
+              name="picked"
+              v-model="listProps.sortBy"
+              value="name"
+            />
             Sort by Name
           </label>
           <label>
-            <input type="radio" name="picked" v-model="listProps.sortBy" value="releaseDate" />
+            <input
+              type="radio"
+              name="picked"
+              v-model="listProps.sortBy"
+              value="releaseDate"
+            />
             Sort by Release date
           </label>
         </div>
@@ -24,22 +39,42 @@
           <div>
             <h4>Type</h4>
             <label>
-              <input type="checkbox" name="filterType" v-model="listProps.type" value="movie" />
+              <input
+                type="checkbox"
+                name="filterType"
+                v-model="listProps.type"
+                value="movie"
+              />
               Movie
             </label>
             <label>
-              <input type="checkbox" name="filterType" v-model="listProps.type" value="tv" />
+              <input
+                type="checkbox"
+                name="filterType"
+                v-model="listProps.type"
+                value="tv"
+              />
               TV-Serie
             </label>
             <label>
-              <input type="checkbox" name="filterType" v-model="listProps.type" value="game" />
+              <input
+                type="checkbox"
+                name="filterType"
+                v-model="listProps.type"
+                value="game"
+              />
               Game
             </label>
           </div>
           <div>
             <h4>Detail</h4>
             <label>
-              <input type="checkbox" name="filterDetail" v-model="listProps.watched" :value="true" />
+              <input
+                type="checkbox"
+                name="filterDetail"
+                v-model="listProps.watched"
+                :value="true"
+              />
               Watched
             </label>
             <div>

@@ -5,7 +5,11 @@
       <MediaTile
         slot-scope="serie"
         :title="serie.name"
-        :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + serie.poster_path"
+        :src="
+          computedConfig.images.base_url +
+            computedConfig.images.poster_sizes[4] +
+            serie.poster_path
+        "
         :id="serie.id"
         :mediaType="'tv'"
         :duration="0"

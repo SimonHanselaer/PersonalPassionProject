@@ -5,7 +5,11 @@
       <MediaTile
         slot-scope="mediaItem"
         :title="mediaItem.title"
-        :src="computedConfig.images.base_url + computedConfig.images.poster_sizes[4] + mediaItem.poster_path"
+        :src="
+          computedConfig.images.base_url +
+            computedConfig.images.poster_sizes[4] +
+            mediaItem.poster_path
+        "
         :id="mediaItem.id"
         :mediaType="'movie'"
         :duration="0"

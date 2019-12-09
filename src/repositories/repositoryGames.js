@@ -118,7 +118,8 @@ export default {
   async getScreenshot(id) {
     const config = {
       method: "POST",
-      url: "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/screenshots",
+      url:
+        "https://cors-anywhere.herokuapp.com/https://api-v3.igdb.com/screenshots",
       headers: {
         Accept: "application/json",
         "user-key": "bb1628f3841097cc6c575a5621692f75",

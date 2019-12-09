@@ -6,20 +6,20 @@
       <img
         class="spotlightImage"
         v-bind:src="
-            computedConfig.images.base_url +
-              computedConfig.images.poster_sizes[4] +
-              computedMovie.poster_path
-          "
+          computedConfig.images.base_url +
+            computedConfig.images.poster_sizes[4] +
+            computedMovie.poster_path
+        "
         width="200"
       />
       <p
         class="spotlightGenre details"
         v-if="computedMovieDetails.genres[0]"
-      >{{computedMovieDetails.genres[0].name}}</p>
+      >{{ computedMovieDetails.genres[0].name }}</p>
       <p class="spotlightGenre details" v-else>Not found</p>
-      <p class="spotlightRuntime details">{{computedRuntime}}</p>
-      <p class="spotlightReleaseYear details">{{computedReleaseYear}}</p>
-      <p class="spotlightOverview">{{computedMovieDetails.overview}}</p>
+      <p class="spotlightRuntime details">{{ computedRuntime }}</p>
+      <p class="spotlightReleaseYear details">{{ computedReleaseYear }}</p>
+      <p class="spotlightOverview">{{ computedMovieDetails.overview }}</p>
       <div class="spotlightBorder"></div>
 
       <button @click="addMediaItem" class="spotlightWatchlist wishlistButton">
@@ -92,7 +92,7 @@
             </g>
           </svg>
         </button>
-        <div v-bind:class="{active: isActive}">
+        <div v-bind:class="{ active: isActive }">
           <ul class="moreOptions textInputField">
             <li class="moreOptionsItem" @click="addToList">
               <svg
@@ -234,7 +234,16 @@ export default {
     },
     addToSeen() {
       let self = this;
-      this.$store.dispatch("addToWatched", self.computedMovie.id);
+
+      let today = new Date();
+      const dd = String(today.getDate()).padStart(2, "0");
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const yyyy = today.getFullYear();
+
+      today = yyyy + "-" + mm + "-" + dd;
+
+      const props = { id: self.computedMovie.id, timestamp: today };
+      this.$store.dispatch("addToWatched", props);
     }
   },
   computed: {

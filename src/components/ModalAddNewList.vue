@@ -1,32 +1,30 @@
 <template>
-  <div class="addlist addlistContainer">
-    <h2 class="header-2">Add list</h2>
+  <modal name="addNewList" class="modal">
+    <h4 class>Add list</h4>
     <form v-on:submit.prevent v-on:submit="handleFormSubmit">
       <label>
         Name
         <input type="text" v-model="listName" placeholder="name" />
       </label>
-
       <button type="submit">Submit</button>
     </form>
-  </div>
+  </modal>
 </template>
 
 <script>
 export default {
-  name: "profilelists",
+  name: "modalAddNewList",
   data() {
     return {
       listName: ""
     };
   },
-  components: {},
-  created() {},
   methods: {
     handleFormSubmit() {
       this.$store.dispatch("addUserList", this.listName);
       this.listName = "";
     }
-  }
+  },
+  computed: {}
 };
 </script>

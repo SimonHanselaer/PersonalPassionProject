@@ -12,19 +12,20 @@ import Profile from "../views/Profile.vue";
 import Detail from "../views/Detail.vue";
 import ListDetail from "../views/ListDetail.vue";
 import Navigation from "../components/Navigation.vue";
+import SearchPeople from "../views/SearchPeople.vue";
 
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   routes: [
     {
-      path: '*',
-      redirect: { name: 'movies' }
+      path: "*",
+      redirect: { name: "movies" }
     },
     {
-      path: '/',
-      redirect: { name: 'movies' }
+      path: "/",
+      redirect: { name: "movies" }
     },
     {
       path: "/login",
@@ -91,6 +92,14 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/searchPeople",
+      name: "searchPeople",
+      components: { content: SearchPeople, navigation: Navigation },
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
@@ -99,8 +108,8 @@ router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login');
-  else if (!requiresAuth && currentUser) next('home');
+  if (requiresAuth && !currentUser) next("login");
+  else if (!requiresAuth && currentUser) next("home");
   else next();
 });
 

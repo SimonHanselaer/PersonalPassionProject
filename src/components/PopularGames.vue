@@ -5,7 +5,11 @@
       <MediaTile
         slot-scope="mediaItem"
         :title="mediaItem.name"
-        :src="'https://images.igdb.com/igdb/image/upload/t_720p/' + mediaItem.cover + '.jpg'"
+        :src="
+          'https://images.igdb.com/igdb/image/upload/t_720p/' +
+            mediaItem.cover +
+            '.jpg'
+        "
         :id="mediaItem.id"
         :mediaType="'game'"
         :duration="0"

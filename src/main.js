@@ -4,16 +4,14 @@ import router from "./router";
 import store from "./store";
 import firebase from "firebase";
 
-import { firestorePlugin } from 'vuefire';
+import { firestorePlugin } from "vuefire";
 // import firebase from 'firebase/app';
-import 'firebase/firestore';
-import VModal from 'vue-js-modal'
-
-
+import "firebase/firestore";
+import VModal from "vue-js-modal";
 
 Vue.config.productionTip = false;
 
-let app = '';
+let app = "";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBPhNgyYREfkPbGyE9y-mSbrtIW1vjbjXY",
@@ -34,10 +32,9 @@ firebase.auth().onAuthStateChanged(() => {
       render: h => h(App)
     }).$mount("#app");
   }
-})
+});
 
 Vue.use(firestorePlugin);
-Vue.use(VModal)
+Vue.use(VModal);
 
-export const db = firebase.firestore()
-
+export const db = firebase.firestore();

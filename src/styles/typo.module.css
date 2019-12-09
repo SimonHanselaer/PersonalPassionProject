@@ -1,4 +1,4 @@
-.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton {
+.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton, .profileAddFriends {
   color: #fff;
   font-family: montserrat;
 }
@@ -87,4 +87,19 @@
 
 .modal {
   color: #333;
+}
+
+.profileAddFriends {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.header-8 {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.header-9 {
+  font-size: 1.9rem;
+  font-weight: 600;
 }

@@ -1,8 +1,8 @@
 <template>
   <modal name="addMediaToList" class="modal">
-    <h4 class>{{title}}</h4>
+    <h4 class>{{ title }}</h4>
     <article v-for="list in computedLists" v-bind:key="list.id">
-      <p>{{list.name}}</p>
+      <p>{{ list.name }}</p>
       <button @click="addToList(list.id)">Add</button>
     </article>
   </modal>
