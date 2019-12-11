@@ -193,13 +193,32 @@
                     computedConfig.images.poster_sizes[4] +
                     actor.profile_path
                 "
-                height="225"
+                height="300"
                 alt
               />
               <p class="castName">{{ actor.name }}</p>
             </a>
           </li>
         </ul>
+      </section>
+
+      <section class="detailSimilar">
+        <h4 class="header-6">Similar movies</h4>
+        <MediaList :media="computedSimilar">
+          <MediaTile
+            slot-scope="mediaItem"
+            :title="mediaItem.title"
+            :src="
+          computedConfig.images.base_url +
+            computedConfig.images.poster_sizes[4] +
+            mediaItem.poster_path
+        "
+            :id="mediaItem.id"
+            :mediaType="'movie'"
+            :duration="0"
+            :releaseDate="mediaItem.release_date"
+          />
+        </MediaList>
       </section>
 
       <section class="detailDetails">
@@ -389,7 +408,7 @@
                     computedConfig.images.poster_sizes[4] +
                     actor.profile_path
                 "
-                height="225"
+                height="300"
                 alt
               />
               <p class="castName">{{ actor.name }}</p>
@@ -397,6 +416,26 @@
           </li>
         </ul>
       </section>
+
+      <section class="detailSimilar">
+        <h4 class="header-6">Similar Series</h4>
+        <MediaList :media="computedSimilar">
+          <MediaTile
+            slot-scope="mediaItem"
+            :title="mediaItem.name"
+            :src="
+          computedConfig.images.base_url +
+            computedConfig.images.poster_sizes[4] +
+            mediaItem.poster_path
+        "
+            :id="mediaItem.id"
+            :mediaType="'tv'"
+            :duration="0"
+            :releaseDate="mediaItem.first_air_date"
+          />
+        </MediaList>
+      </section>
+
       <section class="detailDetails">
         <h4 class="header-6">Details</h4>
         <div>
@@ -601,10 +640,12 @@
 const moment = require("moment");
 import store from "./../store/index";
 import Loading from "./../components/Loading";
+import MediaList from "./../components/MediaList";
+import MediaTile from "./../components/MediaTile";
 
 export default {
   name: "detail",
-  components: { Loading },
+  components: { Loading, MediaList, MediaTile },
   data() {
     return {
       properties: {
@@ -850,6 +891,10 @@ export default {
       const convertedTime = `${hours}h ${minutes}min`;
 
       return convertedTime;
+    },
+
+    computedSimilar() {
+      return store.state.similarMedia;
     }
   }
 };

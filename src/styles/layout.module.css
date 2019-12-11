@@ -1,11 +1,12 @@
 .layout {
     display: grid;
     grid-template-columns: 22rem 1fr;
-    grid-template-rows: 6rem auto;
+    grid-template-rows: 6rem auto 31rem;
     gap: 3rem;
 
     grid-template-areas: 'navBar navBar'
-    'sideBar contentContainer';
+    'sideBar contentContainer'
+    'sideBar footer';
 }
 
 .sideBar {
@@ -13,16 +14,21 @@
 
   position: fixed;
   top: 6rem;
+
+  z-index: 5;
 }
 
 .navBar {
   grid-area: navBar;
 
   position: fixed;
+
+  z-index: 5;
 }
 
 .contentContainer {
   grid-area: contentContainer;
+  min-height: 79vh;
 }
 
 .layoutContent {
@@ -34,6 +40,69 @@
   grid-template-areas: 'spotlight'
   'popular'
   'upcoming';
+}
+
+.footer {
+  margin-top: 4rem;
+  grid-area: footer;
+  background-color: #12162099;
+  margin-left: -3rem;
+  z-index: 4;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr .1rem 1fr auto 1fr;
+  grid-template-areas: '. footerTMDB . footerDivider . footerIGDB .';
+}
+
+.footerDivider {
+  grid-area: footerDivider;
+  border-left: .1rem solid #fff;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footerTMDB, .footerIGDB {
+  display: grid;
+  grid-template-rows: 6.7rem repeat(3,auto);
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-areas:
+  '. footerSectionLogo .'
+  '. footerSectionTitle .'
+  '. footerSectionLink .'
+  '. footerSectionText .';
+
+  gap: 1rem;
+
+  text-align: center;
+  align-self: center;
+
+  width: 40rem;
+  height: 15rem;
+}
+
+.footerSectionTitle {
+  grid-area: footerSectionTitle;
+}
+
+.footerSectionLogo {
+  grid-area: footerSectionLogo;
+  margin: 0 auto;
+}
+
+.footerSectionLink {
+  grid-area: footerSectionLink;
+}
+
+.footerSectionText {
+  grid-area: footerSectionText;
+}
+
+.footerTMDB {
+  grid-area: footerTMDB;
+}
+
+.footerIGDB {
+  grid-area: footerIGDB;
 }
 
 /* spotlight ------------------------------------------------------------------------------------------------------------------------------ */
@@ -163,14 +232,17 @@
   content: '';
   background-color: #00000050;
   grid-area: 1 / 1 / -1 / -1;
+  z-index: 1;
 }
 
 .wishlistIcon {
   grid-area: wishlistIcon;
+  z-index: 1;
 }
 
 .options {
   grid-area: options;
+  z-index: 1;
 }
 
 .title {
@@ -179,12 +251,13 @@
 
   display: flex;
   align-items: flex-end;
+  z-index: 1;
 }
 
 .imageMedia {
   font-size: 0;
   grid-area: 1 / 1 / -1 / -1;
-  z-index: -1;
+  z-index: 0;
 
   & img {
     width: 100%;
@@ -338,7 +411,7 @@ border-radius: .2rem;
 .detail {
   display: grid;
   grid-template-columns: 27rem repeat(3, max-content) 1fr 3rem repeat(3, 5rem);
-  grid-template-rows: repeat(2, auto) .2rem auto auto 1fr 2.5rem 25.5rem;
+  grid-template-rows: repeat(2, auto) .2rem auto auto 1fr 2.5rem auto auto;
   grid-template-areas: 
   'detailImage detailTitle detailTitle detailTitle detailTitle detailTitle detailTitle . detailRating'
   'detailImage detailGenre detailRuntime detailReleaseYear . . detailButtons detailButtons detailButtons'
@@ -347,7 +420,8 @@ border-radius: .2rem;
   'detailImage detailImdb detailImdb detailImdb detailImdb . detailDetails detailDetails detailDetails'
   'detailImage . . . . . detailDetails detailDetails detailDetails'
   '. . . . . . . . .'
-  'detailCast detailCast detailCast detailCast detailCast detailCast detailCast detailCast .';
+  'detailCast detailCast detailCast detailCast detailCast detailCast detailCast detailCast .'
+  'detailSimilar detailSimilar detailSimilar detailSimilar detailSimilar detailSimilar detailSimilar detailSimilar .';
 
   gap: 1.5rem;
   width: 110rem;
@@ -447,14 +521,15 @@ border-bottom: .2rem solid #fff;
 
 .castList {
   display: grid;
-  grid-template-columns: repeat(5, 15rem);
-  gap: 1rem;
+  grid-template-columns: repeat(5, 20rem);
+  gap: 2.5rem;
+  padding-bottom: 2rem;
 }
 
 .castTile {
   display: grid;
-  grid-template-columns: 1rem 13rem 1rem;
-  grid-template-rows: 1rem 15.5rem 5.5rem .5rem;
+  grid-template-columns: 1rem 18rem 1rem;
+  grid-template-rows: 1rem 22.5rem 5.5rem .5rem;
 
   grid-template-areas: '. . .'
   '. . .'
@@ -487,10 +562,14 @@ border-bottom: .2rem solid #fff;
     }
 }
 
+.detailSimilar {
+  grid-area: detailSimilar;
+}
+
 .detailBackdrop {
   font-size: 0;
   grid-area: 1 / 1/ -1 /-1;
-  z-index: -2;
+  z-index: -10;
   opacity: .2;
   filter: grayscale(100%) brightness(60%);
   position: fixed;
@@ -510,6 +589,44 @@ border-bottom: .2rem solid #fff;
 .listDetailFormContainer {
   height: 20rem;
   padding-top: 2rem;
+}
+
+.listItemsSectionContainer {
+  border-top: #fff solid .1rem;
+  margin-right: 3rem;
+  margin-top: .5rem;
+}
+
+.listItemsContainer {
+  padding-top: 2rem;
+}
+
+.filterButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 3rem;
+  margin-top: -3.5rem;
+}
+
+.listDetailForm {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+}
+
+.listDetailFormOrder {
+  padding-right: 5rem;
+}
+
+.listDetailFormFilter {
+  display: flex;
+  flex-direction: row;
+}
+
+.listDetailFormType {
+  display: flex;
+  flex-direction: column;
+  padding-right: 5rem;
 }
 
 .addlistContainer {
@@ -565,7 +682,6 @@ border-bottom: .2rem solid #fff;
   left: 50%;
   margin: 2rem;
   margin-top: 5rem;
-
 }
 
 /* Profile -------------------------------------------------------------------------------------------------------------------------------- */
@@ -656,8 +772,22 @@ border-bottom: .2rem solid #fff;
   'listTitle .'
   'listCount .';
 
-  background-color: #00000070;
+  background-color: #00000090;
   border: #3764FC solid .13rem;
+
+  overflow: hidden;
+}
+
+.listImage {
+    font-size: 0;
+    grid-area: 1 / 1 / -1 / -1;
+    z-index: -1;
+
+}
+
+.listImage img {
+  width: 11.41rem;
+  height: 100%;
 }
 
 .listTitle, .listCount {

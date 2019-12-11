@@ -77,21 +77,23 @@
   padding-bottom: 2.1rem;
 }
 
-.logoutButton {
+.logoutButton, .settingsButton {
   background: none;
   border: none;
   padding: 0;
   display: flex;
   justify-content: space-between;
-  width: 12rem;
+  width: 18rem;
   align-items: center;
   
   position: fixed;
-  bottom: 2rem;
+  bottom: 7.5rem;
+  left: 2rem;
 }
 
-.logoutButton svg {
+.logoutButton svg, .settingsButton svg {
   padding: 0;
+  margin-right: 1rem;
 }
 
 .backButton {
@@ -106,5 +108,12 @@
   width: 8rem;
 
   outline: none;
+}
+
+.settingsButton {
+  padding-top: 1.5rem;
+  border-top: #fff .1rem solid;
+  position: fixed;
+  bottom: 2rem;
 }
   

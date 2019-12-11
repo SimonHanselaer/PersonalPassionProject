@@ -17,6 +17,7 @@ const initQuery = "&query=";
 const region = "&region=US";
 const page = "&page=";
 const person = "/person/";
+const similar = "/similar";
 
 //spotlight movie -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const TodayDate = new Date();
@@ -93,5 +94,12 @@ export default {
 
   getCastExternalId(id) {
     return axios.get(`${baseDomain}${person}${id}${externalId}${APIKey}`);
+  },
+
+  getSimilarMovies(id) {
+    return axios.get(`${baseDomain}${movieDetails}${id}${similar}${APIKey}`);
+  },
+  getSimilarSeries(id) {
+    return axios.get(`${baseDomain}${serieDetails}${id}${similar}${APIKey}`);
   }
 };

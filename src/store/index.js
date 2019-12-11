@@ -40,6 +40,7 @@ export default new Vuex.Store({
     mediaDetailsCredits: [],
     mediaDetailsCast: [],
     mediaDetailsExternalId: [],
+    similarMedia: [],
     refactoredNumber: 0,
     config: [],
     modalValues: {}
@@ -155,6 +156,9 @@ export default new Vuex.Store({
     },
     SET_LOADING_STATUS_USER(state, status) {
       state.loadingStatusUser = status
+    },
+    SET_SIMILAR_MEDIA(state, media) {
+      state.similarMedia = media;
     }
   },
   actions: {
@@ -259,6 +263,9 @@ export default new Vuex.Store({
             context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
           }
 
+          data = await MediaRepository.getSimilarMovies(props.id);
+          context.commit("SET_SIMILAR_MEDIA", data.data.results.splice(0, 5));
+
           context.commit("SET_LOADING_STATUS_DETAILS", false);
           break;
         case "tv":
@@ -279,6 +286,9 @@ export default new Vuex.Store({
             );
             context.state.mediaDetailsCast[i].imdb_id = data.data.imdb_id;
           }
+
+          data = await MediaRepository.getSimilarSeries(props.id);
+          context.commit("SET_SIMILAR_MEDIA", data.data.results.splice(0, 5));
 
           context.commit("SET_LOADING_STATUS_DETAILS", false);
 
@@ -334,6 +344,7 @@ export default new Vuex.Store({
     async getListItems(context, props) {
       let data = await FirestoreRepository.getListItems(props);
       context.commit("SET_LIST_ITEMS", data);
+      return data;
     },
 
     async getWatchedMediaItems(context) {
@@ -445,8 +456,7 @@ export default new Vuex.Store({
       }
     },
     async getWatchedMedia() {
-      const plexUsername = "simonhanselaer";
-      let data = await FirestoreRepository.getWatchedMedia(plexUsername);
+      let data = await FirestoreRepository.getWatchedMedia();
 
       data.forEach(element => {
         FirestoreRepository.addToWatched(element);
@@ -494,6 +504,14 @@ export default new Vuex.Store({
     async getFriends(context) {
       let data = await FirestoreRepository.getFriends();
       context.commit("SET_FRIENDS", data);
+    },
+    async addPlexUsername(context, props) {
+      console.log(context);
+      FirestoreRepository.addPlexUsername(props);
+    },
+    async addUsername(context, props) {
+      console.log(context);
+      FirestoreRepository.addUsername(props);
     }
   },
   modules: {}

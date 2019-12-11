@@ -13,6 +13,8 @@ import Detail from "../views/Detail.vue";
 import ListDetail from "../views/ListDetail.vue";
 import Navigation from "../components/Navigation.vue";
 import SearchPeople from "../views/SearchPeople.vue";
+import Settings from "../views/Settings.vue";
+import Footer from "../components/Footer.vue";
 
 Vue.use(Router);
 
@@ -40,7 +42,7 @@ const router = new Router({
     {
       path: "../movies",
       name: "movies",
-      components: { content: Home, navigation: Navigation },
+      components: { content: Home, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -48,7 +50,7 @@ const router = new Router({
     {
       path: "/shows",
       name: "shows",
-      components: { content: Shows, navigation: Navigation },
+      components: { content: Shows, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -56,7 +58,7 @@ const router = new Router({
     {
       path: "/games",
       name: "games",
-      components: { content: Games, navigation: Navigation },
+      components: { content: Games, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -64,7 +66,7 @@ const router = new Router({
     {
       path: "/social",
       name: "social",
-      components: { content: Social, navigation: Navigation },
+      components: { content: Social, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -72,7 +74,7 @@ const router = new Router({
     {
       path: "/profile",
       name: "profile",
-      components: { content: Profile, navigation: Navigation },
+      components: { content: Profile, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -80,7 +82,7 @@ const router = new Router({
     {
       path: "/detail/:mediaType/:detailId",
       name: "detail",
-      components: { content: Detail, navigation: Navigation },
+      components: { content: Detail, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -88,7 +90,7 @@ const router = new Router({
     {
       path: "/listDetail/:detailId",
       name: "listDetail",
-      components: { content: ListDetail, navigation: Navigation },
+      components: { content: ListDetail, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
@@ -96,11 +98,19 @@ const router = new Router({
     {
       path: "/searchPeople",
       name: "searchPeople",
-      components: { content: SearchPeople, navigation: Navigation },
+      components: { content: SearchPeople, navigation: Navigation, footer: Footer },
       meta: {
         requiresAuth: true
       }
-    }
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      components: { content: Settings, navigation: Navigation, footer: Footer },
+      meta: {
+        requiresAuth: true
+      }
+    },
   ]
 });
 

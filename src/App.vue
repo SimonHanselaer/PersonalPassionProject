@@ -2,6 +2,7 @@
   <div id="app" class="normal layout">
     <router-view name="navigation" />
     <router-view name="content" />
+    <router-view name="footer" />
     <ModalAddToList
       :title="computedModalValues.title"
       :id="computedModalValues.id"

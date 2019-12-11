@@ -1,9 +1,9 @@
-.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton, .profileAddFriends {
+.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton, .profileAddFriends, .settingsButton {
   color: #fff;
   font-family: montserrat;
 }
 
-.normal, .logoutButton {
+.normal, .logoutButton, .settingsButton {
   font-size: 1.6rem;
   font-weight: 300;
   line-height: 2.3rem;
@@ -102,4 +102,19 @@
 .header-9 {
   font-size: 1.9rem;
   font-weight: 600;
+}
+
+.footerHeader {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.footerLink {
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.footerText {
+  font-size: 1rem;
+  font-weight: normal;
 }

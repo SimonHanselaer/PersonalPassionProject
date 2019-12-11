@@ -41,7 +41,8 @@ export default {
                     type: data.type,
                     duration: data.duration,
                     releaseDate: data.releaseDate,
-                    addedOn: firebase.firestore.FieldValue.serverTimestamp()
+                    addedOn: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: localStorage.uid
                 });
                 let updateCount = db.collection("lists").doc(localStorage.uid);
                 updateCount.update({
@@ -63,7 +64,8 @@ export default {
                     data.push({
                         id: doc.id,
                         name: doc.data().name,
-                        count: doc.data().count
+                        count: doc.data().count,
+                        thumbnails: doc.data().thumbnails
                     });
                 });
             })
@@ -108,9 +110,11 @@ export default {
         });
         return listItems;
     },
-    async getWatchedMedia(username) {
+    async getWatchedMedia() {
+        let plexUsername = await db.collection("users").doc(localStorage.uid).get().then(doc => { return doc.data().plexUsername });
+
         let data = [];
-        const watchedRef = db.collection("watched").where("username", "==", username);
+        const watchedRef = db.collection("watched").where("username", "==", plexUsername);
 
         const watchedItems = await watchedRef.get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -159,6 +163,12 @@ export default {
     },
 
     async addItemToList(data) {
+        db.collection("lists").doc(data.listId).get().then(doc => {
+            if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
+                db.collection("lists").doc(data.listId).update({ thumbnails: firebase.firestore.FieldValue.arrayUnion(data.src) });
+            }
+        });
+
         let addItem = db
             .collection("lists")
             .doc(data.listId)
@@ -175,7 +185,8 @@ export default {
                     type: data.type,
                     duration: data.duration,
                     releaseDate: data.releaseDate,
-                    addedOn: firebase.firestore.FieldValue.serverTimestamp()
+                    addedOn: firebase.firestore.FieldValue.serverTimestamp(),
+                    userId: localStorage.uid
                 });
                 let updateCount = db.collection("lists").doc(data.listId);
                 updateCount.update({
@@ -249,6 +260,14 @@ export default {
         }
 
         return data
+    },
+
+    async addPlexUsername(name) {
+        db.collection("users").doc(localStorage.uid).update({ plexUsername: name });
+    },
+
+    async addUsername(name) {
+        db.collection("users").doc(localStorage.uid).update({ name: name })
     }
 
 };

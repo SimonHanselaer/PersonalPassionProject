@@ -1,6 +1,6 @@
 <template>
   <div class="spotlight spotlightMovie">
-    <h2 class="header-2">Spotlight</h2>
+    <h2 class="header-2">Our pick of the day</h2>
     <article v-if="!computedLoadingStatus & !computedLoadingStatusConfig" class="spotlightLayout">
       <h3 class="spotlightTitle header-3">{{ computedMovie.title }}</h3>
       <img
