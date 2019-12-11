@@ -14,6 +14,7 @@ export default new Vuex.Store({
     userId: localStorage.uid,
     userLists: [],
     users: [],
+    filteredUsers: [],
     friends: [],
     listName: "",
     listItems: [],
@@ -378,8 +379,14 @@ export default new Vuex.Store({
       if (props.watched) {
         context.state.modifiedList = await context.state.modifiedList.filter(
           mediaItem => {
+            let watched = false;
             for (let i = 0; i < context.state.watchedMedia.length; i++) {
-              return mediaItem.id != context.state.watchedMedia[i];
+              if (mediaItem.id === context.state.watchedMedia[i].mediaId) {
+                watched = true;
+              };
+            }
+            if (!watched) {
+              return mediaItem
             }
           }
         );
@@ -512,6 +519,13 @@ export default new Vuex.Store({
     async addUsername(context, props) {
       console.log(context);
       FirestoreRepository.addUsername(props);
+    },
+    async searchFriends(context, prop) {
+      console.log(context, prop);
+
+      context.state.filteredUsers = context.state.users.filter(user => {
+        return user.name.toLowerCase().includes(prop.toLowerCase());
+      })
     }
   },
   modules: {}

@@ -25,6 +25,14 @@ export default {
         });
     },
     async addWatchlistItem(data) {
+
+        db.collection("lists").doc(localStorage.uid).get().then(doc => {
+            if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
+                db.collection("lists").doc(localStorage.uid).update({ thumbnails: firebase.firestore.FieldValue.arrayUnion(data.src) });
+            }
+        });
+
+
         let addItem = db
             .collection("lists")
             .doc(localStorage.uid)
@@ -152,17 +160,42 @@ export default {
 
     async getWatchedMediaItems() {
         let data = [];
-        data = await db
+        let dataMovies = await db
             .collection("users")
             .doc(localStorage.uid)
             .get()
             .then(doc => {
                 return doc.data().watched;
             });
+
+        data = data.concat(dataMovies);
+
+        let dataSeries = await db
+            .collection("users")
+            .doc(localStorage.uid)
+            .get()
+            .then(doc => {
+                return doc.data().watchedSeries;
+            });
+
+        data = data.concat(dataSeries);
+
+        let dataGames = await db
+            .collection("users")
+            .doc(localStorage.uid)
+            .get()
+            .then(doc => {
+                return doc.data().playedGames;
+            });
+
+        data = data.concat(dataGames);
+
         return data;
     },
 
     async addItemToList(data) {
+        console.log(data);
+
         db.collection("lists").doc(data.listId).get().then(doc => {
             if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
                 db.collection("lists").doc(data.listId).update({ thumbnails: firebase.firestore.FieldValue.arrayUnion(data.src) });

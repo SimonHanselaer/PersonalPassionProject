@@ -1,8 +1,14 @@
 <template>
   <div class="searchpeople contentContainer">
     <h1 class="header-2">Search friends</h1>
-    <ul class="userContainer">
-      <li v-for="user in computedUsers" :key="user.id" class="userTile">
+    <input
+      type="text"
+      placeholder="Search your friends"
+      v-model="inputQueryFriends"
+      @keyup="handleChangeInput"
+    />
+    <ul class="userContainer" v-if="computedFilteredUsers.length > 0">
+      <li v-for="user in computedFilteredUsers" :key="user.id" class="userTile">
         <h2 class="userName">{{user.name}}</h2>
         <img :src="user.image" alt width="50" class="userImage" v-if="user.image" />
         <img src="assets/icon/user.svg" alt width="60" class="userImage" v-else />
@@ -23,7 +29,9 @@ import store from "./../store/index";
 export default {
   name: "searchPeople",
   data() {
-    return {};
+    return {
+      inputQueryFriends: ""
+    };
   },
   created() {
     store.dispatch("getUser");
@@ -32,6 +40,11 @@ export default {
   methods: {
     addFriend(id) {
       store.dispatch("addFriend", id);
+    },
+    handleChangeInput() {
+      let self = this;
+
+      store.dispatch("searchFriends", self.inputQueryFriends);
     }
   },
   computed: {
@@ -40,6 +53,9 @@ export default {
     },
     computedUsers() {
       return store.state.users;
+    },
+    computedFilteredUsers() {
+      return store.state.filteredUsers;
     }
   }
 };

@@ -102,7 +102,7 @@
           :id="listItem.id"
           :mediaType="listItem.type"
           :duration="0"
-          :releaseDate="listItem.release_date"
+          :releaseDate="listItem.releaseDate"
         />
       </MediaList>
     </section>

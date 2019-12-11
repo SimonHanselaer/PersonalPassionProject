@@ -1,6 +1,6 @@
 <template>
   <div id="footer" class="footer">
-    <section class="footerTMDB">
+    <a href="https://www.themoviedb.org/" class="footerTMDB" target="_blank">
       <h3 class="footerSectionTitle footerHeader">The Movie Database</h3>
       <svg
         class="footerSectionLogo"
@@ -58,16 +58,12 @@
           points="144.01 105.38 134.87 86.65 126.86 86.65 143.23 122.08 144.79 122.08 161.15 86.65 153.14 86.65 144.01 105.38"
         />
       </svg>
-      <a
-        href="https://www.themoviedb.org/"
-        class="footerSectionLink footerLink"
-        target="_blank"
-      >https://www.themoviedb.org/</a>
-      <p
-        class="footerSectionText footerText"
-      >This product uses the TMDb API but is not endorsed or certified by TMDb.</p>
-    </section>
-    <section class="footerIGDB">
+      <p class="footerSectionText footerText">
+        This product uses the TMDb API but is not endorsed or
+        <br />certified by TMDb.
+      </p>
+    </a>
+    <a href="https://www.igdb.com/" class="footerIGDB" target="_blank">
       <h3 class="footerSectionTitle footerHeader">IGDB</h3>
       <svg width="75" viewBox="0 0 512 512" fill="currentColor" class="footerSectionLogo">
         <path
@@ -77,15 +73,11 @@
           d="M476.9 364.09l-7.48-1.19a1353.31 1353.31 0 00-424 0l-7.47 1.19V152.93h439zm-219.49-30.83A1366.39 1366.39 0 01464 349V165.86H50.86V349a1366.26 1366.26 0 01206.55-15.74z"
         />
       </svg>
-      <a
-        href="https://www.igdb.com/"
-        class="footerSectionLink footerLink"
-        target="_blank"
-      >https://www.igdb.com/</a>
-      <p
-        class="footerSectionText footerText"
-      >This product uses the IGDB API but is not endorsed or certified by IGDB.</p>
-    </section>
+      <p class="footerSectionText footerText">
+        This product uses the IGDB API but is not endorsed or
+        <br />certified by IGDB.
+      </p>
+    </a>
     <div class="footerDivider"></div>
   </div>
 </template>
