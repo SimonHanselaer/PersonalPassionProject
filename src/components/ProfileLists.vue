@@ -70,6 +70,7 @@ export default {
   },
   components: {},
   created() {
+    this.$store.dispatch("getNewWatchlistItems");
     this.$store.dispatch("getLists");
   },
   methods: {

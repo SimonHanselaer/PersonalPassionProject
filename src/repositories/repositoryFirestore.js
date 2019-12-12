@@ -26,6 +26,8 @@ export default {
     },
     async addWatchlistItem(data) {
 
+        console.log(data);
+
         db.collection("lists").doc(localStorage.uid).get().then(doc => {
             if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
                 db.collection("lists").doc(localStorage.uid).update({ thumbnails: firebase.firestore.FieldValue.arrayUnion(data.src) });
@@ -313,6 +315,16 @@ export default {
 
     async deleteList(prop) {
         db.collection("lists").doc(prop).delete();
+    },
+
+    async getNewWatchlistItems() {
+        db.collection("addToWatchlist").where("userId", "==", localStorage.uid).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                this.addWatchlistItem(doc.data())
+                db.collection("addToWatchlist").doc(doc.id).delete()
+            })
+        });
+
     }
 
 };

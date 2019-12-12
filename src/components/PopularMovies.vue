@@ -43,6 +43,9 @@ export default {
     },
     computedLoadingStatusConfig() {
       return store.state.loadingStatusConfig;
+    },
+    computedUID() {
+      return localStorage.uid;
     }
   }
 };

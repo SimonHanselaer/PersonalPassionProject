@@ -534,6 +534,10 @@ export default new Vuex.Store({
     async deleteList(context, prop) {
       console.log(context);
       FirestoreRepository.deleteList(prop);
+    },
+
+    async getNewWatchlistItems() {
+      FirestoreRepository.getNewWatchlistItems();
     }
   },
   modules: {}
