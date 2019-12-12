@@ -4,7 +4,12 @@
     <section v-for="friend in computedFriends" :key="friend.id" class="friendContainer">
       <h2>{{friend.friendName}}</h2>
       <ul class="listContainer">
-        <li v-for="list in friend.listData" :key="list.id" class="listTile">
+        <li
+          v-for="list in friend.listData"
+          :key="list.id"
+          class="listTile"
+          @click="goToListDetail(list.id)"
+        >
           <h3 class="listTitle header-9">{{list.name}}</h3>
           <p class="listCount">{{list.count}} items in list</p>
         </li>
@@ -24,7 +29,14 @@ export default {
   created() {
     store.dispatch("getFriends");
   },
-  methods: {},
+  methods: {
+    goToListDetail(id) {
+      this.$router.push({
+        name: "listDetail",
+        params: { detailId: id }
+      });
+    }
+  },
   computed: {
     computedFriends() {
       return store.state.friends;

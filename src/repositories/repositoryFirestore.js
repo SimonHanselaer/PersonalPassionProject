@@ -301,6 +301,18 @@ export default {
 
     async addUsername(name) {
         db.collection("users").doc(localStorage.uid).update({ name: name })
+    },
+
+    async deleteFromList(props) {
+        db.collection("lists").doc(props.listId).collection("media").doc(props.itemId).delete();
+        let updateCount = db.collection("lists").doc(props.listId);
+        updateCount.update({
+            count: firebase.firestore.FieldValue.increment(-1)
+        })
+    },
+
+    async deleteList(prop) {
+        db.collection("lists").doc(prop).delete();
     }
 
 };

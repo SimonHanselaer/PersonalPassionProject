@@ -46,6 +46,11 @@
         <section class="listImage">
           <img :src="image" alt v-for="image in list.thumbnails" :key="image.id" />
         </section>
+        <section class="listDelete" v-if="list.id != computedUserId">
+          <button class="button listDeleteButton" @click.stop="deleteList(list.id)">
+            <p>delete</p>
+          </button>
+        </section>
       </li>
     </ul>
   </div>
@@ -53,11 +58,15 @@
 
 <script>
 import store from "../store/index";
+import { mixin as clickaway } from "vue-clickaway";
 
 export default {
   name: "profilelists",
+  mixins: [clickaway],
   data() {
-    return {};
+    return {
+      isActive: true
+    };
   },
   components: {},
   created() {
@@ -72,11 +81,21 @@ export default {
     },
     addNewList() {
       this.$modal.show("addNewList");
+    },
+    handleClickAway() {
+      this.isActive = true;
+    },
+    deleteList(id) {
+      this.$store.dispatch("deleteList", id);
+      this.$store.dispatch("getLists");
     }
   },
   computed: {
     computedUserLists() {
       return store.state.userLists;
+    },
+    computedUserId() {
+      return localStorage.uid;
     }
   }
 };

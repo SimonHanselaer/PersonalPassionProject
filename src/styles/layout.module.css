@@ -768,7 +768,7 @@ border-bottom: .2rem solid #fff;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr auto auto;
 
-  grid-template-areas: '. .'
+  grid-template-areas: '. listDelete'
   'listTitle .'
   'listCount .';
 
@@ -801,6 +801,19 @@ border-bottom: .2rem solid #fff;
 .listCount {
   grid-area: listCount;
   padding-bottom: .5rem;
+}
+
+.listDelete {
+  grid-area: listDelete;
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-start;
+  padding-top: 1rem;
+  padding-right: 1rem;
+}
+
+.listDeleteButton {
+  color: #fff;
 }
 
 .button {
@@ -865,4 +878,50 @@ border-bottom: .2rem solid #fff;
   border: none;
   border-radius: .2rem;
   margin-right: 1rem;
+}
+
+/* Modal ------------------------------------------------------------------------------------------------------------------------------ */
+
+.modalAddToList {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.modalTitle {
+  text-align: center;
+  color: #333;
+  padding-top: 2rem;
+}
+
+.modalArticle {
+  display: flex;
+  flex-direction: row;
+  height: 5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  padding-bottom: 1rem;
+}
+
+.modalInput {
+  border: none;
+  border-bottom: .1rem solid #333;
+  margin-left: 2rem;
+  outline: none;
+  width: 20rem;
+}
+
+.modalSubmit {
+  background-color: #3764FC;
+  outline: none;
+  border: none;
+  padding: .8rem;
+  width: 10rem;
+  border-radius: .2rem;
+  margin-left: 5rem;
+}
+
+.modalForm {
+  padding-top: 1rem;
 }

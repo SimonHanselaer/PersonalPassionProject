@@ -1,12 +1,9 @@
 <template>
-  <modal name="addNewList" class="modal">
-    <h4 class>Add list</h4>
-    <form v-on:submit.prevent v-on:submit="handleFormSubmit">
-      <label>
-        Name
-        <input type="text" v-model="listName" placeholder="name" />
-      </label>
-      <button type="submit">Submit</button>
+  <modal name="addNewList" height="115" width="400" class="modal">
+    <h4 class="header-2 modalTitle">Add new list</h4>
+    <form v-on:submit.prevent v-on:submit="handleFormSubmit" class="modalForm">
+      <input type="text" v-model="listName" placeholder="name" class="modalInput" />
+      <button type="submit" class="modalSubmit">Add list</button>
     </form>
   </modal>
 </template>
@@ -23,6 +20,8 @@ export default {
     handleFormSubmit() {
       this.$store.dispatch("addUserList", this.listName);
       this.listName = "";
+      this.$store.dispatch("getLists");
+      this.$modal.hide("addNewList");
     }
   },
   computed: {}

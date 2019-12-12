@@ -103,6 +103,8 @@
           :mediaType="listItem.type"
           :duration="0"
           :releaseDate="listItem.releaseDate"
+          :inList="true"
+          :listId="computedListId"
         />
       </MediaList>
     </section>
@@ -171,6 +173,9 @@ export default {
     },
     computedModifiedList() {
       return store.state.modifiedList;
+    },
+    computedListId() {
+      return this.$route.params.detailId;
     }
   }
 };

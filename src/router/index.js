@@ -115,6 +115,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
   const currentUser = firebase.auth().currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 

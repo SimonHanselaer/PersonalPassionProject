@@ -1,4 +1,4 @@
-.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton, .profileAddFriends, .settingsButton {
+.normal, .nav, .header-1, .header-2, .textInputField, .loginInput, .loginButton, .logoutButton, .backButton, .profileAddFriends, .settingsButton, .modalSubmit {
   color: #fff;
   font-family: montserrat;
 }
@@ -117,4 +117,13 @@
 .footerText {
   font-size: 1rem;
   font-weight: normal;
+}
+
+.modalInput {
+  font-family: montserrat, sans-serif;
+  font-size: 1.8rem;
+}
+
+.modalSubmit {
+  font-size: 1.4rem;
 }

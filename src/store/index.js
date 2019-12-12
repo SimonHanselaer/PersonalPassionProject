@@ -526,6 +526,14 @@ export default new Vuex.Store({
       context.state.filteredUsers = context.state.users.filter(user => {
         return user.name.toLowerCase().includes(prop.toLowerCase());
       })
+    },
+    async deleteFromList(context, props) {
+      console.log(context);
+      FirestoreRepository.deleteFromList(props);
+    },
+    async deleteList(context, prop) {
+      console.log(context);
+      FirestoreRepository.deleteList(prop);
     }
   },
   modules: {}
