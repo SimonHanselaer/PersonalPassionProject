@@ -27,6 +27,7 @@ export default new Vuex.Store({
     loadingStatusUpcoming: false,
     loadingStatusDetails: false,
     loadingStatusUser: false,
+    loadingStatusRecommended: false,
     popularSeries: [],
     popularMovies: [],
     popularGames: [],
@@ -44,7 +45,11 @@ export default new Vuex.Store({
     similarMedia: [],
     refactoredNumber: 0,
     config: [],
-    modalValues: {}
+    modalValues: {},
+    lastWatchedMovie: [],
+    recommendedMovies: [],
+    lastWatchedSerie: [],
+    recommendedSeries: []
   },
   mutations: {
     SET_LOADING_STATUS(state, status) {
@@ -69,6 +74,10 @@ export default new Vuex.Store({
 
     SET_LOADING_STATUS_DETAILS(state, status) {
       state.loadingStatusDetails = status;
+    },
+
+    SET_LOADING_STATUS_RECOMMENDED(state, status) {
+      state.loadingStatusRecommended = status;
     },
 
     SET_CONFIG(state, config) {
@@ -160,6 +169,18 @@ export default new Vuex.Store({
     },
     SET_SIMILAR_MEDIA(state, media) {
       state.similarMedia = media;
+    },
+    SET_LAST_WATCHED_MOVIE(state, movie) {
+      state.lastWatchedMovie = movie;
+    },
+    SET_RECOMMENDED_MOVIES(state, movies) {
+      state.recommendedMovies = movies;
+    },
+    SET_LAST_WATCHED_SERIE(state, serie) {
+      state.lastWatchedSerie = serie;
+    },
+    SET_RECOMMENDED_SERIES(state, series) {
+      state.recommendedSeries = series;
     }
   },
   actions: {
@@ -538,6 +559,36 @@ export default new Vuex.Store({
 
     async getNewWatchlistItems() {
       FirestoreRepository.getNewWatchlistItems();
+    },
+
+    async fetchRecommendedMovies(context) {
+      context.commit("SET_LOADING_STATUS_RECOMMENDED", true);
+
+      let data = await FirestoreRepository.getLastWatchedMovie();
+      data = await MediaRepository.getMovieDetails(data.mediaId);
+
+      context.commit("SET_LAST_WATCHED_MOVIE", data.data);
+
+      data = await MediaRepository.getRecommendedMovies(data.data.id);
+      context.commit("SET_RECOMMENDED_MOVIES", data.data.results.splice(0, 5));
+
+      context.commit("SET_LOADING_STATUS_RECOMMENDED", false);
+
+    },
+
+    async fetchRecommendedSeries(context) {
+      context.commit("SET_LOADING_STATUS_RECOMMENDED", true);
+
+      let data = await FirestoreRepository.getLastWatchedSerie();
+      data = await MediaRepository.getSerieDetails(data.mediaId);
+
+      context.commit("SET_LAST_WATCHED_SERIE", data.data);
+
+      data = await MediaRepository.getRecommendedSeries(data.data.id);
+      context.commit("SET_RECOMMENDED_SERIES", data.data.results.splice(0, 5));
+
+      context.commit("SET_LOADING_STATUS_RECOMMENDED", false);
+
     }
   },
   modules: {}

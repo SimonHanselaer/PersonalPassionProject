@@ -22,8 +22,12 @@
 .header-2 {
   font-family: bebas-neue-by-fontfabric;
   font-size: 3.6rem;
-  font-weight: 700;
+  font-weight: 400;
   padding-bottom: 1rem;
+}
+
+.header-2-strong {
+  font-weight: 700;
 }
 
 .header-3 {

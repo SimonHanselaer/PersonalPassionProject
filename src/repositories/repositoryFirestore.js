@@ -325,6 +325,24 @@ export default {
             })
         });
 
+    },
+
+    async getLastWatchedMovie() {
+        let lastWatchedMovie = await db.collection("users").doc(localStorage.uid).get().then(user => {
+            let index = user.data().watched.length - 1;
+            return user.data().watched[index];
+        })
+
+        return lastWatchedMovie;
+    },
+
+    async getLastWatchedSerie() {
+        let lastWatchedSerie = await db.collection("users").doc(localStorage.uid).get().then(user => {
+            let index = user.data().watchedSeries.length - 1;
+            return user.data().watchedSeries[index];
+        })
+
+        return lastWatchedSerie;
     }
 
 };

@@ -1,6 +1,7 @@
 <template>
   <div class="home contentContainer layoutContent">
     <SpotlightMovie />
+    <RecommendedMovies />
     <PopularMovies />
     <UpcomingMovies />
   </div>
@@ -11,13 +12,15 @@
 import SpotlightMovie from "../components/SpotlightMovie.vue";
 import PopularMovies from "../components/PopularMovies.vue";
 import UpcomingMovies from "../components/UpcomingMovies.vue";
+import RecommendedMovies from "../components/RecommendedMovies.vue";
 
 export default {
   name: "home",
   components: {
     SpotlightMovie,
     PopularMovies,
-    UpcomingMovies
+    UpcomingMovies,
+    RecommendedMovies
   }
 };
 </script>

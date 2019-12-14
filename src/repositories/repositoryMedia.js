@@ -18,6 +18,7 @@ const region = "&region=US";
 const page = "&page=";
 const person = "/person/";
 const similar = "/similar";
+const recommended = "/recommendations"
 
 //spotlight movie -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 const TodayDate = new Date();
@@ -101,5 +102,11 @@ export default {
   },
   getSimilarSeries(id) {
     return axios.get(`${baseDomain}${serieDetails}${id}${similar}${APIKey}`);
+  },
+  getRecommendedMovies(id) {
+    return axios.get(`${baseDomain}${movieDetails}${id}${recommended}${APIKey}`);
+  },
+  getRecommendedSeries(id) {
+    return axios.get(`${baseDomain}${serieDetails}${id}${recommended}${APIKey}`);
   }
 };
