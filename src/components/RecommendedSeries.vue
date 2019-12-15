@@ -31,8 +31,8 @@ export default {
   name: "recommendedseries",
   components: { MediaList, MediaTile },
   created() {
-    this.$store.dispatch("fetchRecommendedSeries");
     this.$store.dispatch("fetchConfig");
+    this.$store.dispatch("fetchRecommendedSeries");
   },
   computed: {
     computedWatchedSerie() {

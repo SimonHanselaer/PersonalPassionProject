@@ -1,7 +1,10 @@
 <template>
   <div class="popular popularSeries">
     <h2 class="header-2">Popular series</h2>
-    <MediaList v-if="!computedLoadingStatus" :media="computedSeries">
+    <MediaList
+      v-if="!computedLoadingStatus && !computedLoadingStatusConfig"
+      :media="computedSeries"
+    >
       <MediaTile
         slot-scope="serie"
         :title="serie.name"
@@ -28,8 +31,8 @@ export default {
   name: "popularseries",
   components: { MediaList, MediaTile },
   created() {
-    this.$store.dispatch("fetchPopularSeries");
     this.$store.dispatch("fetchConfig");
+    this.$store.dispatch("fetchPopularSeries");
   },
   computed: {
     computedSeries() {
@@ -40,6 +43,9 @@ export default {
     },
     computedLoadingStatus() {
       return store.state.loadingStatus;
+    },
+    computedLoadingStatusConfig() {
+      return store.state.loadingStatusConfig;
     }
   }
 };

@@ -175,8 +175,8 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("fetchSpotlightSerie");
     this.$store.dispatch("fetchConfig");
+    this.$store.dispatch("fetchSpotlightSerie");
     this.$store.dispatch("getLists");
   },
   methods: {

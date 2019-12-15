@@ -187,8 +187,9 @@ export default new Vuex.Store({
     async fetchConfig(context) {
       context.commit("SET_LOADING_STATUS_CONFIG", true);
       const { data } = await MediaRepository.getConfig();
-      context.commit("SET_LOADING_STATUS_CONFIG", false);
       context.commit("SET_CONFIG", data);
+
+      context.commit("SET_LOADING_STATUS_CONFIG", false);
     },
     async fetchPopularSeries(context) {
       context.commit("SET_LOADING_STATUS_POPULAR", true);
