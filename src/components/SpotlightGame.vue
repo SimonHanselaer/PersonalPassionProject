@@ -1,5 +1,5 @@
 <template>
-  <div class="spotlightGame">
+  <div class="spotlight spotlightGame">
     <h2 class="header-2">Our pick of the day</h2>
     <article v-if="!computedLoadingStatus" class="spotlightLayout">
       <h3 class="spotlightTitle header-3">{{ computedGame.name }}</h3>

@@ -1,5 +1,5 @@
 <template>
-  <div class="contentContainer">
+  <div class="contentContainer detailContainer">
     <div v-if="!computedLoadingState & !computedLoadingStateConfig">
       <button class="backButton" @click="handleBack">
         Back

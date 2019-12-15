@@ -1,5 +1,5 @@
 <template>
-  <div class="contentContainer" v-if="computedListName">
+  <div class="contentContainer listDetail" v-if="computedListName">
     <h2 class="header-2">{{ computedListName }}</h2>
     <section class="filterButton">
       <button class="button" @click="handleFilterChange">

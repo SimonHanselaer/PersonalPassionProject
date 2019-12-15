@@ -33,5 +33,6 @@ export default {
 
 <style>
 @import "./styles/typo.module.css";
+@import "./styles/vars.css";
 @import "./App.module.css";
 </style>

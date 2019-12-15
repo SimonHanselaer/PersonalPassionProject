@@ -1,5 +1,5 @@
 <template>
-  <div class="popularGames">
+  <div class="popular popularGames">
     <h2 class="header-2">Popular games</h2>
     <MediaList v-if="!computedLoadingStatus" :media="computedGames">
       <MediaTile

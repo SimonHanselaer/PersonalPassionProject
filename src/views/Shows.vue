@@ -1,5 +1,5 @@
 <template>
-  <div class="shows contentContainer layoutContent">
+  <div class="shows contentContainer layoutContentSeries">
     <SpotlightSerie />
     <PopularSeries />
     <RecommendedSeries />

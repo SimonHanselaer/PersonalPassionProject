@@ -28,18 +28,35 @@
 
 .contentContainer {
   grid-area: contentContainer;
-  min-height: 79vh;
+  min-height: 86vh;
 }
 
-.layoutContent {
+.layoutContent, .layoutContentSeries, .layoutContentGames {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: repeat(4, auto);
   gap: 3rem;
+  row-gap: 5rem;
+
+  margin-right: 3rem;
 
   grid-template-areas: 'spotlight'
   'popular'
-  'upcoming';
+  'upcoming'
+  'recommended';
+}
+
+.layoutContentSeries {
+  grid-template-rows: repeat(3,auto);
+  grid-template-areas: 'spotlight'
+  'popular'
+  'recommended';
+}
+
+.layoutContentGames {
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas: 'spotlight'
+  'popular';
 }
 
 .footer {
@@ -107,13 +124,13 @@
 
 /* spotlight ------------------------------------------------------------------------------------------------------------------------------ */
 
-.spotLight {
+.spotlight {
   grid-area: spotlight;
 }
 
 .spotlightLayout {
   display: grid;
-  grid-template-columns: 20rem repeat(3, max-content) .7fr repeat(2, 2rem);
+  grid-template-columns: 20rem repeat(3, auto) auto repeat(2, 2rem);
   grid-template-rows: repeat(2, auto) .2rem auto 1fr;
   gap: 2rem;
   row-gap: 1rem;
@@ -146,14 +163,17 @@
 
 .spotlightGenre {
   grid-area: spotlightGenre;
+  width: fit-content;
 }
 
 .spotlightRuntime {
   grid-area: spotlightRuntime;
+  width: fit-content;
 }
 
 .spotlightReleaseYear {
   grid-area: spotlightReleaseYear;
+  width: fit-content;
 }
 
 .spotlightOverview {
@@ -206,6 +226,10 @@
 
 .upcoming {
   grid-area: upcoming;
+}
+
+.recommended {
+  grid-area: recommended;
 }
 
 .listLayout {
@@ -683,6 +707,9 @@ border-bottom: .2rem solid #fff;
 
 /* Profile -------------------------------------------------------------------------------------------------------------------------------- */
 
+.profile {
+}
+
 .profilebanner {
   display: grid;
 
@@ -976,4 +1003,82 @@ border-bottom: .2rem solid #fff;
 .settingContainer, .settingLabelContainer {
   display: flex;
   flex-direction: column;
+}
+
+/* Desktop + ------------------------------------------------------------------------------------------------------------------------------ */
+
+@media screen and (min-width: 1440px) {
+  .layoutContent {
+    grid-template-columns: 1fr 110rem 1fr;
+    grid-template-areas:
+      ". spotlight ."
+      ". popular ."
+      ". upcoming ."
+      ". recommended .";
+  }
+
+  .layoutContentSeries {
+    grid-template-columns: 1fr 110rem 1fr;
+    grid-template-areas: '. spotlight .'
+    '. popular .'
+    '. recommended .';
+  }
+
+  .layoutContentGames {
+    grid-template-columns: 1fr 110rem 1fr;
+    grid-template-areas: '. spotlight .'
+    '. popular .';
+  }
+
+  .profile {
+    width: 143rem;
+    margin: 0 auto;
+  }
+
+  .profilebanner {
+    padding-bottom: 3rem;
+    margin-right: 0;
+  }
+
+  .listsHeaderContainer {
+    width: 143rem;
+  }
+
+  .listContainer {
+    grid-template-columns: repeat(4, 34.5rem);
+    width: 143rem;
+  }
+
+  .detailContainer {
+    width: 110rem;
+    margin: 0 auto;
+  }
+
+  .social {
+    width: 143rem;
+    margin: 0 auto;
+    padding-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1592px) {
+  .listDetail {
+    width: 137.5rem;
+    margin: 0 auto;
+  }
+
+  .listLayout {
+    grid-template-columns: repeat(6, 20rem);
+  }
+}
+
+@media screen and (min-width: 1820px) {
+  .listDetail {
+    width: 160rem;
+    margin: 0 auto;
+  }
+
+  .listLayout {
+    grid-template-columns: repeat(7, 20rem);
+  }
 }
