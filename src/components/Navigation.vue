@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="layout normal">
     <section class="navBar">
-      <p class="appName">Media wish- &amp; watchlist</p>
+      <p class="appName" v-if="width > 1300">Media wish- &amp; watchlist</p>
       <SearchBar />
       <img :src="profilePicture" class="profilePicture" height="40" alt v-if="profilePicture" />
       <img src="/assets/icon/user.svg" class="profilePicture" height="40" alt v-else />
     </section>
-    <section class="sideBar">
+    <section class="sideBar" v-if="width > 1300">
       <div id="nav" class="nav sideBarItems">
         <router-link v-bind:to="{ name: 'movies' }">Movies</router-link>
         <router-link v-bind:to="{ name: 'shows' }">TV-shows</router-link>
@@ -83,6 +83,7 @@
         </router-link>
       </div>
     </section>
+    <Sidebar v-else />
   </div>
 </template>
 
@@ -91,13 +92,20 @@ import firebase from "firebase";
 import store from "../store/index";
 import SearchBar from "./SearchBar";
 
+import Sidebar from "./Sidebar";
+
 export default {
   name: "navigation",
-  components: { SearchBar },
+  components: { SearchBar, Sidebar },
   data() {
     return {
-      profilePicture: localStorage.profilePicture
+      profilePicture: localStorage.profilePicture,
+      width: 0
     };
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
   methods: {
     logout() {
@@ -109,6 +117,9 @@ export default {
           this.$store.state.user = [];
           localStorage.clear();
         });
+    },
+    handleResize() {
+      this.width = window.innerWidth;
     }
   },
   computed: {

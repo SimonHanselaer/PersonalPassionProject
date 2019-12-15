@@ -1007,6 +1007,16 @@ border-bottom: .2rem solid #fff;
 
 /* Desktop + ------------------------------------------------------------------------------------------------------------------------------ */
 
+@media screen and (max-width: 1300px) {
+  .layout {
+    grid-template-columns: 0 1fr;
+  }
+
+  .layoutContent, .layoutContentSeries, .layoutContentGames, .contentContainer {
+    margin-left: -2rem;
+  }
+}
+
 @media screen and (min-width: 1440px) {
   .layoutContent {
     grid-template-columns: 1fr 110rem 1fr;
