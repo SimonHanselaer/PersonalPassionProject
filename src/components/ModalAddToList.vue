@@ -4,7 +4,7 @@
     <section class="modalAddToList">
       <article v-for="list in computedLists" v-bind:key="list.id" class="modalArticle">
         <p>{{ list.name }}</p>
-        <button @click="addToList(list.id)">Add</button>
+        <button @click="addToList(list.id)" class="modalAddButton">Add</button>
       </article>
     </section>
   </modal>

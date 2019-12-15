@@ -2,8 +2,9 @@
   <div class="searchpeople contentContainer">
     <h1 class="header-2">Search friends</h1>
     <input
+      class="searchFriendsInput"
       type="text"
-      placeholder="Search your friends"
+      placeholder="Search your friends..."
       v-model="inputQueryFriends"
       @keyup="handleChangeInput"
     />
@@ -15,9 +16,9 @@
         <button
           v-if="!computedUser.friends.includes(user.id)"
           @click="addFriend(user.id)"
-          class="userAdd"
+          class="userAdd textInputField"
         >Add friend</button>
-        <p class="userAdd textInputField" v-else>Already friends</p>
+        <p class="userAdd userAddPositive textInputField" v-else>Already friends</p>
       </li>
     </ul>
   </div>

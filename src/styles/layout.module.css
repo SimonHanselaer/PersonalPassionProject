@@ -578,10 +578,7 @@ border-bottom: .2rem solid #fff;
 
   overflow: hidden;
 
-  &img {
-    width: 100%;
-    height: 100%;
-  }
+  width: 100vw;
 }
 
 /* List detail ---------------------------------------------------------------------------------------------------------------------------- */
@@ -835,6 +832,8 @@ border-bottom: .2rem solid #fff;
   width: 107.5rem;
 }
 
+/* Add friends ---------------------------------------------------------------------------------------------------------------------------- */
+
 .friendContainer {
   padding-top: 1rem;
   padding-bottom: 2rem;
@@ -856,9 +855,9 @@ border-bottom: .2rem solid #fff;
   grid-template-rows: 1fr auto 1fr;
   gap: 1rem;
 
-  grid-template-areas: 'userImage . .'
-  'userImage userName userAdd'
-  'userImage . .';
+  grid-template-areas: 'userImage userName userName'
+  'userImage . userAdd'
+  'userImage . userAdd';
 }
 
 .userImage {
@@ -869,15 +868,46 @@ border-bottom: .2rem solid #fff;
 
 .userName {
   grid-area: userName;
+  padding-top: 1rem;
 }
 
-.userAdd {
+.userAdd, .modalAddButton, .settingSubmit {
   grid-area: userAdd;
   color: #fff;
   background-color: #3764FC;
   border: none;
   border-radius: .2rem;
   margin-right: 1rem;
+
+  width: 10rem;
+  height: 2.5rem;
+  text-align: center;
+}
+
+.userAdd {
+  position: relative;
+  left: -.5rem;
+  top: -.5rem;
+}
+
+.userAddPositive {
+  background: nonse;
+}
+
+.searchFriendsInput, .settingInput {
+  outline: none;
+  border: none;
+  background: none;
+
+  border-bottom: .1rem solid #fff;
+
+  color: #fff;
+
+  padding-bottom: .5rem;
+  width: 20rem;
+
+  margin-top: 1rem;
+  margin-bottom: 3rem;
 }
 
 /* Modal ------------------------------------------------------------------------------------------------------------------------------ */
@@ -891,6 +921,7 @@ border-bottom: .2rem solid #fff;
   text-align: center;
   color: #333;
   padding-top: 2rem;
+  line-height: 1;
 }
 
 .modalArticle {
@@ -924,4 +955,25 @@ border-bottom: .2rem solid #fff;
 
 .modalForm {
   padding-top: 1rem;
+}
+
+.modalAddButton {
+ padding: .5rem;
+ width: 6rem;
+}
+
+/* Settings ------------------------------------------------------------------------------------------------------------------------------- */
+
+.settings form {
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+}
+
+.settingSubmit {
+  width: 15rem;
+}
+
+.settingContainer, .settingLabelContainer {
+  display: flex;
+  flex-direction: column;
 }

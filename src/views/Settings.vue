@@ -1,20 +1,30 @@
 <template>
-  <div class="settings contentContainer layoutContent">
-    <h1>Settings</h1>
-    <form v-on:submit.prevent v-on:submit="handleSubmitPlex">
-      <label>
-        Plex username:
-        <input type="text" placeholder="myplexusername" v-model="plexUsername" />
+  <div class="settings contentContainer">
+    <h1 class="header-2">Settings</h1>
+    <form v-on:submit.prevent v-on:submit="handleSubmitPlex" class="settingContainer">
+      <label class="settingLabelContainer">
+        <span class="header-7">Set your Plex username</span>
+        <input
+          class="settingInput textInputField"
+          type="text"
+          placeholder="myplexusername"
+          v-model="plexUsername"
+        />
       </label>
-      <button type="submit">Add plex username</button>
+      <button type="submit" class="settingSubmit textInputField">Add plex username</button>
     </form>
 
-    <form v-on:submit.prevent v-on:submit="handleSubmitUsername">
-      <label>
-        username:
-        <input type="text" placeholder="username" v-model="username" />
+    <form v-on:submit.prevent v-on:submit="handleSubmitUsername" class="settingContainer">
+      <label class="settingLabelContainer">
+        <span class="header-7">Set your username</span>
+        <input
+          class="settingInput textInputField"
+          type="text"
+          placeholder="username"
+          v-model="username"
+        />
       </label>
-      <button type="submit">Add username</button>
+      <button type="submit" class="settingSubmit textInputField">Add username</button>
     </form>
   </div>
 </template>
