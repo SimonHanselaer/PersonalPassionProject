@@ -4,7 +4,6 @@ import firebase from "firebase";
 
 export default {
     async addUser(props) {
-        console.log(props);
         let addNewUser = db.collection("users").doc(props.id);
 
         addNewUser.get().then(docSnapshot => {
@@ -25,9 +24,6 @@ export default {
         });
     },
     async addWatchlistItem(data) {
-
-        console.log(data);
-
         db.collection("lists").doc(localStorage.uid).get().then(doc => {
             if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
                 db.collection("lists").doc(localStorage.uid).update({ thumbnails: firebase.firestore.FieldValue.arrayUnion(data.src) });
@@ -80,7 +76,7 @@ export default {
                 });
             })
             .catch(error => {
-                console.log("Error getting documents: ", error);
+                alert("Error getting documents: ", error);
             });
 
         return data;
@@ -196,7 +192,6 @@ export default {
     },
 
     async addItemToList(data) {
-        console.log(data);
 
         db.collection("lists").doc(data.listId).get().then(doc => {
             if (!doc.data().thumbnails || !doc.data().thumbnails.length < 4) {
@@ -281,7 +276,8 @@ export default {
                         listData.push({
                             id: doc.id,
                             name: doc.data().name,
-                            count: doc.data().count
+                            count: doc.data().count,
+                            thumbnails: doc.data().thumbnails
                         });
                     });
                 })

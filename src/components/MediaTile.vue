@@ -265,7 +265,6 @@ export default {
     },
     deleteItem() {
       let self = this;
-      console.log("delete");
       const props = { itemId: self.id, listId: self.listId };
       this.$store.dispatch("deleteFromList", props);
     }

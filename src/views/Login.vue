@@ -2,20 +2,23 @@
   <div class="login">
     <h3 class="header-4 loginTitle">Login</h3>
     <p class="loginSubtitle">Sign in and start making lists &amp; discover new media!</p>
-    <input class="loginInput loginEmail" type="text" v-model="email" placeholder="E-mail" />
-    <input
-      class="loginInput loginPassword"
-      type="password"
-      v-model="password"
-      placeholder="Password"
-    />
 
-    <div class="loginRemember">
+    <form class="loginForm">
+      <input class="loginInput loginEmail" type="text" v-model="email" placeholder="E-mail" />
+      <input
+        class="loginInput loginPassword"
+        type="password"
+        v-model="password"
+        placeholder="Password"
+      />
+    </form>
+
+    <!-- <div class="loginRemember">
       <input type="checkbox" />
       <p>Remember me!</p>
     </div>
 
-    <p class="loginForgot">Forgot password?</p>
+    <p class="loginForgot">Forgot password?</p>-->
 
     <button class="loginButton" @click="login">Log in</button>
 

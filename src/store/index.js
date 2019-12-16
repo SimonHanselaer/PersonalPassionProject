@@ -46,10 +46,11 @@ export default new Vuex.Store({
     refactoredNumber: 0,
     config: [],
     modalValues: {},
-    lastWatchedMovie: [],
+    lastWatchedMovie: false,
     recommendedMovies: [],
-    lastWatchedSerie: [],
-    recommendedSeries: []
+    lastWatchedSerie: false,
+    recommendedSeries: [],
+    nonuse: []
   },
   mutations: {
     SET_LOADING_STATUS(state, status) {
@@ -345,15 +346,15 @@ export default new Vuex.Store({
       }
     },
     async addUser(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.addUser(props);
     },
     async addUserList(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.addUserList(props);
     },
     async addWatchlistItem(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.addWatchlistItem(props);
     },
     async getLists(context) {
@@ -492,23 +493,22 @@ export default new Vuex.Store({
       });
     },
     async addToWatched(context, props) {
-      console.log(context, props);
+      context.state.nonuse = false;
       FirestoreRepository.addToWatched(props);
     },
     async addToWatchedSeries(context, props) {
-      console.log(context, props);
+      context.state.nonuse = false;
       FirestoreRepository.addToWatchedSeries(props);
     },
     async addToPlayedGames(context, props) {
-      console.log(context, props);
+      context.state.nonuse = false;
       FirestoreRepository.addToPlayedGames(props);
     },
     async addItemToList(context, props) {
-      console.log(context, props);
+      context.state.nonuse = false;
       FirestoreRepository.addItemToList(props);
     },
     async setModalValues(context, props) {
-      console.log(props);
       context.state.modalValues = props;
     },
     async getUser(context) {
@@ -527,7 +527,7 @@ export default new Vuex.Store({
 
     async addFriend(context, prop) {
       FirestoreRepository.addFriend(prop);
-      console.log(context);
+      context.state.nonuse = false;
     },
 
     async getFriends(context) {
@@ -535,26 +535,26 @@ export default new Vuex.Store({
       context.commit("SET_FRIENDS", data);
     },
     async addPlexUsername(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.addPlexUsername(props);
     },
     async addUsername(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.addUsername(props);
     },
     async searchFriends(context, prop) {
-      console.log(context, prop);
+      context.state.nonuse = false;
 
       context.state.filteredUsers = context.state.users.filter(user => {
         return user.name.toLowerCase().includes(prop.toLowerCase());
       })
     },
     async deleteFromList(context, props) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.deleteFromList(props);
     },
     async deleteList(context, prop) {
-      console.log(context);
+      context.state.nonuse = false;
       FirestoreRepository.deleteList(prop);
     },
 
@@ -566,12 +566,14 @@ export default new Vuex.Store({
       context.commit("SET_LOADING_STATUS_RECOMMENDED", true);
 
       let data = await FirestoreRepository.getLastWatchedMovie();
-      data = await MediaRepository.getMovieDetails(data.mediaId);
+      if (data) {
+        data = await MediaRepository.getMovieDetails(data.mediaId);
 
-      context.commit("SET_LAST_WATCHED_MOVIE", data.data);
+        context.commit("SET_LAST_WATCHED_MOVIE", data.data);
 
-      data = await MediaRepository.getRecommendedMovies(data.data.id);
-      context.commit("SET_RECOMMENDED_MOVIES", data.data.results.splice(0, 5));
+        data = await MediaRepository.getRecommendedMovies(data.data.id);
+        context.commit("SET_RECOMMENDED_MOVIES", data.data.results.splice(0, 5));
+      }
 
       context.commit("SET_LOADING_STATUS_RECOMMENDED", false);
 
@@ -581,12 +583,14 @@ export default new Vuex.Store({
       context.commit("SET_LOADING_STATUS_RECOMMENDED", true);
 
       let data = await FirestoreRepository.getLastWatchedSerie();
-      data = await MediaRepository.getSerieDetails(data.mediaId);
+      if (data) {
+        data = await MediaRepository.getSerieDetails(data.mediaId);
 
-      context.commit("SET_LAST_WATCHED_SERIE", data.data);
+        context.commit("SET_LAST_WATCHED_SERIE", data.data);
 
-      data = await MediaRepository.getRecommendedSeries(data.data.id);
-      context.commit("SET_RECOMMENDED_SERIES", data.data.results.splice(0, 5));
+        data = await MediaRepository.getRecommendedSeries(data.data.id);
+        context.commit("SET_RECOMMENDED_SERIES", data.data.results.splice(0, 5));
+      }
 
       context.commit("SET_LOADING_STATUS_RECOMMENDED", false);
 

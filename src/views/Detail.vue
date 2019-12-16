@@ -692,7 +692,6 @@ export default {
         duration: self.computedDetails.runtime,
         releaseDate: self.computedDetails.release_date
       };
-      console.log(data);
       this.$store.dispatch("addWatchlistItem", data);
     },
     addMediaItemSerie() {
@@ -709,7 +708,6 @@ export default {
         duration: self.computedDetails.episode_run_time[0],
         releaseDate: self.computedDetails.first_air_date
       };
-      console.log(data);
       this.$store.dispatch("addWatchlistItem", data);
     },
     addMediaItemGame() {
@@ -726,7 +724,6 @@ export default {
         duration: 0,
         releaseDate: self.computedRelease
       };
-      console.log(data);
       this.$store.dispatch("addWatchlistItem", data);
     },
     addToListMovie() {

@@ -12,6 +12,9 @@
         >
           <h3 class="listTitle header-9">{{list.name}}</h3>
           <p class="listCount">{{list.count}} items in list</p>
+          <section class="listImage">
+            <img :src="image" alt v-for="image in list.thumbnails" :key="image.id" />
+          </section>
         </li>
       </ul>
     </section>

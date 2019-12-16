@@ -2,13 +2,17 @@
   <div class="register login">
     <h3 class="header-4 loginTitle">Register</h3>
     <p class="loginSubtitle">Register and start making lists &amp; discover new media!</p>
-    <input class="loginInput loginEmail" type="text" v-model="email" placeholder="E-mail" />
-    <input
-      class="loginInput loginPassword"
-      type="password"
-      v-model="password"
-      placeholder="Password"
-    />
+
+    <form class="loginForm">
+      <input class="loginInput loginEmail" type="text" v-model="email" placeholder="E-mail" />
+      <input
+        class="loginInput loginPassword"
+        type="password"
+        v-model="password"
+        placeholder="Password"
+      />
+    </form>
+
     <button class="loginButton" @click="register">Register</button>
     <button class="loginGoogle" @click="socialLoginGoogle">
       <svg

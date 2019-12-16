@@ -293,15 +293,13 @@
 .login {
   display: grid;
   grid-template-columns: 12.6rem 2.2rem 4.3rem 4rem 4.3rem 2.2rem 12.6rem ;
-  grid-template-rows: auto 1rem auto 3rem 4.2rem 2rem 4.2rem 2rem auto 3rem 4.2rem 4rem auto 4rem 4.5rem 5rem;
+  grid-template-rows: auto 1rem auto 3rem auto 2rem auto 3rem 4.2rem 4rem auto 4rem 4.5rem 5rem;
   grid-template-areas: 
   'loginTitle loginTitle loginTitle loginTitle loginTitle loginTitle loginTitle'
   '. . . . . . .'
   'loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle loginSubtitle'
   '. . . . . . .'
-  'loginEmail loginEmail loginEmail loginEmail loginEmail loginEmail loginEmail'
-  '. . . . . . .'
-  'loginPassword loginPassword loginPassword loginPassword loginPassword loginPassword loginPassword'
+  'loginForm loginForm loginForm loginForm loginForm loginForm loginForm'
   '. . . . . . .'
   'loginRemember loginRemember loginRemember . loginForgot loginForgot loginForgot'
   '. . . . . . .'
@@ -319,6 +317,15 @@
 
   outline: none;
   box-shadow: none;
+}
+
+.loginForm {
+  grid-area: loginForm;
+  display: grid;
+  grid-template-rows: 4.2rem 2rem 4.2rem;
+  grid-template-areas: 'loginEmail'
+  '.'
+  'loginPassword';
 }
 
 .loginTitle {
